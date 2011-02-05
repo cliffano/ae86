@@ -1,0 +1,10 @@
+{
+    "name": "ae86",
+    "description": "Static website generator.",
+    "version": "0.0.1",
+    "author": "Cliffano Subagio <blah@cliffano.com>",
+    "keywords": ["static", "website", "generator"],
+    "directories": { "lib": "./lib/ae86" },
+    "bin": { "ae86": "./bin/ae86" },
+    "engines": { "node": ">= 0.2.0" }
+}
