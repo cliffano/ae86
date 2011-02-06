@@ -9,6 +9,7 @@ var path = require('path'),
 usage = 'Usage: ae86 [options]\n'
     + '\n'
     + 'Options:\n'
+    + '  -o, --out      The directory where the static pages will be written to\n'
     + '  -h, --help     Display help info\n';
 
 abort = function (message) {
@@ -19,6 +20,12 @@ abort = function (message) {
 while (args.length) {
     var arg = args.shift();
     switch (arg) {
+        case '-o':
+        case '--out':
+            args.length
+                ? (args.out = args.shift())
+                : abort('--out requires an argument');
+            break;
         case '-h':
         case '--help':
             abort(usage);
