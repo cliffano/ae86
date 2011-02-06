@@ -26,10 +26,10 @@ while (args.length) {
 */
 
 var options = {
-        layouts: path.join(__dirname, (args.layouts || 'layouts')),
-        pages: path.join(__dirname, (args.pages || 'pages')),
-        partials: path.join(__dirname, (args.partials || 'partials')),
-        out: path.join(__dirname, (args.out || 'out')),
+        layouts: path.join(process.cwd(), (args.layouts || 'layouts')),
+        pages: path.join(process.cwd(), (args.pages || 'pages')),
+        partials: path.join(process.cwd(), (args.partials || 'partials')),
+        out: path.join(process.cwd(), (args.out || 'out')),
         engine: args.engine || 'jazz',
         encoding: args.encoding || 'utf-8'
     },
