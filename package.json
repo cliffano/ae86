@@ -3,6 +3,7 @@
     "description": "Static website generator.",
     "version": "0.0.1",
     "author": "Cliffano Subagio <blah@cliffano.com>",
+    "dependencies": { "jazz": ">= 0.0.13" },
     "keywords": ["static", "website", "generator"],
     "directories": { "lib": "./lib/ae86" },
     "bin": { "ae86": "./bin/ae86" },
