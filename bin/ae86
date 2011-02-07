@@ -10,6 +10,7 @@ usage = 'Usage: ae86 [options]\n'
     + '\n'
     + 'Options:\n'
     + '  -o, --out      The directory where the static pages will be written to\n'
+    + '  -e, --engine   The templating engine\n'
     + '  -h, --help     Display help info\n';
 
 abort = function (message) {
@@ -26,6 +27,12 @@ while (args.length) {
                 ? (args.out = args.shift())
                 : abort('--out requires an argument');
             break;
+        case '-e':
+        case '--engine':
+            args.length
+                ? (args.engine = args.shift())
+                : abort('--engine requires an argument');
+            break;
         case '-h':
         case '--help':
             abort(usage);
@@ -34,9 +41,9 @@ while (args.length) {
 }
 
 options = {
-        layouts: path.join(dir, (args.layouts || 'layouts')),
-        pages: path.join(dir, (args.pages || 'pages')),
-        partials: path.join(dir, (args.partials || 'partials')),
+        layouts: path.join(dir, 'layouts'),
+        pages: path.join(dir, 'pages'),
+        partials: path.join(dir, 'partials'),
         out: path.join(dir, (args.out || 'out')),
         engine: args.engine || 'jazz',
         encoding: args.encoding || 'utf-8'
