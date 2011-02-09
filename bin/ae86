@@ -44,6 +44,7 @@ options = {
         layouts: path.join(dir, 'layouts'),
         pages: path.join(dir, 'pages'),
         partials: path.join(dir, 'partials'),
+        static: path.join(dir, 'static'),
         out: path.join(dir, (args.out || 'out')),
         engine: args.engine || 'jazz',
         encoding: args.encoding || 'utf-8'

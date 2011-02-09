@@ -1,6 +1,8 @@
 <html>
 <head>
     <title>Default Layout</title>
+    <link rel="stylesheet" href="styles/default.css" type="text/css"/>
+    <script type="text/javascript" src="scripts/default.js"></script>
 </head>
 <body>
     {page}
