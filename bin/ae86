@@ -46,6 +46,7 @@ options = {
         partials: path.join(dir, 'partials'),
         static: path.join(dir, 'static'),
         out: path.join(dir, (args.out || 'out')),
+        params: (path.existsSync(path.join(dir, 'params.js'))) ? require(path.join(dir, 'params')).params : {},
         engine: args.engine || 'jazz',
         encoding: args.encoding || 'utf-8'
     },

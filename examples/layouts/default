@@ -5,6 +5,11 @@
     <script type="text/javascript" src="scripts/default.js"></script>
 </head>
 <body>
-    {page}
+    <div>
+        {foreach page in params.pages}
+            <a href="{page}.html">{page}</a> - 
+        {end}
+    </div>
+    {body}
 </body>
 </html>
