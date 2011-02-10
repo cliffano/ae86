@@ -5,11 +5,13 @@
     <script type="text/javascript" src="scripts/default.js"></script>
 </head>
 <body>
+    {fn.include('header')}
     <div>
         {foreach page in params.pages}
             <a href="{page}.html">{page}</a> - 
         {end}
     </div>
     {body}
+    {fn.include('footer')}
 </body>
 </html>

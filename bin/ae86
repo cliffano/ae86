@@ -2,7 +2,7 @@
 
 var path = require('path'),
     AE86 = require('../lib/ae86').AE86,
-    dir = process.cwd(),
+    base = process.cwd(),
     args = process.argv.slice(2),
     usage, abort, options;
     
@@ -41,12 +41,12 @@ while (args.length) {
 }
 
 options = {
-        layouts: path.join(dir, 'layouts'),
-        pages: path.join(dir, 'pages'),
-        partials: path.join(dir, 'partials'),
-        static: path.join(dir, 'static'),
-        out: path.join(dir, (args.out || 'out')),
-        params: (path.existsSync(path.join(dir, 'params.js'))) ? require(path.join(dir, 'params')).params : {},
+        layouts: path.join(base, 'layouts'),
+        pages: path.join(base, 'pages'),
+        partials: path.join(base, 'partials'),
+        static: path.join(base, 'static'),
+        out: path.join(base, (args.out || 'out')),
+        params: (path.existsSync(path.join(base, 'params.js'))) ? require(path.join(base, 'params')).params : {},
         engine: args.engine || 'jazz',
         encoding: args.encoding || 'utf-8'
     },
