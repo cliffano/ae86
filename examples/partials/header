@@ -1,4 +1,8 @@
 <div id="header">
-    <h1>Header Partial</h1>
-    <img src="images/logo.png"/>
+    <h1><img src="images/logo.png"/> {title}</h1>
+</div>
+<div id="nav">
+    {foreach page in pages}
+        <a href="{page}.html">{page}</a> - 
+    {end}
 </div>

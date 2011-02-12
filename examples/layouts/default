@@ -1,17 +1,14 @@
 <html>
 <head>
-    <title>Default Layout</title>
+    <title>{title}</title>
     <link rel="stylesheet" href="styles/default.css" type="text/css"/>
     <script type="text/javascript" src="scripts/default.js"></script>
 </head>
 <body>
-    {fn.include('header')}
-    <div>
-        {foreach page in params.pages}
-            <a href="{page}.html">{page}</a> - 
-        {end}
+    <div id="doc">
+        {include('header')}
+        {body}
+        {include('footer')}
     </div>
-    {body}
-    {fn.include('footer')}
 </body>
 </html>

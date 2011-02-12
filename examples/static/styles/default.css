@@ -1,3 +1,36 @@
+body {
+    background-color: #666666;
+    margin: 0;
+    padding: 0;
+}
+div#doc {
+    background-color: #ffffff;
+    color: #000000;
+    font-family: serif;
+    margin: auto;
+    padding: 20px;
+    width: 960px;
+}
+div#header {
+    border-bottom: 3px solid #000000;
+    text-align: center;
+}
+div#nav {
+    font-weight: bold;
+    padding: 10px;
+    text-align: center;
+}
+div#footer {
+    border-top: 3px solid #000000;
+    font-weight: bold;
+    text-align: right;
+}
 h1 {
-    border: 1px solid #0000ff;
+    font-size: 250%;
+}
+h2 {
+    font-style: italic;
+}
+a {
+    color: #ff0000;
 }
