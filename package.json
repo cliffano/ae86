@@ -3,9 +3,11 @@
     "description": "Static website generator.",
     "version": "0.0.1",
     "author": "Cliffano Subagio <blah@cliffano.com>",
-    "dependencies": { "jazz": ">= 0.0.13" },
+    "dependencies": { "file": ">= 0.1.0", "jazz": ">= 0.0.13" },
     "keywords": ["static", "website", "generator"],
     "directories": { "lib": "./lib/ae86" },
     "bin": { "ae86": "./bin/ae86" },
+    "repository": { "type": "git", "url": "http://github.com/cliffano/ae86.git" },
+    "bugs": { "web": "http://github.com/cliffano/ae86/issues" },
     "engines": { "node": ">= 0.2.0" }
 }
