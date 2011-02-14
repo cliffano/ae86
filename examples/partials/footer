@@ -1,1 +1,1 @@
-{include('components/copyright')}
+{include('elements/copyright')}

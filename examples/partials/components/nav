@@ -1,5 +1,0 @@
-<div id="nav">
-    {foreach page in pages}
-        <a href="{page}.html">{page}</a> - 
-    {end}
-</div>

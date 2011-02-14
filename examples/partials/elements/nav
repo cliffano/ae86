@@ -1,0 +1,5 @@
+<div id="nav">
+    {foreach menu in nav}
+        <a href="{menu.value.url}">{menu.value.title}</a> |
+    {end}
+</div>
