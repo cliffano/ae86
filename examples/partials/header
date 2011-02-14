@@ -1,8 +1,2 @@
-<div id="header">
-    <h1><img src="images/logo.png"/> {title}</h1>
-</div>
-<div id="nav">
-    {foreach page in pages}
-        <a href="{page}.html">{page}</a> - 
-    {end}
-</div>
+{include('components/logo')}
+{include('components/nav')}

@@ -1,3 +1,1 @@
-<div id="footer">
-    <p>Copyright &copy; 2010 - 2011 AE86 Workshop</p>
-</div>
+{include('components/copyright')}
