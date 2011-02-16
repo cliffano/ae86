@@ -13,5 +13,8 @@ exports.params = {
         businesscard: {
             sizes: [ '55x90mm', '110x99mm' ]
         }
+    },
+    enlarge: function(text, cb) {
+        cb('<span style="font-size: 500%;">' + text + '</span>')
     }
 };
