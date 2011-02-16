@@ -1,8 +1,8 @@
 <html>
 <head>
     <title>{title}</title>
-    <link rel="stylesheet" href="styles/default.css" type="text/css"/>
-    <script type="text/javascript" src="scripts/default.js"></script>
+    <link rel="stylesheet" href="{relative('styles/default.css')}" type="text/css"/>
+    <script type="text/javascript" src="{relative('scripts/default.js')}"></script>
 </head>
 <body>
     <div id="doc">
