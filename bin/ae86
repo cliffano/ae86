@@ -13,6 +13,7 @@ usage = 'Usage: ae86 [init] [options]\n'
     + 'Options:\n'
     + '  -o, --out      Directory where the static pages will be written to\n'
     + '  -e, --engine   Templating engine\n'
+    + '  -i, --ignore   Directories/files to be ignored (comma separated)\n'
     + '  -h, --help     Display help info\n';
 
 abort = function (message) {
@@ -59,7 +60,7 @@ options = {
         out: path.join(base, (args.out || 'out')),
         params: (path.existsSync(path.join(base, 'params.js'))) ? require(path.join(base, 'params')).params : {},
         engine: args.engine || 'jazz',
-        ignore: args.ignore || '.cvs,.git,.svn,.DS_Store',
+        ignore: (args.ignore) ? args.ignore.split(',') : ['.cvs', '.git', '.svn', '.DS_Store'],
         encoding: args.encoding || 'utf-8',
         mode: args.mode || 0755
     },
