@@ -38,6 +38,12 @@ while (args.length) {
                 ? (args.engine = args.shift())
                 : abort('--engine requires an argument');
             break;
+        case '-i':
+        case '--ignore':
+            args.length
+                ? (args.engine = args.shift())
+                : abort('--ignore requires an argument');
+            break;
         case '-h':
         case '--help':
             abort(usage);
@@ -53,6 +59,7 @@ options = {
         out: path.join(base, (args.out || 'out')),
         params: (path.existsSync(path.join(base, 'params.js'))) ? require(path.join(base, 'params')).params : {},
         engine: args.engine || 'jazz',
+        ignore: args.ignore || '.cvs,.git,.svn,.DS_Store',
         encoding: args.encoding || 'utf-8',
         mode: args.mode || 0755
     },

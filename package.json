@@ -1,13 +1,15 @@
 {
     "name": "ae86",
     "description": "Static website generator.",
-    "version": "0.0.1",
-    "author": "Cliffano Subagio <blah@cliffano.com>",
-    "dependencies": { "file": ">= 0.1.0", "jazz": ">= 0.0.14" },
     "keywords": ["static", "website", "generator"],
-    "directories": { "lib": "./lib/ae86" },
+    "version": "0.0.1",
+    "homepage" : "http://github.com/cliffano/ae86",
+    "author": "Cliffano Subagio <blah@cliffano.com> (http://blog.cliffano.com)",
     "bin": { "ae86": "./bin/ae86" },
     "repository": { "type": "git", "url": "http://github.com/cliffano/ae86.git" },
     "bugs": { "web": "http://github.com/cliffano/ae86/issues" },
-    "engines": { "node": ">= 0.2.0" }
+    "directories": { "bin": "./bin", "lib": "./lib" },
+    "dependencies": { "file": ">= 0.1.0", "jazz": ">= 0.0.14" },
+    "engines": { "node": ">= 0.2.0" },
+    "licenses" : [{ "type" : "MIT", "url" : "http://github.com/cliffano/ae86/raw/master/LICENSE" } ]
 }
