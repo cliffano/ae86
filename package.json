@@ -9,7 +9,7 @@
     "repository": { "type": "git", "url": "http://github.com/cliffano/ae86.git" },
     "bugs": { "web": "http://github.com/cliffano/ae86/issues" },
     "directories": { "bin": "./bin", "lib": "./lib" },
-    "dependencies": { "file": ">= 0.1.0", "jazz": ">= 0.0.14" },
+    "dependencies": { "file": ">= 0.1.0", "jazz": ">= 0.0.14", "wrench": ">= 1.0.0" },
     "engines": { "node": ">= 0.2.0" },
     "licenses" : [{ "type" : "MIT", "url" : "http://github.com/cliffano/ae86/raw/master/LICENSE" } ]
 }

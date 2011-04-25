@@ -6,9 +6,11 @@ var path = require('path'),
     args = process.argv.slice(2),
     usage, abort, options;
     
-usage = 'Usage: ae86 [init] [options]\n'
+usage = 'Usage: ae86 [init] [clean] [gen] [options]\n'
     + '\n'
-    + '  init           Initialise project\n' 
+    + '  init           Initialise project\n'
+    + '  gen            Generate website\n'
+    + '  clean          Delete generated website\n'
     + '\n'
     + 'Options:\n'
     + '  -o, --out      Directory where the website files will be written to\n'
@@ -25,6 +27,12 @@ while (args.length) {
     var arg = args.shift();
     switch (arg) {
         case 'init':
+            args.action = arg;
+            break;
+        case 'gen':
+            args.action = arg;
+            break;
+        case 'clean':
             args.action = arg;
             break;
         case '-o':
@@ -69,7 +77,13 @@ switch (args.action) {
     case 'init':
         ae86.init();
         break;
+    case 'gen':
+        ae86.generate();
+        break;
+    case 'clean':
+        ae86.clean();
+        break;
     case undefined:
-        ae86.drift();
+        abort(usage);
         break;
 }

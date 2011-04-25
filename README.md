@@ -21,7 +21,7 @@ Initialise project
     
 Generate website
 
-    ae86
+    ae86 gen
     
 Delete generated website
 
