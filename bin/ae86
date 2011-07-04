@@ -1,89 +1,67 @@
 #!/usr/bin/env node
 
-var path = require('path'),
+var DEFAULT_LAYOUTS_DIR = 'layouts',
+    DEFAULT_PAGES_DIR = 'pages',
+    DEFAULT_PARTIALS_DIR = 'partials',
+    DEFAULT_STATIC_DIR = 'static',
+    DEFAULT_OUT_DIR = 'out',
+    DEFAULT_FILE = 'params.js',
+    DEFAULT_ENGINE = 'jazz',
+    DEFAULT_IGNORE = '.cvs,.git,.svn,.DS_Store',
+    DEFAULT_ENCODING = 'utf-8',
+    DEFAULT_MODE = 0755,
+    path = require('path'),
+    nomnom = require('nomnom'),
     AE86 = require('../lib/ae86').AE86,
     base = process.cwd(),
-    args = process.argv.slice(2),
-    usage, abort, options;
-    
-usage = 'Usage: ae86 [init] [clean] [gen] [options]\n'
-    + '\n'
-    + '  init           Initialise project\n'
-    + '  gen            Generate website\n'
-    + '  clean          Delete generated website\n'
-    + '\n'
-    + 'Options:\n'
-    + '  -o, --out      Directory where the website files will be written to\n'
-    + '  -e, --engine   Templating engine\n'
-    + '  -i, --ignore   Directories/files to be ignored (comma separated)\n'
-    + '  -h, --help     Display help info\n';
+    opts, options, instance, doInit, doGen, doClean;
 
-abort = function (message) {
-    console.error(message);
-    process.exit(1);
+instance = function (args) {
+    options = {
+        layouts: path.join(base, DEFAULT_LAYOUTS_DIR),
+        pages: path.join(base, DEFAULT_PAGES_DIR),
+        partials: path.join(base, DEFAULT_PARTIALS_DIR),
+        static: path.join(base, DEFAULT_STATIC_DIR),
+        out: path.join(base, (args.out || DEFAULT_OUT_DIR)),
+        params: (path.existsSync(path.join(base, DEFAULT_FILE))) ? require(path.join(base, DEFAULT_FILE.replace(/\.js/, ''))).params : {},
+        engine: args.engine || DEFAULT_ENGINE,
+        ignore: (args.ignore) ? args.ignore.split(',') : DEFAULT_IGNORE.split(','),
+        encoding: DEFAULT_ENCODING,
+        mode: DEFAULT_MODE
+    };
+    return new AE86(options);
 };
 
-while (args.length) {
-    var arg = args.shift();
-    switch (arg) {
-        case 'init':
-            args.action = arg;
-            break;
-        case 'gen':
-            args.action = arg;
-            break;
-        case 'clean':
-            args.action = arg;
-            break;
-        case '-o':
-        case '--out':
-            args.length
-                ? (args.out = args.shift())
-                : abort('--out requires an argument');
-            break;
-        case '-e':
-        case '--engine':
-            args.length
-                ? (args.engine = args.shift())
-                : abort('--engine requires an argument');
-            break;
-        case '-i':
-        case '--ignore':
-            args.length
-                ? (args.engine = args.shift())
-                : abort('--ignore requires an argument');
-            break;
-        case '-h':
-        case '--help':
-            abort(usage);
-            break;
-    }
-}
+doInit = function (args) {
+    instance(args).init();
+};
 
-options = {
-        layouts: path.join(base, 'layouts'),
-        pages: path.join(base, 'pages'),
-        partials: path.join(base, 'partials'),
-        static: path.join(base, 'static'),
-        out: path.join(base, (args.out || 'out')),
-        params: (path.existsSync(path.join(base, 'params.js'))) ? require(path.join(base, 'params')).params : {},
-        engine: args.engine || 'jazz',
-        ignore: (args.ignore) ? args.ignore.split(',') : ['.cvs', '.git', '.svn', '.DS_Store'],
-        encoding: args.encoding || 'utf-8',
-        mode: args.mode || 0755
+doGen = function (args) {
+    instance(args).generate();
+};
+
+doClean = function (args) {
+    instance(args).clean();
+};
+
+opts = {
+    out: {
+        string: '-o OUT_DIR',
+        help: 'Directory where the website files will be written to, default: ' + DEFAULT_OUT_DIR
     },
-    ae86 = new AE86(options);
-switch (args.action) {
-    case 'init':
-        ae86.init();
-        break;
-    case 'gen':
-        ae86.generate();
-        break;
-    case 'clean':
-        ae86.clean();
-        break;
-    case undefined:
-        abort(usage);
-        break;
-}
+    engine: {
+        string: '-e ENGINE',
+        help: 'Templating engine, default: ' + DEFAULT_ENGINE
+    },
+    ignore: {
+        string: '-i IGNORE',
+        help: 'Directories/files to be ignored (comma separated), default: ' + DEFAULT_IGNORE
+    }
+};
+
+nomnom.scriptName('ae86');
+nomnom.globalOpts(opts);
+nomnom.command('init').callback(doInit);
+nomnom.command('gen').callback(doGen);
+nomnom.command('clean').callback(doClean);
+nomnom.parseArgs();
