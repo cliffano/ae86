@@ -14,7 +14,7 @@ var DEFAULT_LAYOUTS_DIR = 'layouts',
     nomnom = require('nomnom'),
     AE86 = require('../lib/ae86').AE86,
     base = process.cwd(),
-    opts, options, instance, doInit, doGen, doClean;
+    opts, options, engine, Engine, instance, doInit, doGen, doClean;
 
 instance = function (args) {
     options = {
@@ -24,7 +24,6 @@ instance = function (args) {
         static: path.join(base, DEFAULT_STATIC_DIR),
         out: path.join(base, (args.out || DEFAULT_OUT_DIR)),
         params: (path.existsSync(path.join(base, DEFAULT_FILE))) ? require(path.join(base, DEFAULT_FILE.replace(/\.js/, ''))).params : {},
-        engine: args.engine || DEFAULT_ENGINE,
         ignore: (args.ignore) ? args.ignore.split(',') : DEFAULT_IGNORE.split(','),
         encoding: DEFAULT_ENCODING,
         mode: DEFAULT_MODE
@@ -37,7 +36,10 @@ doInit = function (args) {
 };
 
 doGen = function (args) {
-    instance(args).generate();
+    engine = args.engine || DEFAULT_ENGINE;
+    console.log('Revving up AE86\'s ' + engine + ' engine...');
+    Engine = require('../lib/engine/' + engine).Engine;
+    instance(args).generate(new Engine());
 };
 
 doClean = function (args) {
