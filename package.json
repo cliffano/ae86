@@ -7,7 +7,7 @@
     "author": "Cliffano Subagio <blah@cliffano.com> (http://blog.cliffano.com)",
     "bin": { "ae86": "./bin/ae86" },
     "repository": { "type": "git", "url": "http://github.com/cliffano/ae86.git" },
-    "bugs": { "web": "http://github.com/cliffano/ae86/issues" },
+    "bugs": { "url": "http://github.com/cliffano/ae86/issues" },
     "directories": { "bin": "./bin", "lib": "./lib" },
     "dependencies": { "file": "0.1.1", "jazz": "0.0.14", "nomnom": "1.0.0", "wrench": "1.1.0" },
     "devDependencies": { "vows": "0.5.9" },
