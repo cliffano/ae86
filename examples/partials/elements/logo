@@ -1,3 +1,0 @@
-<div id="header">
-    <h1><img src="{relative('images/logo.png')}"/> {title}</h1>
-</div>

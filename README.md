@@ -6,23 +6,23 @@ Static website generator.
 Installation
 ------------
 
-    npm install ae86
+    npm install -g ae86
 
 Usage
 -----
 
-Display help info
+Create new project structure:
 
-    ae86 -h
+	ae86 init
 
-Initialise project
+* partials/ - directory containing partial template files
+* layouts/ - directory containing layout template files
+* pages/ - directory containing website page files
+* ae86.js - file containing website params and custom tags
 
-    ae86 init
-    
-Generate website
+To generate the website:
 
-    ae86 gen
-    
-Delete generated website
+	ae86 gen
 
-    ae86 clean
+
+

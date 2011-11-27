@@ -1,2 +1,0 @@
-{include('elements/logo')}
-{include('elements/nav')}
