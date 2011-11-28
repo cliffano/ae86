@@ -3,6 +3,11 @@ var assert = require('assert'),
   vows = require('vows');
 
 vows.describe('').addBatch({
-  'x': {
+  '': {
+    topic: function () {
+      return {};
+    },
+    '': function (topic) {
+    }
   }
 }).exportTo(module);
