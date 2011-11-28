@@ -18,7 +18,7 @@ Create new project structure:
 * partials/ - directory containing partial template files
 * layouts/ - directory containing layout template files
 * pages/ - directory containing website page files
-* ae86.js - file containing website params and custom tags
+* params.js - file containing website custom tags and variables
 
 To generate the website:
 
