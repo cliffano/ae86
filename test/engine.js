@@ -66,5 +66,44 @@ vows.describe('engine').addBatch({
         assert.isEmpty(_.keys(result));
       }
     }
+  },
+  'process': {
+    'should write file with evaluated data and display page names on console': function () {
+      var _messages = [], processCount = 0,
+        engine = sandbox.require('../lib/engine', {
+          requires: {
+            fs: {
+              writeFile: function (file, data, encoding, cb) {
+                assert.equal(encoding, 'utf8');
+                cb(null);
+              }
+            }
+          },
+          globals: {
+            console: {
+              log: function (message) {
+                _messages.push(message);
+              }
+            }
+          }
+        }),
+        process = function (params, cb) {
+          assert.equal(params.name, 'Bob');
+          processCount += 1;
+          cb(params);
+        },
+        dir = 'out',
+        pages = { 'index.html': { process: process },
+          'products.html': { process: process, globals: [ 'items' ] }},
+        layouts = { 'default.html': { process: process }},
+        partials = { 'header.html': { process: process }},
+        params = { name: 'Bob' };
+      engine.process(dir, pages, layouts, partials, params);
+      // each partial and layout is processed once per page
+      assert.equal(processCount, 6);
+      assert.equal(_messages.length, 2);
+      assert.equal(_messages[0], '+ index.html');
+      assert.equal(_messages[1], '+ products.html');
+    }
   }
 }).exportTo(module);
