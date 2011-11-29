@@ -3,7 +3,7 @@ var assert = require('assert'),
   vows = require('vows');
 
 vows.describe('params').addBatch({
-  'date function': {
+  'date': {
     topic: function () {
       return sandbox.require('../lib/params', {
         globals: {
@@ -18,10 +18,10 @@ vows.describe('params').addBatch({
       topic: function (topic) {
         topic.params().date('yyyymmdd', this.callback);
       },
-      'then it should have 8 digits length': function (result, err) {
+      'then it should have 8 digits length': function (result, dummy) {
         assert.equal(result.length, 8);
       },
-      'and it should contain string 20001010': function (result, err) {
+      'and it should contain string 20001010': function (result, dummy) {
         assert.equal(result, '20001010');
       }
     },
@@ -29,12 +29,12 @@ vows.describe('params').addBatch({
       topic: function (topic) {
         topic.params().date(undefined, this.callback);
       },
-      'then it should contain description with default format': function (result, err) {
+      'then it should contain description with default format': function (result, dummy) {
         assert.equal(result, 'Tue Oct 10 2000 00:00:00');
       }
     }
   },
-  'include function': {
+  'include': {
     topic: function () {
       return sandbox.require('../lib/params', {
       });
@@ -44,7 +44,7 @@ vows.describe('params').addBatch({
         topic.params({ partials: { 'header.html': '<div id="head"></div>' } })
           .include('header.html', this.callback);
       },
-      'then it should contain the partial file\'s content': function (result, err) {
+      'then it should contain the partial file\'s content': function (result, dummy) {
         assert.equal(result, '<div id="head"></div>');
       }
     },
@@ -52,12 +52,12 @@ vows.describe('params').addBatch({
       topic: function (topic) {
         topic.params({ partials: {} }).include('header.html', this.callback);
       },
-      'then it should contain error message': function (result, err) {
+      'then it should contain error message': function (result, dummy) {
         assert.equal(result, '[error] partial file header.html does not exist');
       }
     }
   },
-  'relative function': {
+  'relative': {
     topic: function () {
       return sandbox.require('../lib/params', {
       });
@@ -67,7 +67,7 @@ vows.describe('params').addBatch({
         topic.params({ __file: 'index.html' })
           .relative('scripts/global.js', this.callback);
       },
-      'then it should not have ../ prefix': function (result, err) {
+      'then it should not have ../ prefix': function (result, dummy) {
         assert.equal(result, 'scripts/global.js');
       }
     },
@@ -76,12 +76,12 @@ vows.describe('params').addBatch({
         topic.params({ __file: 'sub/index.html' })
           .relative('scripts/global.js', this.callback);
       },
-      'then it should have a single ../ prefix': function (result, err) {
+      'then it should have a single ../ prefix': function (result, dummy) {
         assert.equal(result, '../scripts/global.js');
       }
     }
   },
-  'title function': {
+  'title': {
     topic: function () {
       return sandbox.require('../lib/params', {
       });
@@ -92,7 +92,7 @@ vows.describe('params').addBatch({
           sitemap: { index: { title: 'Home Page', file: 'index.html' } } })
           .title(this.callback);
       },
-      'then it should contain the file title': function (result, err) {
+      'then it should contain the file title': function (result, dummy) {
         assert.equal(result, 'Home Page');
       }
     },
@@ -101,7 +101,7 @@ vows.describe('params').addBatch({
         topic.params({ __file: 'index.html', sitemap: {} })
           .title(this.callback);
       },
-      'then it should contain error message': function (result, err) {
+      'then it should contain error message': function (result, dummy) {
         assert.equal(result, '[error] current file index.html does not have title in the sitemap');
       }
     }
