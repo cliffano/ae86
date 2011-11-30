@@ -95,9 +95,9 @@ vows.describe('engine').addBatch({
         dir = 'out',
         pages = { 'index.html': { process: process },
           'products.html': { process: process, globals: [ 'items' ] }},
-        layouts = { 'default.html': { process: process }},
-        partials = { 'header.html': { process: process }},
-        params = { name: 'Bob' };
+        layouts = { 'default.html': { process: process },  'brochure.html': { process: process } },
+        partials = { 'header.html': { process: process } },
+        params = { name: 'Bob', sitemap: { 'products.html': { layout: 'brochure.html' } } };
       engine.process(dir, pages, layouts, partials, params);
       // each partial and layout is processed once per page
       assert.equal(processCount, 6);
