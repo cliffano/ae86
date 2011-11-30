@@ -12,6 +12,9 @@
   "bin": {
     "ae86": "./bin/ae86"
   },
+  "scripts": {
+    "test": "vows --spec `find test -name \"*.js\"`"
+  },
   "repository": {
     "type": "git",
     "url": "http://github.com/cliffano/ae86.git"
