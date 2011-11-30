@@ -89,7 +89,7 @@ vows.describe('params').addBatch({
     'when sitemap contains current file': {
       topic: function (topic) {
         topic.params({ __file: 'index.html',
-          sitemap: { index: { title: 'Home Page', file: 'index.html' } } })
+          sitemap: { 'index.html' : { title: 'Home Page' } } })
           .title(this.callback);
       },
       'then it should contain the file title': function (result, dummy) {
