@@ -17,7 +17,7 @@ vows.describe('engine').addBatch({
             file: {
               walkSync: function (dir, cb) {
                 assert.equal(dir, 'products');
-                cb(dir, [], [ 'new.html', 'old.html', 'README.TXT' ])
+                cb(dir, [], [ 'new.html', 'old.html', 'README.TXT' ]);
               }
             },
             fs: {
@@ -56,7 +56,7 @@ vows.describe('engine').addBatch({
             file: {
               walkSync: function (dir, cb) {
                 assert.equal(dir, 'products');
-                cb(dir, [], [])
+                cb(dir, [], []);
               }
             }
           }
