@@ -31,7 +31,6 @@ vows.describe('ae86').addBatch({
     'should create custom directories when options specified': function (topic) {
       var dirs = [],
         ae86 = new topic(dirs).AE86({
-          params: 'myparams',
           layouts: 'mylayouts',
           pages: 'mypages',
           partials: 'mypartials',
@@ -75,9 +74,6 @@ vows.describe('ae86').addBatch({
                   params: params
                 };
               }
-            },
-            'cwd/params': {
-              params: { foo: 'bar' }
             }
           }
         });
@@ -88,7 +84,7 @@ vows.describe('ae86').addBatch({
         compileDirs = [],
         processTemplates = [],
         ae86 = new topic(statik, compileDirs, processTemplates).AE86();
-      ae86.gen('cwd');
+      ae86.gen({ foo: 'bar' });
       assert.equal(statik[0].src, 'static');
       assert.equal(statik[0].dest, 'out');
       assert.equal(compileDirs.length, 3);
@@ -109,13 +105,12 @@ vows.describe('ae86').addBatch({
         processTemplates = [],
         ae86 = new topic(statik, compileDirs, processTemplates).AE86({
           out: 'myout',
-          params: 'params',
           layouts: 'mylayouts',
           pages: 'mypages',
           partials: 'mypartials',
           statik: 'mystatic'
         });
-      ae86.gen('cwd');
+      ae86.gen({ foo: 'bar' });
       assert.equal(statik[0].src, 'mystatic');
       assert.equal(statik[0].dest, 'myout');
       assert.equal(compileDirs.length, 3);
