@@ -31,11 +31,11 @@ Generate the website:
 Template
 --------
 
-<strong>Partials</strong>
+__Partials__
 
 Partials are fragments of the template which can be included in other templates using the include tag.
 
-<strong>Layouts</strong>
+__Layouts__
 
 Layouts are applied to the pages, by default each page uses *drum roll* layouts/default.html unless otherwise specified in params.js' sitemap. Page content is rendered in layout using {body} param.
 
@@ -43,15 +43,15 @@ Layouts are applied to the pages, by default each page uses *drum roll* layouts/
 {body}
 </pre>
 
-<strong>Pages</strong>
+__Pages__
 
 Each page template will be applied a layout and processed into static HTML page.
 
-<strong>Static</strong>
+__Static__
 
 Place all static files (e.g. images, scripts, styles, robots.txt) in static directory. The directory structure of static files will be kept as-is.
 
-<strong>Parameters</strong>
+__Parameters__
 
 Website parameters can be specified in an object in params.js file:
 
@@ -88,7 +88,7 @@ exports.params = {
 
 Note that params.js is a Node.js module, so it can require other modules accordingly.
 
-<strong>Custom Tags</strong>
+__Custom Tags__
 
 Custom tag can be specified in params.js as a function:
 
@@ -110,7 +110,7 @@ This custom tag can then be used in a template file:
 &lt;div&gt;
 </pre>
 
-<strong>Built-in Tags</strong>
+__Built-in Tags__
 
 AE86 comes with a number of built-in tags:
 
