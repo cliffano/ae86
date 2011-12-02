@@ -20,9 +20,9 @@ Create new project structure:
 * pages/ - directory containing website page files
 * params.js - file containing website custom tags and variables
 
-To generate the website:
+Create the templates (check out the Templating Guide section further below).
+
+Generate the website:
 
 	ae86 gen
-
-
 
