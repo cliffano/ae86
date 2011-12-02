@@ -1,3 +1,5 @@
+![http://travis-ci.org/cliffano/ae86](https://secure.travis-ci.org/cliffano/ae86.png?branch=master)
+
 AE86
 ----
 
