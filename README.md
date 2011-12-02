@@ -60,14 +60,12 @@ Website parameters can be specified in an object in params.js file:
 
 These parameters can then be used in a template file:
 
-<pre>
-&lt;h2&gt;{subtitle}&lt;/h2&gt;
-&lt;ul&gt;
-{foreach person in team}
-  &lt;li&gt;{person}&lt;/li&gt;
-{end}
-&lt;/ul&gt;
-</pre>
+    <h2>{subtitle}</h2>
+    <ul>
+    {foreach person in team}
+      <li>{person}</li>
+    {end}
+    </ul>
 
 You also need to specify the sitemap in params.js file. The key should match the page file names under the pages directory, title and layout can be specified as the value. Layout value must be relative to layouts directory, e.g. layout: brochure.html uses layouts/brochure.html . If layout is not specified, then layouts/default.html will be used.
 
@@ -96,11 +94,9 @@ Note that a custom tag function must have a callback(result) as the last argumen
 
 This custom tag can then be used in a template file:
 
-<pre>
-&lt;div id="footer"&gt;
-{copyright('2011', 'Toyota Motor Corporation')}
-&lt;div&gt;
-</pre>
+    <div id="footer">
+      {copyright('2011', 'Toyota Motor Corporation')}
+    <div>
 
 __Built-in Tags__
 
@@ -115,19 +111,15 @@ include(file)
 
 This tag includes a partial template in another template. The file argument is relative to partials directory. E.g. include('header.html') uses partials/header.html file.
 
-<pre>
-&lt;div id="header"&gt;
-{include('header.html')}
-&lt;/div&gt;
-</pre>
+    <div id="header">
+      {include('header.html')}
+    </div>
 
 title()
 
 This tag displays the current page's title as configured in sitemap param.
 
-<pre>
-&lt;title&gt;{title()}&lt;/title&gt;
-</pre>
+    <title>{title()}</title>
 
 date(format)
 
@@ -139,8 +131,6 @@ relative(path)
 
 This tag renders a link as a relative path.
 
-<pre>
-&lt;script type="text/javascript" src="{relative('scripts/global.js')}"&gt;&lt;/script&gt;
-</pre>
+    <script type="text/javascript" src="{relative('scripts/global.js')}"></script>
 
 Which will be rendered as scripts/global.js from templates under pages directory, but it will be rendered as ../scripts/global.js from templates under subdirectories of pages directory.
