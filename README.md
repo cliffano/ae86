@@ -107,7 +107,7 @@ AE86 comes with a number of built-in tags:
 * date(format)
 * relative(path)
 
-include(file)
+__include(file)__
 
 This tag includes a partial template in another template. The file argument is relative to partials directory. E.g. include('header.html') uses partials/header.html file.
 
@@ -115,19 +115,19 @@ This tag includes a partial template in another template. The file argument is r
       {include('header.html')}
     </div>
 
-title()
+__title()__
 
 This tag displays the current page's title as configured in sitemap param.
 
     <title>{title()}</title>
 
-date(format)
+__date(format)__
 
-This tag displays the current time with a specified format. Check out felixge/node-dateformat(https://github.com/felixge/node-dateformat) README page for examples of the date format.
+This tag displays the current time with a specified format. Check out [felixge/node-dateformat](https://github.com/felixge/node-dateformat) README page for examples of the date format.
 
     <div class="date">{date('dddd dd/mm/yyyy hh:MM:ssTT')}</div>
 
-relative(path)
+__relative(path)__
 
 This tag renders a link as a relative path.
 
