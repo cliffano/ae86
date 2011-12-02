@@ -34,7 +34,7 @@ vows.describe('cli').addBatch({
             },
             nomnom: {
               scriptName: function (name) {
-                assert.equal(name, 'ae86')
+                assert.equal(name, 'ae86');
                 return {
                   opts: function (scriptOpts) {
                     _scriptOpts = scriptOpts;
@@ -46,7 +46,7 @@ vows.describe('cli').addBatch({
                   callback: function (cb) {
                     cb({});
                   }
-                }
+                };
               },
               parseArgs: function () {
                 parseArgsCount += 1;
