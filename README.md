@@ -73,14 +73,14 @@ These parameters can then be used in a template file:
 &lt;/ul&gt;
 </pre>
 
-You also need to specify the sitemap in params.js file. The key should match the page file names under the pages directory, title and layout can be specified as the value. If layout is not specified, then layouts/default.html will be used.
+You also need to specify the sitemap in params.js file. The key should match the page file names under the pages directory, title and layout can be specified as the value. Layout value must be relative to layouts directory, e.g. layout: brochure.html uses layouts/brochure.html . If layout is not specified, then layouts/default.html will be used.
 
 <pre>
 exports.params = {
   sitemap: {
     'index.html': { title: 'Home Page' },
-    'products/corolla.html': { title: 'Toyota Corolla', layout: 'layouts/brochure.html' },
-    'products/sprinter.html': { title: 'Toyota Sprinter', layout: 'layouts/brochure.html' },
+    'products/corolla.html': { title: 'Toyota Corolla', layout: 'brochure.html' },
+    'products/sprinter.html': { title: 'Toyota Sprinter', layout: 'brochure.html' },
     'contact.html': { title: 'Contact Us' }
   }
 }
