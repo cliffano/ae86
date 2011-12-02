@@ -22,16 +22,36 @@ Create new project structure:
 * pages/ - directory containing website page files
 * params.js - file containing website custom tags and variables
 
-Create the templates (check out the Templating Guide section further below).
+Create the templates (check out the Template section further below).
 
 Generate the website:
 
 	ae86 gen
 
-Templating Guide
-----------------
+Template
+--------
 
-Parameters
+<strong>Partials</strong>
+
+Partials are fragments of the template which can be included in other templates using the include tag.
+
+<strong>Layouts</strong>
+
+Layouts are applied to the pages, by default each page uses *drum roll* layouts/default.html unless otherwise specified in params.js' sitemap. Page content is rendered in layout using {body} param.
+
+<pre>
+{body}
+</pre>
+
+<strong>Pages</strong>
+
+Each page template will be applied a layout and processed into static HTML page.
+
+<strong>Static</strong>
+
+Place all static files (e.g. images, scripts, styles, robots.txt) in static directory. The directory structure of static files will be kept as-is.
+
+<strong>Parameters</strong>
 
 Website parameters can be specified in an object in params.js file:
 
@@ -68,7 +88,7 @@ exports.params = {
 
 Note that params.js is a Node.js module, so it can require other modules accordingly.
 
-Custom Tags
+<strong>Custom Tags</strong>
 
 Custom tag can be specified in params.js as a function:
 
@@ -90,24 +110,47 @@ This custom tag can then be used in a template file:
 &lt;div&gt;
 </pre>
 
-Built-in Tags
+<strong>Built-in Tags</strong>
 
 AE86 comes with a number of built-in tags:
 
-include()
+* include(file)
+* title()
+* date(format)
+* relative(path)
+
+include(file)
+
+This tag includes a partial template in another template. The file argument is relative to partials directory. E.g. include('header.html') uses partials/header.html file.
+
+<pre>
+&lt;div id="header"&gt;
+{include('header.html')}
+&lt;/div&gt;
+</pre>
 
 title()
 
-date()
+This tag displays the current page's title as configured in sitemap param.
 
-relative()
+<pre>
+&lt;title&gt;{title()}&lt;/title&gt;
+</pre>
 
-Partials
+date(format)
 
-Layouts
+This tag displays the current time with a specified format. Check out felixge/node-dateformat(https://github.com/felixge/node-dateformat) README page for examples of the date format.
 
-Pages
+<pre>
+&lt;div class="date"&gt;{date('dddd dd/mm/yyyy hh:MM:ssTT')}&lt;/div&gt;
+</pre>
 
-Static
+relative(path)
 
-Place all static files (e.g. images, scripts, styles, robots.txt) in static directory. The structure of static files will be kept as is.
+This tag renders a link as a relative path.
+
+<pre>
+&lt;script type="text/javascript" src="{relative('scripts/global.js')}"&gt;&lt;/script&gt;
+</pre>
+
+Which will be rendered as scripts/global.js from templates under pages directory, but it will be rendered as ../scripts/global.js from templates under subdirectories of pages directory.
