@@ -1,9 +1,7 @@
-AE86
+AE86 ![http://travis-ci.org/cliffano/ae86](https://secure.travis-ci.org/cliffano/ae86.png?branch=master)
 ----
 
 Static website generator.
-
-![http://travis-ci.org/cliffano/ae86](https://secure.travis-ci.org/cliffano/ae86.png?branch=master)
 
 Installation
 ------------
