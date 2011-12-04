@@ -23,22 +23,26 @@ vows.describe('ae86').addBatch({
                 cb();
               }
             }
+          },
+          globals: {
+            console: {
+              log: function (message) {
+                messages.push(message);
+              }
+            }
           }
         });
       };
     },
     'should create default directories when no options specified': function (topic) {
       var _err,
-        _results,
         dirs = [],
         files = [],
         messages = [],
         ae86 = new topic(dirs, files, messages).AE86();
-      ae86.init(function (err, results) {
+      ae86.init(function (err) {
         _err = err;
-        _results = results;
       });
-      assert.isUndefined(_err);
       assert.equal(dirs.length, 4);
       assert.equal(dirs[0], 'layouts');
       assert.equal(dirs[1], 'pages');
@@ -48,18 +52,18 @@ vows.describe('ae86').addBatch({
       assert.equal(files[0], 'layouts/default.html');
       assert.equal(files[1], 'pages/index.html');
       assert.equal(files[2], 'params.js');
-      assert.equal(_.keys(_results).length, 5);
-      assert.equal(_results[0][0], 'layouts');
-      assert.equal(_results[0][1], 'layouts/default.html');
-      assert.equal(_results[1][0], 'pages');
-      assert.equal(_results[1][1], 'pages/index.html');
-      assert.equal(_results[2][0], 'partials');
-      assert.equal(_results[3][0], 'static');
-      assert.equal(_results[4][0], 'params.js');
+      assert.isUndefined(_err);
+      assert.equal(messages.length, 7);
+      assert.equal(messages[0], '+ creating layouts');
+      assert.equal(messages[1], '+ creating layouts/default.html');
+      assert.equal(messages[2], '+ creating pages');
+      assert.equal(messages[3], '+ creating pages/index.html');
+      assert.equal(messages[4], '+ creating partials');
+      assert.equal(messages[5], '+ creating static');
+      assert.equal(messages[6], '+ creating params.js');
     },
     'should create custom directories when options specified': function (topic) {
       var _err,
-        _results,
         dirs = [],
         files = [],
         messages = [],
@@ -70,11 +74,9 @@ vows.describe('ae86').addBatch({
           partials: 'mypartials',
           statik: 'mystatic'
         });
-      ae86.init(function (err, results) {
+      ae86.init(function (err) {
         _err = err;
-        _results = results;
       });
-      assert.isUndefined(_err);
       assert.equal(dirs.length, 4);
       assert.equal(dirs[0], 'mylayouts');
       assert.equal(dirs[1], 'mypages');
@@ -84,14 +86,15 @@ vows.describe('ae86').addBatch({
       assert.equal(files[0], 'mylayouts/default.html');
       assert.equal(files[1], 'mypages/index.html');
       assert.equal(files[2], 'myparams.js');
-      assert.equal(_.keys(_results).length, 5);
-      assert.equal(_results[0][0], 'mylayouts');
-      assert.equal(_results[0][1], 'mylayouts/default.html');
-      assert.equal(_results[1][0], 'mypages');
-      assert.equal(_results[1][1], 'mypages/index.html');
-      assert.equal(_results[2][0], 'mypartials');
-      assert.equal(_results[3][0], 'mystatic');
-      assert.equal(_results[4][0], 'myparams.js');
+      assert.isUndefined(_err);
+      assert.equal(messages.length, 7);
+      assert.equal(messages[0], '+ creating mylayouts');
+      assert.equal(messages[1], '+ creating mylayouts/default.html');
+      assert.equal(messages[2], '+ creating mypages');
+      assert.equal(messages[3], '+ creating mypages/index.html');
+      assert.equal(messages[4], '+ creating mypartials');
+      assert.equal(messages[5], '+ creating mystatic');
+      assert.equal(messages[6], '+ creating myparams.js');
     }
   },
   'gen': {
@@ -116,7 +119,7 @@ vows.describe('ae86').addBatch({
                 compileDirs.push(dir);
                 cb('compiled ' + dir);
               },
-              process: function (dir, pages, layouts, partials, params) {
+              process: function (dir, pages, layouts, partials, params, cb) {
                 processTemplates[0] = {
                   dir: dir,
                   pages: pages,
@@ -124,6 +127,7 @@ vows.describe('ae86').addBatch({
                   partials: partials,
                   params: params
                 };
+                cb(null, ['index.html', 'contact.html']);
               }
             }
           },
@@ -138,12 +142,16 @@ vows.describe('ae86').addBatch({
       };
     },
     'should use default directories when no options specified': function (topic) {
-      var statik = [],
+      var _results,
+        statik = [],
         compileDirs = [],
         processTemplates = [],
         messages = [],
         ae86 = new topic(statik, compileDirs, processTemplates, messages).AE86();
-      ae86.gen({ foo: 'bar' });
+      ae86.gen({ foo: 'bar' }, function (err, results) {
+        assert.isNull(err);
+        _results = results;
+      });
       assert.equal(statik[0].src, 'static');
       assert.equal(statik[0].dest, 'out');
       assert.equal(compileDirs.length, 3);
@@ -158,9 +166,13 @@ vows.describe('ae86').addBatch({
       assert.isEmpty(processTemplates[0].params.sitemap);
       assert.equal(processTemplates[0].params.__genId, 'mydate');
       assert.equal(messages[0], 'Generating website...');
+      assert.equal(_results.length, 2);
+      assert.equal(_results[0], 'index.html');
+      assert.equal(_results[1], 'contact.html');
     },
     'should use custom directories when options specified': function (topic) {
-      var statik = [],
+      var _results,
+        statik = [],
         compileDirs = [],
         processTemplates = [],
         messages = [],
@@ -171,7 +183,10 @@ vows.describe('ae86').addBatch({
           partials: 'mypartials',
           statik: 'mystatic'
         });
-      ae86.gen({ foo: 'bar' });
+      ae86.gen({ foo: 'bar' }, function (err, results) {
+        assert.isNull(err);
+        _results = results;
+      });
       assert.equal(statik[0].src, 'mystatic');
       assert.equal(statik[0].dest, 'myout');
       assert.equal(compileDirs.length, 3);
@@ -186,6 +201,9 @@ vows.describe('ae86').addBatch({
       assert.isEmpty(processTemplates[0].params.sitemap);
       assert.equal(processTemplates[0].params.__genId, 'mydate');
       assert.equal(messages[0], 'Generating website...');
+      assert.equal(_results.length, 2);
+      assert.equal(_results[0], 'index.html');
+      assert.equal(_results[1], 'contact.html');
     }
   }
 }).exportTo(module);
