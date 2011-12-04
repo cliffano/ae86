@@ -5,16 +5,24 @@ var _ = require('underscore'),
 
 vows.describe('cli').addBatch({
   'exec': {
-    'should set commands based on args': function () {
-      var _scriptOpts,
-        initCount = 0,
-        genCount = 0,
-        parseArgsCount = 0;
-        cli = sandbox.require('../lib/cli', {
+    topic: function () {
+      return function (command, ae86, result) {
+        return sandbox.require('../lib/cli', {
           globals: {
             process: {
+              exit: function (code) {
+                result[0].code = code;
+              },
               cwd: function () {
-                return 'currdir';
+                return 'dummydir';
+              }
+            },
+            console: {
+              error: function (message) {
+                result[0].message = message;
+              },
+              log: function (message) {
+                result[0].message = message;
               }
             }
           },
@@ -22,12 +30,16 @@ vows.describe('cli').addBatch({
             './ae86': {
               AE86: function () {
                 return {
-                  init: function () {
-                    initCount += 1;
+                  init: function (cb) {
+                    if (command === 'init') {
+                      cb(ae86.err, ae86.results);
+                    }
                   },
-                  gen: function (params) {
-                    assert.equal(params.foo, 'bar');
-                    genCount += 1;
+                  gen: function (params, cb) {
+                    if (command === 'gen') {
+                      assert.equal(params.foo, 'bar');
+                      cb(ae86.err, ae86.results);
+                    }
                   }
                 };
               }
@@ -37,7 +49,10 @@ vows.describe('cli').addBatch({
                 assert.equal(name, 'ae86');
                 return {
                   opts: function (scriptOpts) {
-                    _scriptOpts = scriptOpts;
+                    assert.equal(scriptOpts.version.string, '-v');
+                    assert.isTrue(scriptOpts.version.flag);
+                    assert.equal(scriptOpts.version.help, 'AE86 version number');
+                    assert.equal(scriptOpts.version.callback(), '1.2.3');
                   }
                 };
               },
@@ -49,27 +64,52 @@ vows.describe('cli').addBatch({
                 };
               },
               parseArgs: function () {
-                parseArgsCount += 1;
+                result[0].parseArgsCount = 1;
               }
-            },
-            'currdir/params': {
-              params: { foo: 'bar' }
             },
             fs: {
               readFileSync: function (file) {
                 return '{ "version": "1.2.3" }';
               }
+            },
+            'dummydir/params': {
+              params: { foo: 'bar' }
             }
           }
         });
+      };
+    },
+    'when init callback has an error then exit code should be 1': function (topic) {
+      var result = [{}],
+        cli = topic('init', { err: new Error('some error')}, result);
       cli.exec();
-      assert.equal(_scriptOpts.version.string, '-v');
-      assert.isTrue(_scriptOpts.version.flag);
-      assert.equal(_scriptOpts.version.help, 'AE86 version number');
-      assert.equal(_scriptOpts.version.callback(), '1.2.3');
-      assert.equal(initCount, 1);
-      assert.equal(genCount, 1);
-      assert.equal(parseArgsCount, 1);
+      assert.equal(result[0].code, 1);
+      assert.equal(result[0].parseArgsCount, 1);
+      assert.equal(result[0].message, 'Error: some error');
+    },
+    'when init callback has no error then exit code should be 0': function (topic) {
+      var result = [{}],
+        cli = topic('init', {}, result);
+      cli.exec();
+      assert.equal(result[0].code, 0);
+      assert.equal(result[0].parseArgsCount, 1);
+      assert.isUndefined(result[0].message);
+    },
+    'when gen callback has an error then exit code should be 1': function (topic) {
+      var result = [{}],
+        cli = topic('gen', { err: new Error('some error')}, result);
+      cli.exec();
+      assert.equal(result[0].code, 1);
+      assert.equal(result[0].parseArgsCount, 1);
+      assert.equal(result[0].message, 'Error: some error');
+    },
+    'when gen callback has no error then exit code should be 0': function (topic) {
+      var result = [{}],
+        cli = topic('gen', { results: ['index.html', 'contact.html'] }, result);
+      cli.exec();
+      assert.equal(result[0].code, 0);
+      assert.equal(result[0].parseArgsCount, 1);
+      assert.equal(result[0].message, '> total: 2 pages');
     }
   }
 }).exportTo(module);
