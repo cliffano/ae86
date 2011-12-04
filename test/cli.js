@@ -79,7 +79,7 @@ vows.describe('cli').addBatch({
         });
       };
     },
-    'when init callback has an error then exit code should be 1': function (topic) {
+    'should pass exit code 1 when init callback has an error': function (topic) {
       var result = [{}],
         cli = topic('init', { err: new Error('some error')}, result);
       cli.exec();
@@ -87,7 +87,7 @@ vows.describe('cli').addBatch({
       assert.equal(result[0].parseArgsCount, 1);
       assert.equal(result[0].message, 'Error: some error');
     },
-    'when init callback has no error then exit code should be 0': function (topic) {
+    'should pass exit code 0 when init callback has no error': function (topic) {
       var result = [{}],
         cli = topic('init', {}, result);
       cli.exec();
@@ -95,7 +95,7 @@ vows.describe('cli').addBatch({
       assert.equal(result[0].parseArgsCount, 1);
       assert.isUndefined(result[0].message);
     },
-    'when gen callback has an error then exit code should be 1': function (topic) {
+    'should pass exit code 1  when gen callback has an error': function (topic) {
       var result = [{}],
         cli = topic('gen', { err: new Error('some error')}, result);
       cli.exec();
@@ -103,7 +103,7 @@ vows.describe('cli').addBatch({
       assert.equal(result[0].parseArgsCount, 1);
       assert.equal(result[0].message, 'Error: some error');
     },
-    'when gen callback has no error then exit code should be 0': function (topic) {
+    'should pass exit code 0 when gen callback has no error': function (topic) {
       var result = [{}],
         cli = topic('gen', { results: ['index.html', 'contact.html'] }, result);
       cli.exec();
