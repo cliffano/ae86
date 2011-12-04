@@ -10,23 +10,18 @@ vows.describe('ae86').addBatch({
         return sandbox.require('../lib/ae86', {
           requires: {
             file: {
-              mkdirsSync: function (dir, mode) {
+              mkdirs: function (dir, mode, cb) {
                 assert.equal(mode, '0755');
                 dirs.push(dir);
+                cb();
               }
             },
             fs: {
-              writeFileSync: function (file, data, encoding) {
+              writeFile: function (file, data, encoding, cb) {
                 assert.isTrue(/\.js$/.test(file));
                 assert.equal(data, 'exports.params = {\n};');
                 assert.equal(encoding, 'utf8');
-              }
-            }
-          },
-          globals: {
-            console: {
-              log: function (message) {
-                messages.push(message);
+                cb();
               }
             }
           }
@@ -34,22 +29,32 @@ vows.describe('ae86').addBatch({
       };
     },
     'should create default directories when no options specified': function (topic) {
-      var dirs = [],
+      var _err,
+        _results,
+        dirs = [],
         messages = [],
         ae86 = new topic(dirs, messages).AE86();
-      ae86.init();
+      ae86.init(function (err, results) {
+        _err = err;
+        _results = results;
+      });
+      assert.isUndefined(_err);
+      assert.equal(dirs.length, 4);
       assert.equal(dirs[0], 'layouts');
       assert.equal(dirs[1], 'pages');
       assert.equal(dirs[2], 'partials');
       assert.equal(dirs[3], 'static');
-      assert.equal(messages[0], '+ layouts');
-      assert.equal(messages[1], '+ pages');
-      assert.equal(messages[2], '+ partials');
-      assert.equal(messages[3], '+ static');
-      assert.equal(messages[4], '+ params.js');
+      assert.equal(_.keys(_results).length, 5);
+      assert.equal(_results[0], 'layouts');
+      assert.equal(_results[1], 'pages');
+      assert.equal(_results[2], 'partials');
+      assert.equal(_results[3], 'static');
+      assert.equal(_results[4], 'params.js');
     },
     'should create custom directories when options specified': function (topic) {
-      var dirs = [],
+      var _err,
+        _results,
+        dirs = [],
         messages = [],
         ae86 = new topic(dirs, messages).AE86({
           layouts: 'mylayouts',
@@ -58,16 +63,22 @@ vows.describe('ae86').addBatch({
           partials: 'mypartials',
           statik: 'mystatic'
         });
-      ae86.init();
+      ae86.init(function (err, results) {
+        _err = err;
+        _results = results;
+      });
+      assert.isUndefined(_err);
+      assert.equal(dirs.length, 4);
       assert.equal(dirs[0], 'mylayouts');
       assert.equal(dirs[1], 'mypages');
       assert.equal(dirs[2], 'mypartials');
       assert.equal(dirs[3], 'mystatic');
-      assert.equal(messages[0], '+ mylayouts');
-      assert.equal(messages[1], '+ mypages');
-      assert.equal(messages[2], '+ mypartials');
-      assert.equal(messages[3], '+ mystatic');
-      assert.equal(messages[4], '+ myparams.js');
+      assert.equal(_.keys(_results).length, 5);
+      assert.equal(_results[0], 'mylayouts');
+      assert.equal(_results[1], 'mypages');
+      assert.equal(_results[2], 'mypartials');
+      assert.equal(_results[3], 'mystatic');
+      assert.equal(_results[4], 'myparams.js');
     }
   },
   'gen': {
