@@ -105,8 +105,8 @@ vows.describe('engine').addBatch({
       // each partial and layout is processed once per page
       assert.equal(processCount, 6);
       assert.equal(_messages.length, 2);
-      assert.equal(_messages[0], '+ creating index.html');
-      assert.equal(_messages[1], '+ creating products.html');
+      assert.equal(_messages[0], '+ creating out/index.html');
+      assert.equal(_messages[1], '+ creating out/products.html');
       assert.equal(_results.length, 2);
       assert.equal(_results[0], 'index.html');
       assert.equal(_results[1], 'products.html');
