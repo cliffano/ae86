@@ -69,7 +69,7 @@ vows.describe('engine').addBatch({
   },
   'process': {
     'should write file with evaluated data and display page names on console': function () {
-      var _messages = [], processCount = 0,
+      var _messages = [], processCount = 0, _results,
         engine = sandbox.require('../lib/engine', {
           requires: {
             fs: {
