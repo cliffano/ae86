@@ -88,7 +88,7 @@ vows.describe('cli').addBatch({
       assert.equal(checks.code, 1);
       assert.equal(checks.parseArgsCount, 1);
       assert.equal(checks.messages.length, 3);
-      assert.equal(checks.messages[0], 'Initialising AE86 project');
+      assert.equal(checks.messages[0], 'Initialising project');
       assert.equal(checks.messages[1], 'An error has occured. some error');
       assert.equal(checks.messages[2], 'Generating website');
     },
@@ -99,7 +99,7 @@ vows.describe('cli').addBatch({
       assert.equal(checks.code, 0);
       assert.equal(checks.parseArgsCount, 1);
       assert.equal(checks.messages.length, 2);
-      assert.equal(checks.messages[0], 'Initialising AE86 project');
+      assert.equal(checks.messages[0], 'Initialising project');
       assert.equal(checks.messages[1], 'Generating website');
     },
     'should pass exit code 1  when gen callback has an error': function (topic) {
@@ -109,7 +109,7 @@ vows.describe('cli').addBatch({
       assert.equal(checks.code, 1);
       assert.equal(checks.parseArgsCount, 1);
       assert.equal(checks.messages.length, 3);
-      assert.equal(checks.messages[0], 'Initialising AE86 project');
+      assert.equal(checks.messages[0], 'Initialising project');
       assert.equal(checks.messages[1], 'Generating website');
       assert.equal(checks.messages[2], 'An error has occured. some error');
     },
@@ -120,7 +120,7 @@ vows.describe('cli').addBatch({
       assert.equal(checks.code, 0);
       assert.equal(checks.parseArgsCount, 1);
       assert.equal(checks.messages.length, 3);
-      assert.equal(checks.messages[0], 'Initialising AE86 project');
+      assert.equal(checks.messages[0], 'Initialising project');
       assert.equal(checks.messages[1], 'Generating website');
       assert.equal(checks.messages[2], 'Total of 2 pages');
     }
