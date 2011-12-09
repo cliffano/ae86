@@ -119,5 +119,64 @@ vows.describe('ae86').addBatch({
       assert.isEmpty(checks.processTemplates.params.sitemap);
       assert.equal(checks.processTemplates.params.__genId, 'mydate');
     }
+  },
+  'watch': {
+    topic: function () {
+      return function (checks) {
+        return sandbox.require('../lib/ae86', {
+          requires: {
+            fs: {
+              watchFile: function (file, listener) {
+                checks.push({
+                  file: file,
+                  listener: listener
+                });
+              }
+            }
+          }
+        });
+      };
+    },
+    'should watch default directories and params file with specified listener when no options specified': function (topic) {
+      var checks = [],
+        listener = 'dummylistener',
+        ae86 = new topic(checks).AE86();        
+      ae86.watch(listener);
+      assert.equal(checks.length, 5);
+      assert.equal(checks[0].file, 'layouts');
+      assert.equal(checks[0].listener, 'dummylistener');
+      assert.equal(checks[1].file, 'pages');
+      assert.equal(checks[1].listener, 'dummylistener');
+      assert.equal(checks[2].file, 'params.js');
+      assert.equal(checks[2].listener, 'dummylistener');
+      assert.equal(checks[3].file, 'partials');
+      assert.equal(checks[3].listener, 'dummylistener');
+      assert.equal(checks[4].file, 'static');
+      assert.equal(checks[4].listener, 'dummylistener');
+    },
+    'should watch custom directories and params file with specified listener when options specified': function (topic) {
+      var checks = [],
+        listener = 'dummylistener',
+        ae86 = new topic(checks).AE86({
+          out: 'myout',
+          layouts: 'mylayouts',
+          pages: 'mypages',
+          params: 'myparams',
+          partials: 'mypartials',
+          statik: 'mystatic'
+        });        
+      ae86.watch(listener);
+      assert.equal(checks.length, 5);
+      assert.equal(checks[0].file, 'mylayouts');
+      assert.equal(checks[0].listener, 'dummylistener');
+      assert.equal(checks[1].file, 'mypages');
+      assert.equal(checks[1].listener, 'dummylistener');
+      assert.equal(checks[2].file, 'myparams.js');
+      assert.equal(checks[2].listener, 'dummylistener');
+      assert.equal(checks[3].file, 'mypartials');
+      assert.equal(checks[3].listener, 'dummylistener');
+      assert.equal(checks[4].file, 'mystatic');
+      assert.equal(checks[4].listener, 'dummylistener');
+    }
   }
 }).exportTo(module);
