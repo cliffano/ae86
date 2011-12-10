@@ -110,7 +110,7 @@ vows.describe('engine').addBatch({
         _results = results;
       });
       // each partial and layout is processed once per page
-      assert.equal(processCount, 6);
+      assert.equal(processCount, 8);
       assert.equal(mkdirsPaths.length, 2);
       assert.equal(mkdirsPaths[0], 'out');
       assert.equal(mkdirsPaths[1], 'out/product');
