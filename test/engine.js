@@ -69,9 +69,16 @@ vows.describe('engine').addBatch({
   },
   'process': {
     'should write file with evaluated data and display page names on console': function () {
-      var _messages = [], processCount = 0, _results,
+      var _messages = [], mkdirsPaths = [], processCount = 0, _results,
         engine = sandbox.require('../lib/engine', {
           requires: {
+            file: {
+              mkdirs: function (path, mode, cb) {
+                mkdirsPaths.push(path);
+                assert.equal(mode, '0755');
+                cb(null);
+              }
+            },
             fs: {
               writeFile: function (file, data, encoding, cb) {
                 assert.equal(encoding, 'utf8');
@@ -94,7 +101,7 @@ vows.describe('engine').addBatch({
         },
         dir = 'out',
         pages = { 'index.html': { process: process },
-          'products.html': { process: process, globals: [ 'items' ] }},
+          'product/items.html': { process: process, globals: [ 'items' ] }},
         layouts = { 'default.html': { process: process },  'brochure.html': { process: process } },
         partials = { 'header.html': { process: process } },
         params = { name: 'Bob', sitemap: { 'products.html': { layout: 'brochure.html' } } };
@@ -104,12 +111,15 @@ vows.describe('engine').addBatch({
       });
       // each partial and layout is processed once per page
       assert.equal(processCount, 6);
+      assert.equal(mkdirsPaths.length, 2);
+      assert.equal(mkdirsPaths[0], 'out');
+      assert.equal(mkdirsPaths[1], 'out/product');
       assert.equal(_messages.length, 2);
       assert.equal(_messages[0], '+ creating out/index.html');
-      assert.equal(_messages[1], '+ creating out/products.html');
+      assert.equal(_messages[1], '+ creating out/product/items.html');
       assert.equal(_results.length, 2);
       assert.equal(_results[0], 'index.html');
-      assert.equal(_results[1], 'products.html');
+      assert.equal(_results[1], 'product/items.html');
     }
   }
 }).exportTo(module);
