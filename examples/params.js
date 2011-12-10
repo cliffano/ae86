@@ -5,6 +5,6 @@ exports.params = {
   },
   sitemap: {
     'index.html': { title: 'Home Page' },
-    'about/team.html': { title: 'About - Team Page', layouts: 'alternative.html' }
+    'about/team.html': { title: 'About - Team Page', layout: 'alternative.html' }
   }
 };
