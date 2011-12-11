@@ -11,7 +11,7 @@ Installation
 Usage
 -----
 
-Create new project structure:
+Create new project with sample templates:
 
     ae86 init
 
@@ -20,13 +20,11 @@ Create new project structure:
 * pages/ - directory containing page templates
 * params.js - file containing custom tags and variables
 
-Generate the website:
+Generate the website, website will be written to out/ directory:
 
     ae86 gen
 
-Generated static website will be written to out/ directory.
-
-AE86 in watch mode will automatically regenerate the website everytime there's a modified file:
+Watch the project, website will automatically be regenerated everytime there's a modified file:
 
     ae86 watch
 
