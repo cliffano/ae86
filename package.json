@@ -1,6 +1,6 @@
 {
   "name": "ae86",
-  "description": "Static website generator.",
+  "description": "Static website generator written in Node.js .",
   "keywords": [
     "static",
     "website",
