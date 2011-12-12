@@ -24,7 +24,8 @@
   },
   "directories": {
     "bin": "./bin",
-    "lib": "./lib"
+    "lib": "./lib",
+    "test": "./test"
   },
   "dependencies": {
     "async": "0.1.15",
