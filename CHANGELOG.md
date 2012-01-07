@@ -1,3 +1,6 @@
+### 0.0.4
+*
+
 ### 0.0.3
 * Fix watch mode to work with both files and dirs (using watch-tree)
 
