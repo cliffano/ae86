@@ -34,7 +34,8 @@
     "jazz": "0.0.14",
     "ncp": "0.2.2",
     "nomnom": "1.5.1",
-    "underscore": "1.2.2"
+    "underscore": "1.2.2",
+    "watch-tree": "0.1.1"
   },
   "devDependencies": {
     "sandboxed-module": "0.1.2",

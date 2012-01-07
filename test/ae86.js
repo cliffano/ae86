@@ -125,12 +125,17 @@ vows.describe('ae86').addBatch({
       return function (checks) {
         return sandbox.require('../lib/ae86', {
           requires: {
-            fs: {
-              watchFile: function (file, listener) {
-                checks.push({
-                  file: file,
-                  listener: listener
-                });
+            'watch-tree': {
+              watchTree: function (file, options) {
+                assert.isTrue(options.ignore !== undefined);
+                assert.equal(options['sample-rate'], 5);
+                checks.files.push(file);
+                return {
+                  on: function (event, cb) {
+                    checks.events.push(event);
+                    cb();
+                  }
+                }
               }
             }
           }
@@ -138,25 +143,29 @@ vows.describe('ae86').addBatch({
       };
     },
     'should watch default directories and params file with specified listener when no options specified': function (topic) {
-      var checks = [],
-        listener = 'dummylistener',
+      var checks = { files: [], events: [] },
+        listenerCallCount = 0;
+        listener = function() {
+          listenerCallCount += 1;
+        },
         ae86 = new topic(checks).AE86();        
       ae86.watch(listener);
-      assert.equal(checks.length, 5);
-      assert.equal(checks[0].file, 'layouts');
-      assert.equal(checks[0].listener, 'dummylistener');
-      assert.equal(checks[1].file, 'pages');
-      assert.equal(checks[1].listener, 'dummylistener');
-      assert.equal(checks[2].file, 'params.js');
-      assert.equal(checks[2].listener, 'dummylistener');
-      assert.equal(checks[3].file, 'partials');
-      assert.equal(checks[3].listener, 'dummylistener');
-      assert.equal(checks[4].file, 'static');
-      assert.equal(checks[4].listener, 'dummylistener');
+      assert.equal(checks.files.length, 5);
+      assert.equal(checks.files[0], 'layouts');
+      assert.equal(checks.files[1], 'pages');
+      assert.equal(checks.files[2], 'params.js');
+      assert.equal(checks.files[3], 'partials');
+      assert.equal(checks.files[4], 'static');
+      // each file/dir fires 3 events (5 * 3 = 15)
+      assert.equal(checks.events.length, 15);
+      assert.equal(listenerCallCount, 15);
     },
     'should watch custom directories and params file with specified listener when options specified': function (topic) {
-      var checks = [],
-        listener = 'dummylistener',
+      var checks = { files: [], events: [] },
+        listenerCallCount = 0;
+        listener = function() {
+          listenerCallCount += 1;
+        },
         ae86 = new topic(checks).AE86({
           out: 'myout',
           layouts: 'mylayouts',
@@ -166,17 +175,15 @@ vows.describe('ae86').addBatch({
           statik: 'mystatic'
         });        
       ae86.watch(listener);
-      assert.equal(checks.length, 5);
-      assert.equal(checks[0].file, 'mylayouts');
-      assert.equal(checks[0].listener, 'dummylistener');
-      assert.equal(checks[1].file, 'mypages');
-      assert.equal(checks[1].listener, 'dummylistener');
-      assert.equal(checks[2].file, 'myparams.js');
-      assert.equal(checks[2].listener, 'dummylistener');
-      assert.equal(checks[3].file, 'mypartials');
-      assert.equal(checks[3].listener, 'dummylistener');
-      assert.equal(checks[4].file, 'mystatic');
-      assert.equal(checks[4].listener, 'dummylistener');
+      assert.equal(checks.files.length, 5);
+      assert.equal(checks.files[0], 'mylayouts');
+      assert.equal(checks.files[1], 'mypages');
+      assert.equal(checks.files[2], 'myparams.js');
+      assert.equal(checks.files[3], 'mypartials');
+      assert.equal(checks.files[4], 'mystatic');
+      // each file/dir fires 3 events (5 * 3 = 15)
+      assert.equal(checks.events.length, 15);
+      assert.equal(listenerCallCount, 15);
     }
   }
 }).exportTo(module);
