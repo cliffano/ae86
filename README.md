@@ -106,7 +106,7 @@ AE86 comes with a number of built-in tags and variables:
 * title()
 * date(format)
 * relative(path)
-* __genid
+* __genId
 
 __include(file)__
 
@@ -138,11 +138,11 @@ This tag renders a path relative to the location of the page template.
 
 Which will be rendered as ../scripts/global.js from templates under subdirectories of pages directory, but it will be rendered as scripts/global.js from templates right under the pages directory.
 
-____genid__
+____genId__
 
 This variable is an ID unique for each website generation (currently a timestamp). It's handy when you want to force the client browser to request a resource that should only be cached once for each version of the website, e.g. JavaScript, CSS, or image files.
 
-    <script type="text/javascript" src="{relative('scripts/global.js')}?{__genid}"></script>
+    <script type="text/javascript" src="{relative('scripts/global.js')}?{__genId}"></script>
 
 Colophon
 --------
