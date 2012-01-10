@@ -54,6 +54,9 @@ vows.describe('cli').addBatch({
               },
               parseArgs: function () {
                 checks.parseArgsCount = 1;
+              },
+              getUsage: function () {
+                return 'dummyusage instruction';
               }
             },
             fs: {
@@ -92,11 +95,12 @@ vows.describe('cli').addBatch({
       cli.exec();
       assert.equal(checks.code, 1);
       assert.equal(checks.parseArgsCount, 1);
-      assert.equal(checks.messages.length, 4);
+      assert.equal(checks.messages.length, 5);
       assert.equal(checks.messages[0], 'Initialising project');
       assert.equal(checks.messages[1], 'An error has occured. some error');
       assert.equal(checks.messages[2], 'Generating website');
       assert.equal(checks.messages[3], 'Watching project');
+      assert.equal(checks.messages[4], 'dummyusage instruction');
     },
     'should pass exit code 0 when init callback has no error': function (topic) {
       var checks = {},
@@ -104,10 +108,11 @@ vows.describe('cli').addBatch({
       cli.exec();
       assert.equal(checks.code, 0);
       assert.equal(checks.parseArgsCount, 1);
-      assert.equal(checks.messages.length, 3);
+      assert.equal(checks.messages.length, 4);
       assert.equal(checks.messages[0], 'Initialising project');
       assert.equal(checks.messages[1], 'Generating website');
       assert.equal(checks.messages[2], 'Watching project');
+      assert.equal(checks.messages[3], 'dummyusage instruction');
     },
     'should pass exit code 1  when gen callback has an error': function (topic) {
       var checks = {},
@@ -115,11 +120,12 @@ vows.describe('cli').addBatch({
       cli.exec();
       assert.equal(checks.code, 1);
       assert.equal(checks.parseArgsCount, 1);
-      assert.equal(checks.messages.length, 4);
+      assert.equal(checks.messages.length, 5);
       assert.equal(checks.messages[0], 'Initialising project');
       assert.equal(checks.messages[1], 'Generating website');
       assert.equal(checks.messages[2], 'An error has occured. some error');
       assert.equal(checks.messages[3], 'Watching project');
+      assert.equal(checks.messages[4], 'dummyusage instruction');
     },
     'should pass exit code 0 when gen callback has no error': function (topic) {
       var checks = {},
@@ -127,21 +133,34 @@ vows.describe('cli').addBatch({
       cli.exec();
       assert.equal(checks.code, 0);
       assert.equal(checks.parseArgsCount, 1);
-      assert.equal(checks.messages.length, 4);
+      assert.equal(checks.messages.length, 5);
       assert.equal(checks.messages[0], 'Initialising project');
       assert.equal(checks.messages[1], 'Generating website');
       assert.equal(checks.messages[2], 'Total of 2 pages');
       assert.equal(checks.messages[3], 'Watching project');
+      assert.equal(checks.messages[4], 'dummyusage instruction');
     },
     'should watch with specified listener': function (topic) {
       var checks = {},
         cli = topic('watch', {}, checks);
       cli.exec();
-      assert.equal(checks.messages.length, 4);
+      assert.equal(checks.messages.length, 5);
       assert.equal(checks.messages[0], 'Initialising project');
       assert.equal(checks.messages[1], 'Generating website');
       assert.equal(checks.messages[2], 'Watching project');
       assert.equal(checks.messages[3], 'Change detected. Regenerating website');
+      assert.equal(checks.messages[4], 'dummyusage instruction');
+    },
+    'should log usage message when no command is supplied': function (topic) {
+      var checks = {},
+        cli = topic('', {}, checks);
+      cli.exec();
+      assert.equal(checks.parseArgsCount, 1);
+      assert.equal(checks.messages.length, 4);
+      assert.equal(checks.messages[0], 'Initialising project');
+      assert.equal(checks.messages[1], 'Generating website');
+      assert.equal(checks.messages[2], 'Watching project');
+      assert.equal(checks.messages[3], 'dummyusage instruction');
     }
   }
 }).exportTo(module);
