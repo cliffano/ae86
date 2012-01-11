@@ -1,4 +1,4 @@
-AE86 ![http://travis-ci.org/cliffano/ae86](https://secure.travis-ci.org/cliffano/ae86.png?branch=master)
+AE86 [![http://travis-ci.org/cliffano/ae86](https://secure.travis-ci.org/cliffano/ae86.png?branch=master)](http://travis-ci.org/cliffano/ae86)
 ----
 
 AE86 is a static website generator written in Node.js .
