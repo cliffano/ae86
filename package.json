@@ -13,7 +13,7 @@
     "ae86": "./bin/ae86"
   },
   "scripts": {
-    "test": "vows --spec `find test -name \"*.js\"`"
+    "test": "npm install -g bob; bob lint test;"
   },
   "repository": {
     "type": "git",
