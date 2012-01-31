@@ -135,7 +135,7 @@ vows.describe('ae86').addBatch({
                     checks.events.push(event);
                     cb();
                   }
-                }
+                };
               }
             }
           }
@@ -144,7 +144,7 @@ vows.describe('ae86').addBatch({
     },
     'should watch default directories and params file with specified listener when no options specified': function (topic) {
       var checks = { files: [], events: [] },
-        listenerCallCount = 0;
+        listenerCallCount = 0,
         listener = function() {
           listenerCallCount += 1;
         },
@@ -162,7 +162,7 @@ vows.describe('ae86').addBatch({
     },
     'should watch custom directories and params file with specified listener when options specified': function (topic) {
       var checks = { files: [], events: [] },
-        listenerCallCount = 0;
+        listenerCallCount = 0,
         listener = function() {
           listenerCallCount += 1;
         },
