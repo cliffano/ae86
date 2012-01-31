@@ -13,7 +13,7 @@
     "ae86": "./bin/ae86"
   },
   "scripts": {
-    "test": "npm install -g bob; bob clean lint test coverage;"
+    "test": "npm install -g bob; bob clean lint test;"
   },
   "repository": {
     "type": "git",
