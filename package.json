@@ -30,7 +30,7 @@
   "dependencies": {
     "async": "0.1.15",
     "dateformat": "1.0.2-1.2.3",
-    "file": "0.1.1",
+    "file": "0.2.0",
     "jazz": "0.0.18",
     "ncp": "0.2.2",
     "nomnom": "1.5.1",
