@@ -38,8 +38,8 @@
     "watch-tree": "0.1.1"
   },
   "devDependencies": {
-    "sandboxed-module": "0.1.2",
-    "vows": "0.5.9"
+    "sandboxed-module": "http://nodeload.github.com/cliffano/node-sandboxed-module/tarball/master",
+    "vows": "0.6.1"
   },
   "engines": {
     "node": ">= 0.4.0"
