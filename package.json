@@ -6,7 +6,7 @@
     "website",
     "generator"
   ],
-  "version": "0.0.4",
+  "version": "0.0.5",
   "homepage": "http://github.com/cliffano/ae86",
   "author": "Cliffano Subagio <blah@cliffano.com> (http://blog.cliffano.com)",
   "bin": {
