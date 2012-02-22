@@ -126,7 +126,7 @@ vows.describe('ae86').addBatch({
       return function (checks) {
         return sandbox.require('../lib/ae86', {
           requires: {
-            'watch-tree': {
+            'watch-tree-maintained': {
               watchTree: function (file, options) {
                 assert.isTrue(options.ignore !== undefined);
                 assert.equal(options['sample-rate'], 5);
