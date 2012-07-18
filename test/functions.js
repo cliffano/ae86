@@ -1,3 +1,73 @@
+var bag = require('bagofholding'),
+  sandbox = require('sandboxed-module'),
+  should = require('should'),
+  checks, mocks,
+  functions;
+
+describe('functions', function () {
+
+  function create(checks, mocks) {
+    return sandbox.require('../lib/functions', {
+      requires: mocks ? mocks.requires : {},
+      globals: {}
+    });
+  }
+
+  beforeEach(function () {
+    checks = {};
+    mocks = {};
+  });
+
+  describe('date', function () {
+
+    it('should return formatted date when format is specified', function () {
+    });
+
+    it('should return date with default format when format is not specified', function () {
+    });
+  });
+
+  describe('include', function () {
+
+    it('should return partial template when partial exists', function () {
+    });
+
+    it('should return error message when partial does not exist', function () {
+
+    });
+  });
+
+  describe('relative', function () {
+
+    it('should return path when path is at the root directory', function () {
+    });
+
+    it('should return a single upper directory when path is at a subdirectory', function () {
+
+    });
+
+    it('should return multiple upper directories when path is at several directories deep', function () {
+
+    });
+  });
+
+  describe('title', function () {
+
+    it('should return title when file exists in sitemap and it has a title', function () {
+    });
+
+    it('should return undefined when file exists in sitemap but it does not have a title', function () {
+
+    });
+
+    it('should return error message when file does not exist in sitemap', function () {
+
+    });
+  });
+});
+ 
+
+/*
 var assert = require('assert'),
   sandbox = require('sandboxed-module'),
   vows = require('vows');
@@ -107,3 +177,4 @@ vows.describe('params').addBatch({
     }
   }
 }).exportTo(module);
+*/

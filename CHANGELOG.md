@@ -1,5 +1,7 @@
 ### 0.0.5 (SNAPSHOT)
-*
+* Fix params.js reloading in watch mode
+* Add clean target to remove the generated website
+* Fix fileDeleted event handling in watch mode, no longer keeps deleted file in generated website
 
 ### 0.0.4 
 * Display usage on arg-less comamand
