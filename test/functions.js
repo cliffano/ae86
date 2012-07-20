@@ -9,7 +9,11 @@ describe('functions', function () {
   function create(checks, mocks) {
     return sandbox.require('../lib/functions', {
       requires: mocks ? mocks.requires : {},
-      globals: {}
+      globals: {
+        Date: function () {
+          return new Date(2000, 9, 10); // NOTE: 0-based month, so 10 Oct 2000
+        }
+      }
     });
   }
 
@@ -21,160 +25,100 @@ describe('functions', function () {
   describe('date', function () {
 
     it('should return formatted date when format is specified', function () {
+      functions = (create(checks, mocks))('somepage', {}, {});
+      functions.date('yyyymmdd', function (data) {
+        checks.data = data;
+      });
+      checks.data.should.equal('20001010');
     });
 
     it('should return date with default format when format is not specified', function () {
+      functions = (create(checks, mocks))('somepage', {}, {});
+      functions.date(undefined, function (data) {
+        checks.data = data;
+      });
+      checks.data.should.equal('2000-10-10T00:00:00');
     });
   });
 
   describe('include', function () {
 
     it('should return partial template when partial exists', function () {
+      functions = (create(checks, mocks))('somepage', {}, {});
+      functions.include('somepartial', function (data) {
+        checks.data = data;
+      });
+      checks.data.should.equal('[error] partial somepartial does not exist');
     });
 
     it('should return error message when partial does not exist', function () {
-
+      functions = (create(checks, mocks))('somepage', {}, { partials: { somepartial: 'foobar' } });
+      functions.include('somepartial', function (data) {
+        checks.data = data;
+      });
+      checks.data.should.equal('foobar');
     });
   });
 
   describe('relative', function () {
 
-    it('should return path when path is at the root directory', function () {
+    it('should return path when page is at the project root directory', function () {
+      functions = (create(checks, mocks))('homepage.html', {}, {});
+      functions.relative('somepage.html', function (data) {
+        checks.data = data;
+      });
+      checks.data.should.equal('somepage.html');
     });
 
-    it('should return a single upper directory when path is at a subdirectory', function () {
-
+    it('should return a single upper directory when page is at a project subdirectory', function () {
+      functions = (create(checks, mocks))('foo/homepage.html', {}, {});
+      functions.relative('somepage.html', function (data) {
+        checks.data = data;
+      });
+      checks.data.should.equal('../somepage.html');
     });
 
-    it('should return multiple upper directories when path is at several directories deep', function () {
+    it('should return multiple upper directories when page is at several directories deep below project directory', function () {
+      functions = (create(checks, mocks))('foo/bar/homepage.html', {}, {});
+      functions.relative('somepage.html', function (data) {
+        checks.data = data;
+      });
+      checks.data.should.equal('../../somepage.html');
+    });
 
+    it('should return multiple upper directories when page and path are both at several directories deep below project directory', function () {
+      functions = (create(checks, mocks))('foo/bar/homepage.html', {}, {});
+      functions.relative('abc/xyz/somepage.html', function (data) {
+        checks.data = data;
+      });
+      checks.data.should.equal('../../abc/xyz/somepage.html');
     });
   });
 
   describe('title', function () {
 
     it('should return title when file exists in sitemap and it has a title', function () {
+      functions = (create(checks, mocks))('somepage.html', {}, { sitemap: { 'somepage.html': { title: 'foobar' } } });
+      functions.title(function (data) {
+        checks.data = data;
+      });
+      checks.data.should.equal('foobar');
     });
 
     it('should return undefined when file exists in sitemap but it does not have a title', function () {
-
+      functions = (create(checks, mocks))('somepage.html', {}, { sitemap: { 'somepage.html': {} } });
+      functions.title(function (data) {
+        checks.data = data;
+      });
+      should.not.exist(checks.data);
     });
 
     it('should return error message when file does not exist in sitemap', function () {
-
+      functions = (create(checks, mocks))('somepage.html', {}, {});
+      functions.title(function (data) {
+        checks.data = data;
+      });
+      checks.data.should.equal('[error] page somepage.html does not have any sitemap title');
     });
   });
 });
- 
-
-/*
-var assert = require('assert'),
-  sandbox = require('sandboxed-module'),
-  vows = require('vows');
-
-vows.describe('params').addBatch({
-  'date': {
-    topic: function () {
-      return sandbox.require('../lib/params', {
-        globals: {
-          Date: function () {
-            // NOTE: 0-based month
-            return new Date(2000, 9, 10);
-          }
-        }
-      });
-    },
-    'when format is yyyymmdd': {
-      topic: function (topic) {
-        topic.params().date('yyyymmdd', this.callback);
-      },
-      'then it should have 8 digits length': function (result, dummy) {
-        assert.equal(result.length, 8);
-      },
-      'and it should contain string 20001010': function (result, dummy) {
-        assert.equal(result, '20001010');
-      }
-    },
-    'when format is undefined': {
-      topic: function (topic) {
-        topic.params().date(undefined, this.callback);
-      },
-      'then it should contain description with default format': function (result, dummy) {
-        assert.equal(result, 'Tue Oct 10 2000 00:00:00');
-      }
-    }
-  },
-  'include': {
-    topic: function () {
-      return sandbox.require('../lib/params', {
-      });
-    },
-    'when partial file exists': {
-      topic: function (topic) {
-        topic.params({ partials: { 'header.html': '<div id="head"></div>' } })
-          .include('header.html', this.callback);
-      },
-      'then it should contain the partial file\'s content': function (result, dummy) {
-        assert.equal(result, '<div id="head"></div>');
-      }
-    },
-    'when partial file does not exist': {
-      topic: function (topic) {
-        topic.params({ partials: {} }).include('header.html', this.callback);
-      },
-      'then it should contain error message': function (result, dummy) {
-        assert.equal(result, '[error] partial file header.html does not exist');
-      }
-    }
-  },
-  'relative': {
-    topic: function () {
-      return sandbox.require('../lib/params', {
-      });
-    },
-    'when current file is in base directory': {
-      topic: function (topic) {
-        topic.params({ __file: 'index.html' })
-          .relative('scripts/global.js', this.callback);
-      },
-      'then it should not have ../ prefix': function (result, dummy) {
-        assert.equal(result, 'scripts/global.js');
-      }
-    },
-    'when current file is in sub directory': {
-      topic: function (topic) {
-        topic.params({ __file: 'sub/index.html' })
-          .relative('scripts/global.js', this.callback);
-      },
-      'then it should have a single ../ prefix': function (result, dummy) {
-        assert.equal(result, '../scripts/global.js');
-      }
-    }
-  },
-  'title': {
-    topic: function () {
-      return sandbox.require('../lib/params', {
-      });
-    },
-    'when sitemap contains current file': {
-      topic: function (topic) {
-        topic.params({ __file: 'index.html',
-          sitemap: { 'index.html' : { title: 'Home Page' } } })
-          .title(this.callback);
-      },
-      'then it should contain the file title': function (result, dummy) {
-        assert.equal(result, 'Home Page');
-      }
-    },
-    'when sitemap does not contain current file': {
-      topic: function (topic) {
-        topic.params({ __file: 'index.html', sitemap: {} })
-          .title(this.callback);
-      },
-      'then it should contain error message': function (result, dummy) {
-        assert.equal(result, '[error] current file index.html does not have title in the sitemap');
-      }
-    }
-  }
-}).exportTo(module);
-*/
