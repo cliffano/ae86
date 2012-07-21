@@ -1,166 +1,83 @@
-var _ = require('underscore'),
-  assert = require('assert'),
+var bag = require('bagofholding'),
   sandbox = require('sandboxed-module'),
-  vows = require('vows');
+  should = require('should'),
+  checks, mocks,
+  cli;
 
-vows.describe('cli').addBatch({
-  'exec': {
-    topic: function () {
-      return function (command, ae86, checks) {
-        checks.messages = [];
-        return sandbox.require('../lib/cli', {
-          requires: {
-            './ae86': {
-              AE86: function () {
-                return {
-                  init: function (dir, cb) {
-                    if (command === 'init') {
-                      assert.isNotNull(dir);
-                      cb(ae86.err);
-                    }
-                  },
-                  gen: function (params, cb) {
-                    if (command === 'gen') {
-                      assert.equal(params.foo, 'bar');
-                      cb(ae86.err, ae86.results);
-                    }
-                  },
-                  watch: function (listener) {
-                    if (command === 'watch') {
-                      listener({ mtime: 8 }, { mtime: 7 });
-                    }
-                  }
-                };
-              }
-            },
-            nomnom: {
-              scriptName: function (name) {
-                assert.equal(name, 'ae86');
-                return {
-                  opts: function (scriptOpts) {
-                    assert.equal(scriptOpts.version.string, '-v');
-                    assert.isTrue(scriptOpts.version.flag);
-                    assert.equal(scriptOpts.version.help, 'AE86 version number');
-                    assert.equal(scriptOpts.version.callback(), '1.2.3');
-                  }
-                };
-              },
-              command: function (name) {
-                return {
-                  callback: function (cb) {
-                    cb({});
-                  }
-                };
-              },
-              parseArgs: function () {
-                checks.parseArgsCount = 1;
-              },
-              getUsage: function () {
-                return 'dummyusage instruction';
-              }
-            },
-            fs: {
-              readFileSync: function (file) {
-                return '{ "version": "1.2.3" }';
-              }
-            },
-            'dummydir/params': {
-              params: { foo: 'bar' }
-            }
-          },
-          globals: {
-            process: {
-              exit: function (code) {
-                checks.code = code;
-              },
-              cwd: function () {
-                return 'dummydir';
-              }
-            },
-            console: {
-              error: function (message) {
-                checks.messages.push(message);
-              },
-              log: function (message) {
-                checks.messages.push(message);
-              }
+describe('cli', function () {
+
+  function create(checks, mocks) {
+    return sandbox.require('../lib/cli', {
+      requires: {
+        bagofholding: {
+          cli: {
+            exit: bag.cli.exit,
+            parse: function (commands, dir) {
+              checks.bag_parse_commands = commands;
+              checks.bag_parse_dir = dir;
             }
           }
-        });
-      };
-    },
-    'should pass exit code 1 when init callback has an error': function (topic) {
-      var checks = {},
-        cli = topic('init', { err: new Error('some error')}, checks);
-      cli.exec();
-      assert.equal(checks.code, 1);
-      assert.equal(checks.parseArgsCount, 1);
-      assert.equal(checks.messages.length, 5);
-      assert.equal(checks.messages[0], 'Initialising project');
-      assert.equal(checks.messages[1], 'An error has occured. some error');
-      assert.equal(checks.messages[2], 'Generating website');
-      assert.equal(checks.messages[3], 'Watching project');
-      assert.equal(checks.messages[4], 'dummyusage instruction');
-    },
-    'should pass exit code 0 when init callback has no error': function (topic) {
-      var checks = {},
-        cli = topic('init', {}, checks);
-      cli.exec();
-      assert.equal(checks.code, 0);
-      assert.equal(checks.parseArgsCount, 1);
-      assert.equal(checks.messages.length, 4);
-      assert.equal(checks.messages[0], 'Initialising project');
-      assert.equal(checks.messages[1], 'Generating website');
-      assert.equal(checks.messages[2], 'Watching project');
-      assert.equal(checks.messages[3], 'dummyusage instruction');
-    },
-    'should pass exit code 1  when gen callback has an error': function (topic) {
-      var checks = {},
-        cli = topic('gen', { err: new Error('some error')}, checks);
-      cli.exec();
-      assert.equal(checks.code, 1);
-      assert.equal(checks.parseArgsCount, 1);
-      assert.equal(checks.messages.length, 5);
-      assert.equal(checks.messages[0], 'Initialising project');
-      assert.equal(checks.messages[1], 'Generating website');
-      assert.equal(checks.messages[2], 'An error has occured. some error');
-      assert.equal(checks.messages[3], 'Watching project');
-      assert.equal(checks.messages[4], 'dummyusage instruction');
-    },
-    'should pass exit code 0 when gen callback has no error': function (topic) {
-      var checks = {},
-        cli = topic('gen', { results: ['index.html', 'contact.html'] }, checks);
-      cli.exec();
-      assert.equal(checks.code, 0);
-      assert.equal(checks.parseArgsCount, 1);
-      assert.equal(checks.messages.length, 5);
-      assert.equal(checks.messages[0], 'Initialising project');
-      assert.equal(checks.messages[1], 'Generating website');
-      assert.equal(checks.messages[2], 'Total of 2 pages');
-      assert.equal(checks.messages[3], 'Watching project');
-      assert.equal(checks.messages[4], 'dummyusage instruction');
-    },
-    'should watch with specified listener': function (topic) {
-      var checks = {},
-        cli = topic('watch', {}, checks);
-      cli.exec();
-      assert.equal(checks.messages.length, 5);
-      assert.equal(checks.messages[0], 'Initialising project');
-      assert.equal(checks.messages[1], 'Generating website');
-      assert.equal(checks.messages[2], 'Watching project');
-      assert.equal(checks.messages[3], 'Change detected. Regenerating website');
-      assert.equal(checks.messages[4], 'dummyusage instruction');
-    },
-    'should log usage message when no command is supplied': function (topic) {
-      var checks = {},
-        cli = topic('', {}, checks);
-      cli.exec();
-      assert.equal(checks.parseArgsCount, 1);
-      assert.equal(checks.messages.length, 4);
-      assert.equal(checks.messages[0], 'Initialising project');
-      assert.equal(checks.messages[1], 'Generating website');
-      assert.equal(checks.messages[2], 'Watching project');
-      assert.equal(checks.messages[3], 'dummyusage instruction');
-    }
+        },
+        './ae86': function () {
+          return {
+            init: function (exit) {
+              checks.ae86_init_exit = exit;
+            },
+            generate: function (exit) {
+              checks.ae86_gen_exit = exit;
+            },
+            watch: function (exit) {
+              checks.ae86_watch_exit = exit;
+            },
+            clean: function (exit) {
+              checks.ae86_clean_exit = exit;
+            }
+          };
+        }
+      },
+      globals: {
+        process: bag.mock.process(checks, mocks)
+      }
+    });
   }
-}).exportTo(module);
+
+  beforeEach(function () {
+    checks = {};
+    mocks = {};
+    cli = create(checks, mocks);
+    cli.exec();
+  });
+
+  describe('exec', function () {
+
+    it('should contain init command and delegate to ae86 init when exec is called', function () {
+      checks.bag_parse_commands.init.desc.should.equal('Create example AE86 project files');
+      checks.bag_parse_commands.init.action();
+      checks.ae86_init_exit.should.be.a('function');
+    });
+
+    it('should contain gen command and delegate to ae86 gen when exec is called', function () {
+      checks.bag_parse_commands.gen.desc.should.equal('Generate website');
+      checks.bag_parse_commands.gen.action();
+      checks.ae86_gen_exit.should.be.a('function');
+    });
+
+    it('should contain watch command and delegate to ae86 watch when exec is called', function () {
+      checks.bag_parse_commands.watch.desc.should.equal('Watch for changes and automatically regenerate website');
+      checks.bag_parse_commands.watch.action();
+      checks.ae86_watch_exit.should.be.a('function');
+    });
+
+    it('should contain drift command and delegate to ae86 watch when exec is called', function () {
+      checks.bag_parse_commands.drift.desc.should.equal('Alias for watch');
+      checks.bag_parse_commands.drift.action();
+      checks.ae86_watch_exit.should.be.a('function');
+    });
+
+    it('should contain clean command and delegate to ae86 clean when exec is called', function () {
+      checks.bag_parse_commands.clean.desc.should.equal('Remove website');
+      checks.bag_parse_commands.clean.action();
+      checks.ae86_clean_exit.should.be.a('function');
+    });
+  });
+});
