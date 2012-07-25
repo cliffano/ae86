@@ -52,15 +52,66 @@ describe('ae86', function () {
 
     beforeEach(function () {
 
+      checks.engine_compile__count = 0;
+      checks.engine_merge__count = 0;
+
+      mocks.process_cwd = '/somepath';
+      mocks.requires = {
+        '/somepath/params': {
+          params: {
+            foo: 'bar'
+          }
+        },
+        './engine': function (ext) {
+          checks.engine_ext = ext;
+          return {
+            compile: function (dir, cb) {
+              checks.engine_compile__count++;
+              cb();
+            },
+            merge: function (dir, templates, params, cb) {
+              checks.engine_merge__count++;
+              checks.engine_merge_params = params;
+              cb();
+            }
+          }
+        },
+        dateformat: function (format) {
+          checks.dateformat_format = format;
+          return '20001001';
+        },
+        ncp: {
+          ncp: function (srcDir, destDir, cb) {
+            checks.ncp_ncp_srcDir = srcDir;
+            checks.ncp_ncp_destDir = destDir;
+            cb();
+          }
+        }
+      };
+
+      ae86 = new (create(checks, mocks))();      
+      ae86.generate(function (err, result) {
+      });
+    });
+
+    it('should log command message', function () {
+      checks.console_log_messages.length.should.equal(1);
+      checks.console_log_messages[0].should.equal('Generating website');
     });
 
     it('should set default params', function () {
+      (typeof checks.engine_merge_params.sitemap).should.equal('object');
+      checks.engine_merge_params.__genId.should.equal('20001001');
     });
 
     it('should copy static files', function () {
+      checks.ncp_ncp_srcDir.should.equal('static');
+      checks.ncp_ncp_destDir.should.equal('out');
     });
 
-    it('should compile page templates', function () {
+    it('should compile and merge page templates', function () {
+      checks.engine_compile__count.should.equal(3);
+      checks.engine_merge__count.should.equal(1);
     });
   });
 
@@ -178,7 +229,7 @@ describe('ae86', function () {
       };
 
       should.exist(require.cache['/somepath/params.js']);
-      
+
       ae86.watch();
 
       should.not.exist(require.cache['/somepath/params.js']);
