@@ -74,7 +74,7 @@ describe('ae86', function () {
               checks.engine_merge_params = params;
               cb();
             }
-          }
+          };
         },
         dateformat: function (format) {
           checks.dateformat_format = format;
@@ -151,14 +151,14 @@ describe('ae86', function () {
       checks.watchtree_watchTree_args['static'].ignore.should.equal('\\.swp');
       checks.watchtree_watchTree_args['static']['sample-rate'].should.equal(5);
 
-      checks.watchtree_watchTree_args['partials'].ignore.should.equal('\\.swp');
-      checks.watchtree_watchTree_args['partials']['sample-rate'].should.equal(5);
+      checks.watchtree_watchTree_args.partials.ignore.should.equal('\\.swp');
+      checks.watchtree_watchTree_args.partials['sample-rate'].should.equal(5);
 
-      checks.watchtree_watchTree_args['layouts'].ignore.should.equal('\\.swp');
-      checks.watchtree_watchTree_args['layouts']['sample-rate'].should.equal(5);
+      checks.watchtree_watchTree_args.layouts.ignore.should.equal('\\.swp');
+      checks.watchtree_watchTree_args.layouts['sample-rate'].should.equal(5);
 
-      checks.watchtree_watchTree_args['pages'].ignore.should.equal('\\.swp');
-      checks.watchtree_watchTree_args['pages']['sample-rate'].should.equal(5);
+      checks.watchtree_watchTree_args.pages.ignore.should.equal('\\.swp');
+      checks.watchtree_watchTree_args.pages['sample-rate'].should.equal(5);
 
       checks.watchtree_watchTree_args['params.js'].ignore.should.equal('\\.swp');
       checks.watchtree_watchTree_args['params.js']['sample-rate'].should.equal(5);
