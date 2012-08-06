@@ -43,7 +43,7 @@ describe('engine', function () {
     });
 
     it('should compile files with the specified file extension', function (done) {
-      mocks.file_walkSync_files = [ 'foo.html', 'bar.html', '.git', 'abc.txt' ];
+      mocks.file_walkSync_files = [ 'foo.html', 'sub/dir/bar.html', '.git', 'abc.txt' ];
       engine = new (create(checks, mocks))('html');
       engine.compile('sometemplatedir', function (err, result) {
         checks.engine_compile_err = err;
@@ -53,9 +53,29 @@ describe('engine', function () {
       checks.file_walkSync_dir.should.equal('sometemplatedir');
       checks.fs_readFile_files.length.should.equal(2);
       checks.fs_readFile_files[0].should.equal('/somebasedir/foo.html');
-      checks.fs_readFile_files[1].should.equal('/somebasedir/bar.html');
+      checks.fs_readFile_files[1].should.equal('/somebasedir/sub/dir/bar.html');
       should.not.exist(checks.engine_compile_err);
       should.exist(checks.engine_compile_result);
+      should.exist(checks.engine_compile_result['somebasedir/foo.html']);
+      should.exist(checks.engine_compile_result['somebasedir/sub/dir/bar.html']);
+    });
+
+    it('should compile files with windows file path separator (backslashes) and have url path separator (slashes)', function (done) {
+      mocks.file_walkSync_files = [ 'foo.html', 'sub\\dir\\bar.html', '.git', 'abc.txt' ];
+      engine = new (create(checks, mocks))('html');
+      engine.compile('sometemplatedir', function (err, result) {
+        checks.engine_compile_err = err;
+        checks.engine_compile_result = result;
+        done();
+      });
+      checks.file_walkSync_dir.should.equal('sometemplatedir');
+      checks.fs_readFile_files.length.should.equal(2);
+      checks.fs_readFile_files[0].should.equal('/somebasedir/foo.html');
+      checks.fs_readFile_files[1].should.equal('/somebasedir/sub\\dir\\bar.html');
+      should.not.exist(checks.engine_compile_err);
+      should.exist(checks.engine_compile_result);
+      should.exist(checks.engine_compile_result['somebasedir/foo.html']);
+      should.exist(checks.engine_compile_result['somebasedir/sub/dir/bar.html']);
     });
 
     it('should ignore files with extensions other than the one specified', function (done) {
