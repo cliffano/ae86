@@ -1,4 +1,7 @@
-### 0.0.6 (SNAPSHOT)
+### 0.0.7 (SNAPSHOT)
+*
+
+### 0.0.6
 * Fix incorrect URL path and directory path on Windows
 
 ### 0.0.5
