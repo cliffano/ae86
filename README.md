@@ -32,7 +32,7 @@ Watch for changes and automatically regenerate website:
 
     ae86 watch
 
-Or, for AE86 historian, use this alias for watch:
+Or, for AE86 historians, use this alias for watch:
 
     ae86 drift
 
