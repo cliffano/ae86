@@ -1,5 +1,5 @@
 ### 0.0.6 (SNAPSHOT)
-* Fix incorrect URL path on Windows
+* Fix incorrect URL path and directory path on Windows
 
 ### 0.0.5
 * Fix params.js reloading in watch mode

@@ -107,7 +107,7 @@ describe('engine', function () {
         },
         file: {
           mkdirs: function (dir, mode, cb) {
-            checks.file_walkSync_dir = dir;
+            checks.file_mkdirs_dir = dir;
             mode.should.equal('0755');
             cb(mocks.file_mkdirs_err);
           }
@@ -198,13 +198,14 @@ describe('engine', function () {
           foo: 'bar'
         };
       engine = new (create(checks, mocks))('html');
-      engine.merge('someoutputdir', templates, params, function (err, result) {
+      engine.merge('some/output/dir', templates, params, function (err, result) {
         checks.engine_compile_err = err;
         checks.engine_compile_result = result;
         done();
       });
       checks.console_log_messages.length.should.equal(1);
-      checks.console_log_messages[0].should.equal('+ creating someoutputdir/page.html');
+      checks.console_log_messages[0].should.equal('+ creating some/output/dir/page.html');
+      checks.file_mkdirs_dir.should.equal('some/output/dir');
     });
 
     it('should pass error to callback when directory cannot be created', function (done) {
@@ -223,12 +224,39 @@ describe('engine', function () {
           foo: 'bar'
         };
       engine = new (create(checks, mocks))('html');
-      engine.merge('someoutputdir', templates, params, function (err, result) {
+      engine.merge('some/output/dir', templates, params, function (err, result) {
         checks.engine_compile_err = err;
         checks.engine_compile_result = result;
         done();
       });
       checks.engine_compile_err.message.should.equal('someerror');
+      checks.file_mkdirs_dir.should.equal('some/output/dir');
+    });
+
+    it('should create dir with *nix and Windows paths', function () {
+      mocks.file_mkdirs_err = new Error('someerror');
+      var templates = {
+          partials: {
+          },
+          pages: {
+            'page.html': jazz.compile('Some content with param {foo}')
+          },
+          layouts: {
+            'default.html': jazz.compile('{content}')
+          }
+        },
+        params = {
+          foo: 'bar'
+        };
+      engine = new (create(checks, mocks))('html');
+
+      engine.merge('some/output/dir', templates, params, function (err, result) {
+      });
+      checks.file_mkdirs_dir.should.equal('some/output/dir');
+
+      engine.merge('some\\output\\dir', templates, params, function (err, result) {
+      });
+      checks.file_mkdirs_dir.should.equal('some\\output');
     });
   });
 });
