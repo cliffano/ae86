@@ -105,12 +105,10 @@ describe('engine', function () {
             cb(mocks.fs_writeFile_err);
           }
         },
-        file: {
-          mkdirs: function (dir, mode, cb) {
-            checks.file_mkdirs_dir = dir;
-            mode.should.equal('0755');
-            cb(mocks.file_mkdirs_err);
-          }
+        mkdirp: function (dir, mode, cb) {
+          checks.mkdirp_dir = dir;
+          mode.should.equal('0755');
+          cb(mocks.mkdirp_err);
         }
       };
     });
@@ -205,11 +203,11 @@ describe('engine', function () {
       });
       checks.console_log_messages.length.should.equal(1);
       checks.console_log_messages[0].should.equal('+ creating some/output/dir/page.html');
-      checks.file_mkdirs_dir.should.equal('some/output/dir');
+      checks.mkdirp_dir.should.equal('some/output/dir');
     });
 
     it('should pass error to callback when directory cannot be created', function (done) {
-      mocks.file_mkdirs_err = new Error('someerror');
+      mocks.mkdirp_err = new Error('someerror');
       var templates = {
           partials: {
           },
@@ -230,11 +228,11 @@ describe('engine', function () {
         done();
       });
       checks.engine_compile_err.message.should.equal('someerror');
-      checks.file_mkdirs_dir.should.equal('some/output/dir');
+      checks.mkdirp_dir.should.equal('some/output/dir');
     });
 
     it('should create dir with *nix and Windows paths', function () {
-      mocks.file_mkdirs_err = new Error('someerror');
+      mocks.mkdirp_err = new Error('someerror');
       var templates = {
           partials: {
           },
@@ -252,11 +250,11 @@ describe('engine', function () {
 
       engine.merge('some/output/dir', templates, params, function (err, result) {
       });
-      checks.file_mkdirs_dir.should.equal('some/output/dir');
+      checks.mkdirp_dir.should.equal('some/output/dir');
 
       engine.merge('some\\output\\dir', templates, params, function (err, result) {
       });
-      checks.file_mkdirs_dir.should.equal('some\\output');
+      checks.mkdirp_dir.should.equal('some\\output');
     });
   });
 });
