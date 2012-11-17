@@ -1,9 +1,10 @@
 AE86 [![http://travis-ci.org/cliffano/ae86](https://secure.travis-ci.org/cliffano/ae86.png?branch=master)](http://travis-ci.org/cliffano/ae86)
 ----
 
-AE86 is a simplistic static website generator written in Node.js .
+AE86 is a simple static website generator written in Node.js .
 
 This is handy when you want to create a static website by specifying simple templates, along with custom variables and template functions.
+All you need to know is standard HTML, JavaScript, CSS, and a bit of simple Jazz templating, nothing fancy.
 
 Installation
 ------------
