@@ -1,6 +1,6 @@
 {
   "name": "ae86",
-  "description": "Simple static website generator.",
+  "description": "Old school static website generator.",
   "keywords": [
     "static",
     "website",
@@ -41,9 +41,7 @@
     "wrench": "1.3.9"
   },
   "devDependencies": {
-    "mocha": "1.3.2",
-    "sandboxed-module": "0.1.3",
-    "should": "1.1.0"
+    "buster": "0.6.12"
   },
   "scripts": {},
   "engines": {
