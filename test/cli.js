@@ -1,83 +1,100 @@
 var bag = require('bagofholding'),
-  sandbox = require('sandboxed-module'),
-  should = require('should'),
-  checks, mocks,
-  cli;
+  buster = require('buster'),
+  cli = require('../lib/cli'),
+  AE86 = new require('../lib/ae86');
 
-describe('cli', function () {
-
-  function create(checks, mocks) {
-    return sandbox.require('../lib/cli', {
-      requires: {
-        bagofholding: {
-          cli: {
-            exit: bag.cli.exit,
-            parse: function (commands, dir) {
-              checks.bag_parse_commands = commands;
-              checks.bag_parse_dir = dir;
-            }
-          }
-        },
-        './ae86': function () {
-          return {
-            init: function (exit) {
-              checks.ae86_init_exit = exit;
-            },
-            generate: function (exit) {
-              checks.ae86_gen_exit = exit;
-            },
-            watch: function (exit) {
-              checks.ae86_watch_exit = exit;
-            },
-            clean: function (exit) {
-              checks.ae86_clean_exit = exit;
-            }
-          };
-        }
-      },
-      globals: {
-        process: bag.mock.process(checks, mocks)
-      }
-    });
-  }
-
-  beforeEach(function () {
-    checks = {};
-    mocks = {};
-    cli = create(checks, mocks);
+buster.testCase('cli - exec', {
+  'should contain commands with actions': function (done) {
+    var mockCommand = function (base, actions) {
+      assert.defined(base);
+      assert.defined(actions.commands.init.action);
+      assert.defined(actions.commands.gen.action);
+      assert.defined(actions.commands.watch.action);
+      assert.defined(actions.commands.drift.action);
+      assert.defined(actions.commands.clean.action);
+      done();
+    };
+    this.stub(bag, 'cli', { command: mockCommand });
     cli.exec();
-  });
+  }
+});
 
-  describe('exec', function () {
-
-    it('should contain init command and delegate to ae86 init when exec is called', function () {
-      checks.bag_parse_commands.init.desc.should.equal('Create example AE86 project files');
-      checks.bag_parse_commands.init.action();
-      checks.ae86_init_exit.should.be.a('function');
+buster.testCase('cli - init', {
+  'should contain init command and delegate to ae86 init when exec is called': function (done) {
+    this.stub(bag, 'cli', {
+      command: function (base, actions) {
+        actions.commands.init.action();
+      },
+      exit: bag.cli.exit
     });
-
-    it('should contain gen command and delegate to ae86 gen when exec is called', function () {
-      checks.bag_parse_commands.gen.desc.should.equal('Generate website');
-      checks.bag_parse_commands.gen.action();
-      checks.ae86_gen_exit.should.be.a('function');
+    this.stub(AE86.prototype, 'init', function (cb) {
+      assert.equals(typeof bag.cli.exit, 'function');
+      done();
     });
+    cli.exec();
+  }
+});
 
-    it('should contain watch command and delegate to ae86 watch when exec is called', function () {
-      checks.bag_parse_commands.watch.desc.should.equal('Watch for changes and automatically regenerate website');
-      checks.bag_parse_commands.watch.action();
-      checks.ae86_watch_exit.should.be.a('function');
+buster.testCase('cli - gen', {
+  'should contain gen command and delegate to ae86 generate when exec is called': function (done) {
+    this.stub(bag, 'cli', {
+      command: function (base, actions) {
+        actions.commands.gen.action();
+      },
+      exit: bag.cli.exit
     });
+    this.stub(AE86.prototype, 'generate', function (cb) {
+      assert.equals(typeof bag.cli.exit, 'function');
+      done();
+    });
+    cli.exec();
+  }
+});
 
-    it('should contain drift command and delegate to ae86 watch when exec is called', function () {
-      checks.bag_parse_commands.drift.desc.should.equal('Alias for watch');
-      checks.bag_parse_commands.drift.action();
-      checks.ae86_watch_exit.should.be.a('function');
+buster.testCase('cli - watch', {
+  'should contain watch command and delegate to ae86 watch when exec is called': function (done) {
+    this.stub(bag, 'cli', {
+      command: function (base, actions) {
+        actions.commands.watch.action();
+      },
+      exit: bag.cli.exit
     });
+    this.stub(AE86.prototype, 'watch', function (cb) {
+      assert.equals(typeof bag.cli.exit, 'function');
+      done();
+    });
+    cli.exec();
+  }
+});
 
-    it('should contain clean command and delegate to ae86 clean when exec is called', function () {
-      checks.bag_parse_commands.clean.desc.should.equal('Remove website');
-      checks.bag_parse_commands.clean.action();
-      checks.ae86_clean_exit.should.be.a('function');
+buster.testCase('cli - drift', {
+  'should contain drift command and delegate to ae86 watch when exec is called': function (done) {
+    this.stub(bag, 'cli', {
+      command: function (base, actions) {
+        actions.commands.watch.action();
+      },
+      exit: bag.cli.exit
     });
-  });
+    this.stub(AE86.prototype, 'watch', function (cb) {
+      assert.equals(typeof bag.cli.exit, 'function');
+      done();
+    });
+    cli.exec();
+  }
+});
+
+buster.testCase('cli - clean', {
+  'should contain clean command and delegate to ae86 clean when exec is called': function (done) {
+    this.stub(bag, 'cli', {
+      command: function (base, actions) {
+        actions.commands.clean.action();
+      },
+      exit: bag.cli.exit
+    });
+    this.stub(AE86.prototype, 'clean', function (cb) {
+      assert.equals(typeof bag.cli.exit, 'function');
+      done();
+    });
+    cli.exec();
+  }
 });

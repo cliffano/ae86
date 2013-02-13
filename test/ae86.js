@@ -1,3 +1,4 @@
+/*
 var bag = require('bagofholding'),
   _jscov = require('../lib/ae86'),
   sandbox = require('sandboxed-module'),
@@ -269,3 +270,4 @@ describe('ae86', function () {
     });
   });
 });
+*/

@@ -1,0 +1,19 @@
+{
+  "commands": {
+    "init": {
+      "desc": "Create example AE86 project files\nUsage: ae86 init"
+    },
+    "gen": {
+      "desc": "Generate website\nUsage: ae86 gen"
+    },
+    "watch": {
+      "desc": "Watch for changes and automatically regenerate website\nUsage: ae86 watch"
+    },
+    "drift": {
+      "desc": "Alias for watch\nUsage: ae86 drift"
+    },
+    "clean": {
+      "desc": "Remove website\nUsage: ae86 clean"
+    }
+  }
+}

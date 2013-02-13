@@ -1,3 +1,4 @@
+/*
 var bag = require('bagofholding'),
   jazz = require('jazz'),
   sandbox = require('sandboxed-module'),
@@ -258,4 +259,4 @@ describe('engine', function () {
     });
   });
 });
- 
+*/
