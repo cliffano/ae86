@@ -20,8 +20,11 @@ buster.testCase('cli - exec', {
 });
 
 buster.testCase('cli - init', {
+  setUp: function () {
+    this.mockConsole = this.mock(console);
+  },
   'should contain init command and delegate to ae86 init when exec is called': function (done) {
-    this.mock(console).expects('log').withExactArgs('Creating example AE86 project');
+    this.mockConsole.expects('log').withExactArgs('Creating example AE86 project');
     this.stub(bag, 'cli', {
       command: function (base, actions) {
         actions.commands.init.action();
@@ -37,8 +40,11 @@ buster.testCase('cli - init', {
 });
 
 buster.testCase('cli - gen', {
+  setUp: function () {
+    this.mockConsole = this.mock(console);
+  },
   'should contain gen command and delegate to ae86 generate when exec is called': function (done) {
-    this.mock(console).expects('log').withExactArgs('Generating website');
+    this.mockConsole.expects('log').withExactArgs('Generating website');
     this.stub(bag, 'cli', {
       command: function (base, actions) {
         actions.commands.gen.action();
@@ -54,8 +60,11 @@ buster.testCase('cli - gen', {
 });
 
 buster.testCase('cli - watch', {
+  setUp: function () {
+    this.mockConsole = this.mock(console);
+  },
   'should contain watch command and delegate to ae86 watch when exec is called': function (done) {
-    this.mock(console).expects('log').withExactArgs('Watching for changes and automatically regenerating website');
+    this.mockConsole.expects('log').withExactArgs('Watching for changes and automatically regenerating website');
     this.stub(bag, 'cli', {
       command: function (base, actions) {
         actions.commands.watch.action();
@@ -71,8 +80,11 @@ buster.testCase('cli - watch', {
 });
 
 buster.testCase('cli - drift', {
+  setUp: function () {
+    this.mockConsole = this.mock(console);
+  },
   'should contain drift command and delegate to ae86 watch when exec is called': function (done) {
-    this.mock(console).expects('log').withExactArgs('Watching for changes and automatically regenerating website');
+    this.mockConsole.expects('log').withExactArgs('Watching for changes and automatically regenerating website');
     this.stub(bag, 'cli', {
       command: function (base, actions) {
         actions.commands.watch.action();
@@ -88,8 +100,11 @@ buster.testCase('cli - drift', {
 });
 
 buster.testCase('cli - clean', {
+  setUp: function () {
+    this.mockConsole = this.mock(console);
+  },
   'should contain clean command and delegate to ae86 clean when exec is called': function (done) {
-    this.mock(console).expects('log').withExactArgs('Removing website');
+    this.mockConsole.expects('log').withExactArgs('Removing website');
     this.stub(bag, 'cli', {
       command: function (base, actions) {
         actions.commands.clean.action();
