@@ -1,53 +1,22 @@
-/*
-var bag = require('bagofholding'),
-  _jscov = require('../lib/ae86'),
-  sandbox = require('sandboxed-module'),
-  should = require('should'),
-  checks, mocks,
-  ae86;
+var AE86 = require('../lib/ae86'),
+  buster = require('buster'),
+  ncp = require('ncp');
 
-describe('ae86', function () {
-
-  function create(checks, mocks) {
-    return sandbox.require('../lib/ae86', {
-      requires: mocks ? mocks.requires : {},
-      globals: {
-        console: bag.mock.console(checks, mocks),
-        process: bag.mock.process(checks, mocks)
-      },
-      locals: {
-        __dirname: '/somepath/ae86/lib'
-      }
+buster.testCase('ae86 - init', {
+  'should delegate to ncp ncp when initialising the project': function (done) {
+    this.stub(ncp, 'ncp', function (source, dest, cb) {
+      assert.isTrue(source.match(/.+\/ae86\/examples$/).length === 1);
+      assert.equals(dest, '.');
+      cb();
+    });
+    var ae86 = new AE86();
+    ae86.init(function (err, result) {
+      done();
     });
   }
+});
 
-  beforeEach(function () {
-    checks = {};
-    mocks = {};
-  });
-
-  describe('init', function () {
-
-    it('should delegate to ncp ncp when initialising the project', function (done) {
-      mocks.requires = {
-        ncp: {
-          ncp: function (srcDir, destDir, cb) {
-            checks.ncp_ncp_srcDir = srcDir;
-            checks.ncp_ncp_destDir = destDir;
-            cb();
-          }
-        }
-      };
-      ae86 = new (create(checks, mocks))();
-      ae86.init(function (err, result) {
-        done();
-      });
-      checks.ncp_ncp_srcDir.should.equal('/somepath/ae86/examples');
-      checks.ncp_ncp_destDir.should.equal('.');
-      checks.console_log_messages.length.should.equal(1);
-      checks.console_log_messages[0].should.equal('Creating example AE86 project');
-    });
-  });
+/*
 
   describe('generate', function () {
 
