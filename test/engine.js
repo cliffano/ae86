@@ -7,7 +7,7 @@ var bag = require('bagofholding'),
 
 buster.testCase('engine - engine', {
   'should use default ext when optional ext is not specified': function () {
-    var engine = new Engine()
+    var engine = new Engine();
     assert.equals(engine.ext, 'html');
   },
   'should use specified ext': function () {
