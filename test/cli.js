@@ -21,6 +21,7 @@ buster.testCase('cli - exec', {
 
 buster.testCase('cli - init', {
   'should contain init command and delegate to ae86 init when exec is called': function (done) {
+    this.mock(console).expects('log').withExactArgs('Creating example AE86 project');
     this.stub(bag, 'cli', {
       command: function (base, actions) {
         actions.commands.init.action();
@@ -37,6 +38,7 @@ buster.testCase('cli - init', {
 
 buster.testCase('cli - gen', {
   'should contain gen command and delegate to ae86 generate when exec is called': function (done) {
+    this.mock(console).expects('log').withExactArgs('Generating website');
     this.stub(bag, 'cli', {
       command: function (base, actions) {
         actions.commands.gen.action();
@@ -53,6 +55,7 @@ buster.testCase('cli - gen', {
 
 buster.testCase('cli - watch', {
   'should contain watch command and delegate to ae86 watch when exec is called': function (done) {
+    this.mock(console).expects('log').withExactArgs('Watching for changes and automatically regenerating website');
     this.stub(bag, 'cli', {
       command: function (base, actions) {
         actions.commands.watch.action();
@@ -69,6 +72,7 @@ buster.testCase('cli - watch', {
 
 buster.testCase('cli - drift', {
   'should contain drift command and delegate to ae86 watch when exec is called': function (done) {
+    this.mock(console).expects('log').withExactArgs('Watching for changes and automatically regenerating website');
     this.stub(bag, 'cli', {
       command: function (base, actions) {
         actions.commands.watch.action();
@@ -85,6 +89,7 @@ buster.testCase('cli - drift', {
 
 buster.testCase('cli - clean', {
   'should contain clean command and delegate to ae86 clean when exec is called': function (done) {
+    this.mock(console).expects('log').withExactArgs('Removing website');
     this.stub(bag, 'cli', {
       command: function (base, actions) {
         actions.commands.clean.action();
