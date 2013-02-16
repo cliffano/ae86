@@ -1,5 +1,6 @@
 ### 0.0.7-pre
 * Engine template file extension is now optional, defaults to html
+* Modify gen ID format, no longer includes millisecs value
 
 ### 0.0.6
 * Fix incorrect URL path and directory path on Windows

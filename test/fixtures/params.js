@@ -1,0 +1,1 @@
+exports.params = { foo: 'bar' };

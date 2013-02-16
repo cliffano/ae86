@@ -1,6 +1,10 @@
 var AE86 = require('../lib/ae86'),
   buster = require('buster'),
-  ncp = require('ncp');
+  Engine = require('../lib/engine'),
+  ncp = require('ncp'),
+  p = require('path'),
+  watchtree = require('watch-tree-maintained'),
+  wrench = require('wrench');
 
 buster.testCase('ae86 - init', {
   'should delegate to ncp ncp when initialising the project': function (done) {
@@ -16,227 +20,121 @@ buster.testCase('ae86 - init', {
   }
 });
 
-/*
-
-  describe('generate', function () {
-
-    beforeEach(function () {
-
-      checks.engine_compile__count = 0;
-      checks.engine_merge__count = 0;
-
-      mocks.process_cwd = '/somepath';
-      mocks.requires = {
-        '/somepath/params': {
-          params: {
-            foo: 'bar'
-          }
-        },
-        './engine': function (ext) {
-          checks.engine_ext = ext;
-          return {
-            compile: function (dir, cb) {
-              checks.engine_compile__count++;
-              cb();
-            },
-            merge: function (dir, templates, params, cb) {
-              checks.engine_merge__count++;
-              checks.engine_merge_params = params;
-              cb();
-            }
-          };
-        },
-        dateformat: function (format) {
-          checks.dateformat_format = format;
-          return '20001001';
-        },
-        ncp: {
-          ncp: function (srcDir, destDir, cb) {
-            checks.ncp_ncp_srcDir = srcDir;
-            checks.ncp_ncp_destDir = destDir;
-            cb();
-          }
-        }
-      };
-
-      ae86 = new (create(checks, mocks))();      
-      ae86.generate(function (err, result) {
-      });
+buster.testCase('ae86 - generate', {
+  setUp: function () {
+    this.mockNcp = this.mock(ncp);
+    this.useFakeTimers(new Date(2000, 9, 10).getTime());
+    this.ae86 = new AE86({ params: { foo: 'bar' }});
+  },
+  'should copy static files and process pages': function (done) {
+    this.stub(process, 'cwd', function () { return p.join(__dirname, '/fixtures'); });
+    this.mockNcp.expects('ncp').once().withArgs('static', 'out').callsArgWith(2);
+    this.stub(Engine.prototype, 'compile', function (dir, cb) {
+      assert.isTrue(['partials', 'layouts', 'pages'].indexOf(dir) !== -1);
+      cb();
     });
-
-    it('should log command message', function () {
-      checks.console_log_messages.length.should.equal(1);
-      checks.console_log_messages[0].should.equal('Generating website');
+    this.stub(Engine.prototype, 'merge', function (dir, templates, params, cb) {
+      assert.equals(dir, 'out');
+      assert.isObject(params.sitemap);
+      assert.equals(params.__genId, '20001010000000');
+      cb();      
     });
-
-    it('should set default params', function () {
-      (typeof checks.engine_merge_params.sitemap).should.equal('object');
-      checks.engine_merge_params.__genId.should.equal('20001001');
+    this.ae86.generate(function (err, result) {
+      done();
     });
-
-    it('should copy static files', function () {
-      checks.ncp_ncp_srcDir.should.equal('static');
-      checks.ncp_ncp_destDir.should.equal('out');
-    });
-
-    it('should compile and merge page templates', function () {
-      checks.engine_compile__count.should.equal(3);
-      checks.engine_merge__count.should.equal(1);
-    });
-  });
-
-  describe('watch', function () {
-
-    beforeEach(function () {
-
-      checks.ae86_generate__count = 0;
-      checks.ae86_clean__count = 0;
-      checks.watchtree_watchTree_args = {};
-
-      mocks.process_cwd = '/somepath';
-      mocks.requires = {
-        'watch-tree-maintained': {
-          watchTree: function (file, opts) {
-            checks.watchtree_watchTree_args[file] = opts;
-            return bag.mock.stream(checks, mocks);
-          }
-        }
-      };
-
-      require.cache['/somepath/params.js'] = { foo: 'bar' };
-
-      ae86 = new (create(checks, mocks))();
-    });
-
-    it('should log activity message', function () {
-      ae86.watch();
-
-      checks.console_log_messages.length.should.equal(1);
-      checks.console_log_messages[0].should.equal('Watching for changes and automatically regenerating website');
-    });
-
-    it('should ignore swap files and set sample rate on project directories and files', function () {
-      ae86.watch();
-
-      checks.watchtree_watchTree_args['static'].ignore.should.equal('\\.swp');
-      checks.watchtree_watchTree_args['static']['sample-rate'].should.equal(5);
-
-      checks.watchtree_watchTree_args.partials.ignore.should.equal('\\.swp');
-      checks.watchtree_watchTree_args.partials['sample-rate'].should.equal(5);
-
-      checks.watchtree_watchTree_args.layouts.ignore.should.equal('\\.swp');
-      checks.watchtree_watchTree_args.layouts['sample-rate'].should.equal(5);
-
-      checks.watchtree_watchTree_args.pages.ignore.should.equal('\\.swp');
-      checks.watchtree_watchTree_args.pages['sample-rate'].should.equal(5);
-
-      checks.watchtree_watchTree_args['params.js'].ignore.should.equal('\\.swp');
-      checks.watchtree_watchTree_args['params.js']['sample-rate'].should.equal(5);
-    });
-
-    it('should log message and set listener when a file is created', function () {
-
-      mocks.stream_on_fileCreated = ['somepath', 'somestats'];
-
-      ae86 = new (create(checks, mocks))();
-      ae86.generate = function () {
-        checks.ae86_generate__count++;
-      };
-
-      should.exist(require.cache['/somepath/params.js']);
-
-      ae86.watch();
-
-      should.not.exist(require.cache['/somepath/params.js']);
-
-      checks.ae86_generate__count.should.equal(5);
-
-      checks.console_log_messages.length.should.equal(6);
-      checks.console_log_messages[0].should.equal('Watching for changes and automatically regenerating website');
-      checks.console_log_messages[1].should.equal('static was created');
-      checks.console_log_messages[2].should.equal('partials was created');
-      checks.console_log_messages[3].should.equal('layouts was created');
-      checks.console_log_messages[4].should.equal('pages was created');
-      checks.console_log_messages[5].should.equal('params.js was created');      
-    });
-
-    it('should log message and set listener when a file is modified', function () {
-
-      mocks.stream_on_fileModified = ['somepath', 'somestats'];
-
-      ae86 = new (create(checks, mocks))();
-      ae86.generate = function () {
-        checks.ae86_generate__count++;
-      };
-
-      should.exist(require.cache['/somepath/params.js']);
-
-      ae86.watch();
-
-      should.not.exist(require.cache['/somepath/params.js']);
-
-      checks.ae86_generate__count.should.equal(5);
-
-      checks.console_log_messages.length.should.equal(6);
-      checks.console_log_messages[0].should.equal('Watching for changes and automatically regenerating website');
-      checks.console_log_messages[1].should.equal('static was modified');
-      checks.console_log_messages[2].should.equal('partials was modified');
-      checks.console_log_messages[3].should.equal('layouts was modified');
-      checks.console_log_messages[4].should.equal('pages was modified');
-      checks.console_log_messages[5].should.equal('params.js was modified');      
-    });
-
-    it('should log message, call clean, and set listener when a file is deleted', function () {
-    
-      mocks.stream_on_fileDeleted = ['somepath', 'somestats'];
-
-      ae86 = new (create(checks, mocks))();
-      ae86.generate = function () {
-        checks.ae86_generate__count++;
-      };
-      ae86.clean = function () {
-        checks.ae86_clean__count++;
-      };
-
-      should.exist(require.cache['/somepath/params.js']);
-
-      ae86.watch();
-
-      should.not.exist(require.cache['/somepath/params.js']);
-
-      checks.ae86_generate__count.should.equal(5);
-      checks.ae86_clean__count.should.equal(5);
-
-      checks.console_log_messages.length.should.equal(6);
-      checks.console_log_messages[0].should.equal('Watching for changes and automatically regenerating website');
-      checks.console_log_messages[1].should.equal('static was deleted');
-      checks.console_log_messages[2].should.equal('partials was deleted');
-      checks.console_log_messages[3].should.equal('layouts was deleted');
-      checks.console_log_messages[4].should.equal('pages was deleted');
-      checks.console_log_messages[5].should.equal('params.js was deleted');  
-    });
-
-  });
-
-  describe('clean', function () {
-
-    it('should delegate to wrench rmdirRecursive when removing the generated website', function (done) {
-      mocks.requires = {
-        wrench: {
-          rmdirRecursive: function (dir, cb) {
-            checks.wrench_rmdirRecursive_dir = dir;
-            cb();
-          }
-        }
-      };
-      ae86 = new (create(checks, mocks))();
-      ae86.clean(function (err, result) {
-        done();
-      });
-      checks.wrench_rmdirRecursive_dir.should.equal('out');
-      checks.console_log_messages.length.should.equal(1);
-      checks.console_log_messages[0].should.equal('Removing website');
-    });
-  });
+  }
 });
-*/
+
+buster.testCase('ae86 - watch', {
+  setUp: function () {
+    this.mockConsole = this.mock(console);
+    this.stub(process, 'cwd', function () { return '/somepath'; });
+    this.ae86 = new AE86();
+    require.cache['/somepath/params.js'] = { foo: 'bar' };
+  },
+  'should ignore swap files and set sample rate on project directories and files': function () {
+    var mockWatcher = {
+      on: function (event, cb) {}
+    }
+    this.stub(watchtree, 'watchTree', function (file, opts) {
+      assert.isTrue(['static', 'partials', 'layouts', 'pages', 'params.js'].indexOf(file) !== -1);
+      assert.equals(opts.ignore, '\\.swp');
+      assert.equals(opts['sample-rate'], 5);
+      return { on: function (event, cb) {} };
+    });
+    this.ae86.watch();
+  },
+  'should log message and set listener when a file is created': function () {
+    this.mockConsole.expects('log').once().withExactArgs('%s was created', 'static');
+    this.mockConsole.expects('log').once().withExactArgs('%s was created', 'partials');
+    this.mockConsole.expects('log').once().withExactArgs('%s was created', 'layouts');
+    this.mockConsole.expects('log').once().withExactArgs('%s was created', 'pages');
+    this.mockConsole.expects('log').once().withExactArgs('%s was created', 'params.js');
+    var mockWatcher = {
+      on: function (event, cb) {}
+    }
+    this.stub(watchtree, 'watchTree', function (file, opts) {
+      return { on: function (event, cb) {
+        if (event === 'fileCreated') {
+          cb('somepath', 'somestats');
+        }
+      }};
+    });
+    this.ae86.generate = this.spy();
+    this.ae86.clean = this.spy();
+    this.ae86.watch();
+  },
+  'should log message and set listener when a file is modified': function () {
+    this.mockConsole.expects('log').once().withExactArgs('%s was modified', 'static');
+    this.mockConsole.expects('log').once().withExactArgs('%s was modified', 'partials');
+    this.mockConsole.expects('log').once().withExactArgs('%s was modified', 'layouts');
+    this.mockConsole.expects('log').once().withExactArgs('%s was modified', 'pages');
+    this.mockConsole.expects('log').once().withExactArgs('%s was modified', 'params.js');
+    var mockWatcher = {
+      on: function (event, cb) {}
+    }
+    this.stub(watchtree, 'watchTree', function (file, opts) {
+      return { on: function (event, cb) {
+        if (event === 'fileModified') {
+          cb('somepath', 'somestats');
+        }
+      }};
+    });
+    this.ae86.generate = this.spy();
+    this.ae86.clean = this.spy();
+    this.ae86.watch();
+  },
+  'should log message and set listener when a file is deleted': function () {
+    this.mockConsole.expects('log').once().withExactArgs('%s was deleted', 'static');
+    this.mockConsole.expects('log').once().withExactArgs('%s was deleted', 'partials');
+    this.mockConsole.expects('log').once().withExactArgs('%s was deleted', 'layouts');
+    this.mockConsole.expects('log').once().withExactArgs('%s was deleted', 'pages');
+    this.mockConsole.expects('log').once().withExactArgs('%s was deleted', 'params.js');
+    var mockWatcher = {
+      on: function (event, cb) {}
+    }
+    this.stub(watchtree, 'watchTree', function (file, opts) {
+      return { on: function (event, cb) {
+        if (event === 'fileDeleted') {
+          cb('somepath', 'somestats');
+        }
+      }};
+    });
+    this.ae86.generate = this.spy();
+    this.ae86.clean = this.spy();
+    this.ae86.watch();
+  }
+});
+
+buster.testCase('ae86 - clean', {
+  'should delegate to wrench rmdirRecursive when removing the generated website': function (done) {
+    this.stub(wrench, 'rmdirRecursive', function (dir, cb) {
+      assert.equals(dir, 'out');
+      cb();
+    });
+    var ae86 = new AE86();
+    ae86.clean(function (err, result) {
+      done();
+    });
+  }
+});
