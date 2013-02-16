@@ -62,17 +62,23 @@ buster.testCase('engine - compile', {
   }
 });
 
-buster.testCase('engine - compile', {
+buster.testCase('engine - merge', {
   setUp: function () {
     this.mockConsole = this.mock(console);
   },
-  'should merge partials in page templates': function (done) {
+  'should merge partials in page templates with non-default template': function (done) {
     var templates = {
         partials: { 'footer.html': jazz.compile('Some footer text') },
         pages: { 'page.html': jazz.compile('{include(\'footer.html\')}') },
-        layouts: { 'default.html': jazz.compile('{content}') }
+        layouts: { 'somelayout.html': jazz.compile('{content}') }
       },
-      params = {},
+      params = {
+        sitemap: {
+          'page.html': {
+            layout: 'somelayout.html'
+          }
+        }
+      },
       mockMkdirp = function (dir, mode, cb) {
         assert.equals(dir, 'someoutputdir');
         assert.equals(mode, '0755');
@@ -120,7 +126,7 @@ buster.testCase('engine - compile', {
       done();
     });
   },
-  'should merge parameters in page templates': function (done) {
+  'should merge parameters in page templates and pass any error': function (done) {
     var templates = {
         partials: {},
         pages: { 'page.html': jazz.compile('Some content with param {foo}') },
@@ -134,15 +140,14 @@ buster.testCase('engine - compile', {
       },
       engine = new Engine({ mkdirp: mockMkdirp });
 
-    this.mockConsole.expects('log').withExactArgs('+ creating %s', 'someoutputdir/page.html');
     this.stub(fs, 'writeFile', function (page, content, encoding, cb) {
       assert.equals(page, 'someoutputdir/page.html');
       assert.equals(content, 'Some content with param bar');
       assert.equals(encoding, 'utf8');
-      cb();
+      cb(new Error('some error'));
     });
     engine.merge('someoutputdir', templates, params, function (err, result) {
-      assert.isNull(err);
+      assert.equals(err.message, 'some error');
       assert.equals(result[0], 'page.html');
       done();
     });
