@@ -55,7 +55,7 @@ buster.testCase('ae86 - watch', {
   'should ignore swap files and set sample rate on project directories and files': function () {
     var mockWatcher = {
       on: function (event, cb) {}
-    }
+    };
     this.stub(watchtree, 'watchTree', function (file, opts) {
       assert.isTrue(['static', 'partials', 'layouts', 'pages', 'params.js'].indexOf(file) !== -1);
       assert.equals(opts.ignore, '\\.swp');
@@ -72,7 +72,7 @@ buster.testCase('ae86 - watch', {
     this.mockConsole.expects('log').once().withExactArgs('%s was created', 'params.js');
     var mockWatcher = {
       on: function (event, cb) {}
-    }
+    };
     this.stub(watchtree, 'watchTree', function (file, opts) {
       return { on: function (event, cb) {
         if (event === 'fileCreated') {
@@ -92,7 +92,7 @@ buster.testCase('ae86 - watch', {
     this.mockConsole.expects('log').once().withExactArgs('%s was modified', 'params.js');
     var mockWatcher = {
       on: function (event, cb) {}
-    }
+    };
     this.stub(watchtree, 'watchTree', function (file, opts) {
       return { on: function (event, cb) {
         if (event === 'fileModified') {
@@ -112,7 +112,7 @@ buster.testCase('ae86 - watch', {
     this.mockConsole.expects('log').once().withExactArgs('%s was deleted', 'params.js');
     var mockWatcher = {
       on: function (event, cb) {}
-    }
+    };
     this.stub(watchtree, 'watchTree', function (file, opts) {
       return { on: function (event, cb) {
         if (event === 'fileDeleted') {
