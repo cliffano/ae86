@@ -1,4 +1,7 @@
-### 0.0.7-pre
+### 0.0.8-pre
+*
+
+### 0.0.7
 * Engine template file extension is now optional, defaults to html
 * Modify gen ID format, no longer includes millisecs value
 
