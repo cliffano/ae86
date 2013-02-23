@@ -32,7 +32,7 @@ buster.testCase('cli - init', {
       exit: bag.cli.exit
     });
     this.stub(AE86.prototype, 'init', function (cb) {
-      assert.equals(typeof bag.cli.exit, 'function');
+      assert.equals(typeof cb, 'function');
       done();
     });
     cli.exec();
@@ -52,7 +52,7 @@ buster.testCase('cli - gen', {
       exit: bag.cli.exit
     });
     this.stub(AE86.prototype, 'generate', function (cb) {
-      assert.equals(typeof bag.cli.exit, 'function');
+      assert.equals(typeof cb, 'function');
       done();
     });
     cli.exec();
@@ -72,7 +72,7 @@ buster.testCase('cli - watch', {
       exit: bag.cli.exit
     });
     this.stub(AE86.prototype, 'watch', function (cb) {
-      assert.equals(typeof bag.cli.exit, 'function');
+      assert.equals(typeof cb, 'function');
       done();
     });
     cli.exec();
@@ -92,7 +92,7 @@ buster.testCase('cli - drift', {
       exit: bag.cli.exit
     });
     this.stub(AE86.prototype, 'watch', function (cb) {
-      assert.equals(typeof bag.cli.exit, 'function');
+      assert.equals(typeof cb, 'function');
       done();
     });
     cli.exec();
@@ -112,7 +112,7 @@ buster.testCase('cli - clean', {
       exit: bag.cli.exit
     });
     this.stub(AE86.prototype, 'clean', function (cb) {
-      assert.equals(typeof bag.cli.exit, 'function');
+      assert.equals(typeof cb, 'function');
       done();
     });
     cli.exec();
