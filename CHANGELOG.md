@@ -1,5 +1,5 @@
 ### 0.0.8-pre
-*
+* Update dependencies
 
 ### 0.0.7
 * Engine template file extension is now optional, defaults to html
