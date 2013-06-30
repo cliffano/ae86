@@ -1,4 +1,4 @@
-AE86 [![Build Status](https://secure.travis-ci.org/cliffano/ae86.png?branch=master)](http://travis-ci.org/cliffano/ae86) [![Dependencies Status](https://david-dm.org/cliffano/ae86.png)](http://david-dm.org/cliffano/ae86)
+AE86 [![Build Status](https://secure.travis-ci.org/cliffano/ae86.png?branch=master)](http://travis-ci.org/cliffano/ae86) [![Dependencies Status](https://david-dm.org/cliffano/ae86.png)](http://david-dm.org/cliffano/ae86) [![Published Version](https://badge.fury.io/js/ae86.png)](http://badge.fury.io/js/ae86)
 ----
 <img align="right" src="https://raw.github.com/cliffano/ae86/master/avatar.jpg" alt="Avatar"/>
 
