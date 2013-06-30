@@ -1,5 +1,4 @@
-var bag = require('bagofholding'),
-  buster = require('buster'),
+var buster = require('buster'),
   Engine = require('../lib/engine'),
   f = require('file'),
   fs = require('fs'),

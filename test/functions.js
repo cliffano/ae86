@@ -1,5 +1,4 @@
-var bag = require('bagofholding'),
-  functions = require('../lib/functions');
+var functions = require('../lib/functions');
 
 buster.testCase('functions - date', {
   setUp: function () {

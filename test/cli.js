@@ -1,4 +1,4 @@
-var bag = require('bagofholding'),
+var bag = require('bagofcli'),
   buster = require('buster'),
   cli = require('../lib/cli'),
   AE86 = new require('../lib/ae86');
@@ -14,7 +14,7 @@ buster.testCase('cli - exec', {
       assert.defined(actions.commands.clean.action);
       done();
     };
-    this.stub(bag, 'cli', { command: mockCommand });
+    this.stub(bag, 'command', mockCommand);
     cli.exec();
   }
 });
@@ -25,11 +25,8 @@ buster.testCase('cli - init', {
   },
   'should contain init command and delegate to ae86 init when exec is called': function (done) {
     this.mockConsole.expects('log').withExactArgs('Creating example AE86 project');
-    this.stub(bag, 'cli', {
-      command: function (base, actions) {
-        actions.commands.init.action();
-      },
-      exit: bag.cli.exit
+    this.stub(bag, 'command', function (base, actions) {
+      actions.commands.init.action();
     });
     this.stub(AE86.prototype, 'init', function (cb) {
       assert.equals(typeof cb, 'function');
@@ -45,11 +42,8 @@ buster.testCase('cli - gen', {
   },
   'should contain gen command and delegate to ae86 generate when exec is called': function (done) {
     this.mockConsole.expects('log').withExactArgs('Generating website');
-    this.stub(bag, 'cli', {
-      command: function (base, actions) {
-        actions.commands.gen.action();
-      },
-      exit: bag.cli.exit
+    this.stub(bag, 'command', function (base, actions) {
+      actions.commands.gen.action();
     });
     this.stub(AE86.prototype, 'generate', function (cb) {
       assert.equals(typeof cb, 'function');
@@ -65,11 +59,8 @@ buster.testCase('cli - watch', {
   },
   'should contain watch command and delegate to ae86 watch when exec is called': function (done) {
     this.mockConsole.expects('log').withExactArgs('Watching for changes and automatically regenerating website');
-    this.stub(bag, 'cli', {
-      command: function (base, actions) {
-        actions.commands.watch.action();
-      },
-      exit: bag.cli.exit
+    this.stub(bag, 'command', function (base, actions) {
+      actions.commands.watch.action();
     });
     this.stub(AE86.prototype, 'watch', function (cb) {
       assert.equals(typeof cb, 'function');
@@ -85,11 +76,8 @@ buster.testCase('cli - drift', {
   },
   'should contain drift command and delegate to ae86 watch when exec is called': function (done) {
     this.mockConsole.expects('log').withExactArgs('Watching for changes and automatically regenerating website');
-    this.stub(bag, 'cli', {
-      command: function (base, actions) {
-        actions.commands.watch.action();
-      },
-      exit: bag.cli.exit
+    this.stub(bag, 'command', function (base, actions) {
+      actions.commands.watch.action();
     });
     this.stub(AE86.prototype, 'watch', function (cb) {
       assert.equals(typeof cb, 'function');
@@ -105,11 +93,8 @@ buster.testCase('cli - clean', {
   },
   'should contain clean command and delegate to ae86 clean when exec is called': function (done) {
     this.mockConsole.expects('log').withExactArgs('Removing website');
-    this.stub(bag, 'cli', {
-      command: function (base, actions) {
-        actions.commands.clean.action();
-      },
-      exit: bag.cli.exit
+    this.stub(bag, 'command', function (base, actions) {
+      actions.commands.clean.action();
     });
     this.stub(AE86.prototype, 'clean', function (cb) {
       assert.equals(typeof cb, 'function');
