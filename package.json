@@ -16,6 +16,7 @@
   "bin": {
     "ae86": "./bin/ae86"
   },
+  "preferGlobal": true,
   "repository": {
     "type": "git",
     "url": "http://github.com/cliffano/ae86.git"
