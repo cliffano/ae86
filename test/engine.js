@@ -1,8 +1,10 @@
-var buster = require('buster'),
+var buster = require('buster-node'),
   Engine = require('../lib/engine'),
   f = require('file'),
   fs = require('fs'),
-  jazz = require('jazz');
+  jazz = require('jazz'),
+  referee = require('referee'),
+  assert = referee.assert;
 
 buster.testCase('engine - engine', {
   'should use default ext when optional ext is not specified': function () {

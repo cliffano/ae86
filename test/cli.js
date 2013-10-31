@@ -1,7 +1,9 @@
-var bag = require('bagofcli'),
-  buster = require('buster'),
+var AE86 = new require('../lib/ae86'),
+  bag = require('bagofcli'),
+  buster = require('buster-node'),
   cli = require('../lib/cli'),
-  AE86 = new require('../lib/ae86');
+  referee = require('referee'),
+  assert = referee.assert;
 
 buster.testCase('cli - exec', {
   'should contain commands with actions': function (done) {

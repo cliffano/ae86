@@ -1,10 +1,12 @@
 var AE86 = require('../lib/ae86'),
-  buster = require('buster'),
+  buster = require('buster-node'),
   Engine = require('../lib/engine'),
   ncp = require('ncp'),
   p = require('path'),
+  referee = require('referee'),
   watchtree = require('watch-tree-maintained'),
-  wrench = require('wrench');
+  wrench = require('wrench'),
+  assert = referee.assert;
 
 buster.testCase('ae86 - init', {
   'should delegate to ncp ncp when initialising the project': function (done) {

@@ -1,4 +1,7 @@
-var functions = require('../lib/functions');
+var buster = require('buster-node'),
+  functions = require('../lib/functions'),
+  referee = require('referee'),
+  assert = referee.assert;
 
 buster.testCase('functions - date', {
   setUp: function () {
