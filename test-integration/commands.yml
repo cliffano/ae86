@@ -1,0 +1,19 @@
+- description: Command help should display help information
+  command: ../../../../../bin/ae86 --help
+  exitcode: 0
+  output: 'Usage: ae86'
+
+- description: Command init should create example AE86 project files
+  command: ../../../../../bin/ae86 init
+  exitcode: 0
+  output: Creating example AE86 project
+
+- description: Command gen should generate website files
+  command: ../../../../../bin/ae86 gen
+  exitcode: 0
+  output: Generating website\n\+ creating out/about/team.html\n\+ creating out/index.html\n
+
+- description: Command clean should remove website
+  command: ../../../../../bin/ae86 clean
+  exitcode: 0
+  output: Removing website
