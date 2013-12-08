@@ -49,6 +49,12 @@ Remove website:
 
     ae86 clean
 
+To use custom directory for the generated website:
+
+    ae86 --out-dir public gen
+    ae86 --out-dir public watch
+    ae86 --out-dir public clean
+
 Template & Parameters
 ---------------------
 
