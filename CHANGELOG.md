@@ -1,5 +1,5 @@
 ### 0.0.10-pre
-*
+* Add outDir flag to gen and watch/drift commands
 
 ### 0.0.9
 * Change test lib to buster-node + referee

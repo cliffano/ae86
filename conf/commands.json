@@ -1,19 +1,42 @@
 {
   "commands": {
     "init": {
-      "desc": "Create example AE86 project files"
+      "desc": "Create example AE86 project files",
+      "examples": [
+        "ae86 init"
+      ]
     },
     "gen": {
-      "desc": "Generate website"
+      "desc": "Generate website",
+      "options": [
+        { "arg": "-o, --out-dir <outDir>", "desc": "Output directory containing generated website | default: out" }
+      ],
+      "examples": [
+        "ae86 gen",
+        "ae86 --out-dir public gen"
+      ]
     },
     "watch": {
-      "desc": "Watch for changes and automatically regenerate website"
+      "desc": "Watch for changes and automatically regenerate website",
+      "options": [
+        { "arg": "-o, --out-dir <outDir>", "desc": "Output directory containing generated website | default: out" }
+      ],
+      "examples": [
+        "ae86 watch",
+        "ae86 --out-dir public watch"
+      ]
     },
     "drift": {
       "desc": "Alias for watch"
     },
     "clean": {
-      "desc": "Remove website"
+      "desc": "Remove generated website",
+      "options": [
+        { "arg": "-o, --out-dir <outDir>", "desc": "Output directory containing generated website | default: out" }
+      ],
+      "examples": [
+        "ae86 clean"
+      ]
     }
   }
 }

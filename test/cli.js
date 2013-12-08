@@ -103,5 +103,16 @@ buster.testCase('cli - clean', {
       done();
     });
     cli.exec();
+  },
+  'should use output directory arg when provided': function (done) {
+    this.mockConsole.expects('log').withExactArgs('Removing website');
+    this.stub(bag, 'command', function (base, actions) {
+      actions.commands.clean.action({ outDir: 'someoutdir' });
+    });
+    this.stub(AE86.prototype, 'clean', function (cb) {
+      assert.equals(typeof cb, 'function');
+      done();
+    });
+    cli.exec();
   }
 });

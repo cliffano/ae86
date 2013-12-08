@@ -138,5 +138,15 @@ buster.testCase('ae86 - clean', {
     ae86.clean(function (err, result) {
       done();
     });
+  },
+  'should use custom out dir when specified': function (done) {
+    this.stub(wrench, 'rmdirRecursive', function (dir, cb) {
+      assert.equals(dir, 'someoutdir');
+      cb();
+    });
+    var ae86 = new AE86({ outDir: 'someoutdir' });
+    ae86.clean(function (err, result) {
+      done();
+    });
   }
 });
