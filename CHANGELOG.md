@@ -1,4 +1,7 @@
-### 0.0.10-pre
+### 0.0.11-pre
+*
+
+### 0.0.10
 * Add outDir flag to gen and watch/drift commands
 
 ### 0.0.9
