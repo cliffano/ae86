@@ -21,7 +21,7 @@
 - description: Command gen should generate website files at custom output directory
   command: ../../../../../bin/ae86 --out-dir public gen
   exitcode: 0
-  output: Generating website\n\+ creating public/about/team.html\n\+ creating public/index.html\n
+  output: Generating website\n\+ creating public/.+.html\n\+ creating public/.+.html\n
 
 - description: Command clean should remove website from custom output directory
   command: ../../../../../bin/ae86 --out-dir public clean
