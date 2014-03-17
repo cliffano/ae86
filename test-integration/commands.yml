@@ -1,29 +1,32 @@
+- params:
+    ae86: ../../../../../bin/ae86
+
 - description: Command help should display help information
-  command: ../../../../../bin/ae86 --help
+  command: '{ae86} --help'
   exitcode: 0
   output: 'Usage: ae86'
 
 - description: Command init should create example AE86 project files
-  command: ../../../../../bin/ae86 init
+  command: '{ae86} init'
   exitcode: 0
   output: Creating example AE86 project
 
 - description: Command gen should generate website files
-  command: ../../../../../bin/ae86 gen
+  command: '{ae86} gen'
   exitcode: 0
   output: Generating website\n\+ creating out/about/team.html\n\+ creating out/index.html\n
 
 - description: Command clean should remove website
-  command: ../../../../../bin/ae86 clean
+  command: '{ae86} clean'
   exitcode: 0
   output: Removing website
 
 - description: Command gen should generate website files at custom output directory
-  command: ../../../../../bin/ae86 --out-dir public gen
+  command: '{ae86} --out-dir public gen'
   exitcode: 0
   output: Generating website\n\+ creating public/.+.html\n\+ creating public/.+.html\n
 
 - description: Command clean should remove website from custom output directory
-  command: ../../../../../bin/ae86 --out-dir public clean
+  command: '{ae86} --out-dir public clean'
   exitcode: 0
   output: Removing website
