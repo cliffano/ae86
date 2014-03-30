@@ -171,3 +171,18 @@ Which will be rendered as ../scripts/global.js from templates under the subdirec
 This variable is an ID unique for each website generation (currently a timestamp). It's handy when you want to force the client browser to request a resource that should only be cached once for each version of the generated website, e.g. JavaScript, CSS, or image files.
 
     <script type="text/javascript" src="{relative('scripts/global.js')}?{__genId}"></script>
+
+Bob Integration
+---------------
+
+AE86 support is included in [Bob](http://github.com/cliffano/bob) build tool.
+
+Configure AE86 in `.bob.json` file:
+
+    {
+      "site": {
+        "type": "ae86"
+      }
+    }
+
+And generate the web site with `bob site` command.
