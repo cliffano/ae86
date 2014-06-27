@@ -1,8 +1,31 @@
 body {
+    background-color: #efefef;
+    color: #000000;
+    font: 14px helvetica, sans-serif;
+    line-height: 170%;
+    margin: 0;
+    padding: 0;
 }
-
+div.container, div.container-fluid {
+    max-width: 880px;
+}
+div#nav {
+    font-size: 14px;
+}
 div#header {
+    margin: 50px 10px;
+    padding-top: 20px;
+    text-align: center;
+    text-transform: uppercase;
 }
-
+div#body {
+    padding: 30px 50px;
+    text-align: left;
+}
 div#footer {
+    font-size: 90%;
+    padding: 30px 50px;
+}
+h1 {
+    font-family: oswald, roboto, sans-serif;
 }

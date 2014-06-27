@@ -1,5 +1,5 @@
 ### 0.0.11-pre
-*
+* Update example site with Bootstrap and Google Fonts
 
 ### 0.0.10
 * Add outDir flag to gen and watch/drift commands

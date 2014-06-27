@@ -1,10 +1,10 @@
 exports.params = {
   site: {
-    name: 'Examples',
+    name: 'AE86',
     url: 'http://localhost:3000'
   },
   sitemap: {
-    'index.html': { title: 'Home Page' },
-    'about/team.html': { title: 'About - Team Page', layout: 'alternative.html' }
+    'index.html': { title: 'Home' },
+    'about/team.html': { title: 'Team', layout: 'alternative.html' }
   }
 };
