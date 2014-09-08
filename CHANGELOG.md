@@ -1,4 +1,7 @@
-### 0.1.0-pre
+### 0.1.1-pre
+*
+
+### 0.1.0
 * Update example site with Bootstrap and Google Fonts
 * Set min node engine to >= v0.10.0
 
