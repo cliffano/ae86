@@ -1,5 +1,6 @@
-### 0.0.11-pre
+### 0.1.0-pre
 * Update example site with Bootstrap and Google Fonts
+* Set min node engine to >= v0.10.0
 
 ### 0.0.10
 * Add outDir flag to gen and watch/drift commands

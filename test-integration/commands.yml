@@ -14,7 +14,7 @@
 - description: Command gen should generate website files
   command: '{ae86} gen'
   exitcode: 0
-  output: Generating website\n\+ creating out/about/team.html\n\+ creating out/index.html\n
+  output: Generating website\n\+ creating out/.+.html\n\+ creating out/.+.html\n
 
 - description: Command clean should remove website
   command: '{ae86} clean'
