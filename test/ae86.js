@@ -9,6 +9,9 @@ var AE86 = require('../lib/ae86'),
   assert = referee.assert;
 
 buster.testCase('ae86 - init', {
+  setUp: function () {
+    this.mock({});
+  },
   'should delegate to ncp ncp when initialising the project': function (done) {
     this.stub(ncp, 'ncp', function (source, dest, cb) {
       assert.isTrue(source.match(/.+\/ae86\/examples$/).length === 1);
@@ -129,6 +132,9 @@ buster.testCase('ae86 - watch', {
 });
 
 buster.testCase('ae86 - clean', {
+  setUp: function () {
+    this.mock({});
+  },
   'should delegate to wrench rmdirRecursive when removing the generated website': function (done) {
     this.stub(wrench, 'rmdirRecursive', function (dir, cb) {
       assert.equals(dir, 'out');

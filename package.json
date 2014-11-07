@@ -37,13 +37,13 @@
     "jazz": "~0.0.18",
     "lodash": "~2.4.1",
     "mkdirp": "~0.5.0",
-    "ncp": "~0.6.0",
+    "ncp": "~1.0.1",
     "watch-tree-maintained": "~0.1.2",
     "wrench": "~1.5.8"
   },
   "devDependencies": {
     "buster-node": "~0.7.0",
-    "referee": "~1.0.1"
+    "referee": "~1.1.0"
   },
   "scripts": {},
   "engines": {

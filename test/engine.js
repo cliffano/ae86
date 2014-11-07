@@ -7,6 +7,9 @@ var buster = require('buster-node'),
   assert = referee.assert;
 
 buster.testCase('engine - engine', {
+  setUp: function () {
+    this.mock({});
+  },
   'should use default ext when optional ext is not specified': function () {
     var engine = new Engine();
     assert.equals(engine.ext, 'html');

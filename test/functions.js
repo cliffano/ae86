@@ -6,6 +6,7 @@ var buster = require('buster-node'),
 buster.testCase('functions - date', {
   setUp: function () {
     this.useFakeTimers(new Date(2000, 9, 10).getTime());
+    this.mock({});
   },
   'should return formatted date when format is specified': function (done) {
     var funcs = functions('somepage', {}, {});
@@ -24,6 +25,9 @@ buster.testCase('functions - date', {
 });
 
 buster.testCase('functions - include', {
+  setUp: function () {
+    this.mock({});
+  },
   'should return partial template when partial exists': function (done) {
     var funcs = functions('somepage', {}, {});
     funcs.include('somepartial', function (data) {
@@ -41,6 +45,9 @@ buster.testCase('functions - include', {
 });
 
 buster.testCase('functions - relative', {
+  setUp: function () {
+    this.mock({});
+  },
   'should return path when page is at the project root directory': function (done) {
     var funcs = functions('homepage.html', {}, {});
     funcs.relative('somepage.html', function (data) {
@@ -72,6 +79,9 @@ buster.testCase('functions - relative', {
 });
 
 buster.testCase('functions - title', {
+  setUp: function () {
+    this.mock({});
+  },
   'should return title when file exists in sitemap and it has a title': function (done) {
     var funcs = functions('somepage.html', {}, { sitemap: { 'somepage.html': { title: 'foobar' } } });
     funcs.title(function (data) {
