@@ -31,8 +31,8 @@
   },
   "dependencies": {
     "async": "~0.9.0",
-    "bagofcli": "~0.2.0",
-    "dateformat": "~1.0.8-1.2.3",
+    "bagofcli": "~0.2.1",
+    "dateformat": "1.0.8",
     "file": "~0.2.2",
     "jazz": "~0.0.18",
     "lodash": "~2.4.1",
