@@ -186,3 +186,8 @@ Configure AE86 in `.bob.json` file:
     }
 
 And generate the web site with `bob site` command.
+
+Colophon
+--------
+
+[Developer's Guide](http://cliffano.github.io/developers_guide.html#nodejs)
