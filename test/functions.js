@@ -18,7 +18,7 @@ buster.testCase('functions - date', {
   'should return date with default format when format is not specified': function (done) {
     var funcs = functions('somepage', {}, {});
     funcs.date(undefined, function (data) {
-      assert.equals(data, '2000-10-10T00:00:00+1100');
+      assert.defined(data.match(/2000-10-10T00:00:00+..../));
       done();
     });
   }
