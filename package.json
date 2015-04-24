@@ -35,14 +35,14 @@
     "dateformat": "~1.0.11",
     "file": "~0.2.2",
     "jazz": "~0.0.18",
-    "lodash": "~3.1.0",
+    "lodash": "~3.7.0",
     "mkdirp": "~0.5.0",
-    "ncp": "~1.0.1",
+    "ncp": "~2.0.0",
     "watch-tree-maintained": "~0.1.2",
     "wrench": "~1.5.8"
   },
   "devDependencies": {
-    "buster-node": "~0.7.0",
+    "buster-node": "~0.7.1",
     "referee": "~1.1.1"
   },
   "scripts": {},
