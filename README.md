@@ -1,7 +1,7 @@
 <img align="right" src="https://raw.github.com/cliffano/ae86/master/avatar.jpg" alt="Avatar"/>
 
-[![Build Status](https://secure.travis-ci.org/cliffano/ae86.png?branch=master)](http://travis-ci.org/cliffano/ae86)
-[![Dependencies Status](https://david-dm.org/cliffano/ae86.png)](http://david-dm.org/cliffano/ae86)
+[![Build Status](https://img.shields.io/travis/cliffano/ae86.svg)](http://travis-ci.org/cliffano/ae86)
+[![Dependencies Status](https://img.shields.io/david/cliffano/ae86.svg)](http://david-dm.org/cliffano/ae86)
 [![Coverage Status](https://coveralls.io/repos/cliffano/ae86/badge.png?branch=master)](https://coveralls.io/r/cliffano/ae86?branch=master)
 [![Published Version](https://badge.fury.io/js/ae86.png)](http://badge.fury.io/js/ae86)
 <br/>
