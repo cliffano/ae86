@@ -2,8 +2,8 @@
 
 [![Build Status](https://img.shields.io/travis/cliffano/ae86.svg)](http://travis-ci.org/cliffano/ae86)
 [![Dependencies Status](https://img.shields.io/david/cliffano/ae86.svg)](http://david-dm.org/cliffano/ae86)
-[![Coverage Status](https://coveralls.io/repos/cliffano/ae86/badge.png?branch=master)](https://coveralls.io/r/cliffano/ae86?branch=master)
-[![Published Version](https://badge.fury.io/js/ae86.png)](http://badge.fury.io/js/ae86)
+[![Coverage Status](https://img.shields.io/coveralls/cliffano/ae86.svg)](https://coveralls.io/r/cliffano/ae86?branch=master)
+[![Published Version](https://img.shields.io/npm/v/ae86.svg)](http://www.npmjs.com/package/ae86)
 <br/>
 [![npm Badge](https://nodei.co/npm/ae86.png)](http://npmjs.org/package/ae86)
 
