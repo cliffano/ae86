@@ -25,6 +25,6 @@
     "type": "dox-foundation"
   },
   "site": {
-    "type": "gh-pages-cli"
+    "type": "buildbranch"
   }
 }
