@@ -33,7 +33,7 @@ buster.testCase('engine - compile', {
       cb('/somebasedir', [], [ 'foo.html', 'sub/dir/bar.html', '.git', 'abc.txt' ]);
     });
     this.engine.compile('sometemplatedir', function (err, result) {
-      assert.equals(err, undefined);
+      assert.equals(err, null);
       assert.defined(result['somebasedir/foo.html']);
       assert.defined(result['somebasedir/sub/dir/bar.html']);
       done();
@@ -47,7 +47,7 @@ buster.testCase('engine - compile', {
       cb('/somebasedir', [], [ 'foo.html', 'sub\\dir\\bar.html', '.git', 'abc.txt' ]);
     });
     this.engine.compile('sometemplatedir', function (err, result) {
-      assert.equals(err, undefined);
+      assert.equals(err, null);
       assert.defined(result['somebasedir/foo.html']);
       assert.defined(result['somebasedir/sub/dir/bar.html']);
       done();
@@ -59,7 +59,7 @@ buster.testCase('engine - compile', {
       cb('/somebasedir', [], [ '.git', 'abc.txt' ]);
     });
     this.engine.compile('sometemplatedir', function (err, result) {
-      assert.equals(err, undefined);
+      assert.equals(err, null);
       assert.equals(result, {});
       done();
     });
@@ -98,7 +98,7 @@ buster.testCase('engine - merge', {
       cb();
     });
     engine.merge('someoutputdir', templates, params, function (err, result) {
-      assert.equals(err, undefined);
+      assert.equals(err, null);
       assert.equals(result[0], 'page.html');
       done();
     });
@@ -125,7 +125,7 @@ buster.testCase('engine - merge', {
       cb();
     });
     engine.merge('someoutputdir', templates, params, function (err, result) {
-      assert.equals(err, undefined);
+      assert.equals(err, null);
       assert.equals(result[0], 'page.html');
       done();
     });
@@ -178,7 +178,7 @@ buster.testCase('engine - merge', {
       cb();
     });
     engine.merge('some/output/dir', templates, params, function (err, result) {
-      assert.equals(err, undefined);
+      assert.equals(err, null);
       assert.equals(result[0], 'page.html');
       done();
     });
