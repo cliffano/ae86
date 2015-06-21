@@ -1,5 +1,5 @@
 ### 0.1.1-pre
-*
+* Add build reports to readme
 
 ### 0.1.0
 * Update example site with Bootstrap and Google Fonts
