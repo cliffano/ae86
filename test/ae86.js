@@ -1,6 +1,7 @@
 var AE86 = require('../lib/ae86'),
   buster = require('buster-node'),
   Engine = require('../lib/engine'),
+  minifier = require('minifier'),
   ncp = require('ncp'),
   p = require('path'),
   referee = require('referee'),
@@ -27,12 +28,15 @@ buster.testCase('ae86 - init', {
 
 buster.testCase('ae86 - generate', {
   setUp: function () {
+    this.mockMinifier = this.mock(minifier);
     this.mockNcp = this.mock(ncp);
     this.useFakeTimers(new Date(2000, 9, 10).getTime());
     this.ae86 = new AE86({ params: { foo: 'bar' }});
   },
   'should copy static files and process pages': function (done) {
     this.stub(process, 'cwd', function () { return p.join(__dirname, '/fixtures'); });
+    this.mockMinifier.expects('on').once().withArgs('error');
+    this.mockMinifier.expects('minify').once().withArgs('out');
     this.mockNcp.expects('ncp').once().withArgs('static', 'out').callsArgWith(2);
     this.stub(Engine.prototype, 'compile', function (dir, cb) {
       assert.isTrue(['partials', 'layouts', 'pages'].indexOf(dir) !== -1);
@@ -42,9 +46,27 @@ buster.testCase('ae86 - generate', {
       assert.equals(dir, 'out');
       assert.isObject(params.sitemap);
       assert.equals(params.__genId, '20001010000000');
-      cb();      
+      cb();
     });
     this.ae86.generate(function (err, result) {
+      done();
+    });
+  },
+  'should pass error when an error occurs while preparing static files': function (done) {
+    this.stub(process, 'cwd', function () { return p.join(__dirname, '/fixtures'); });
+    this.mockNcp.expects('ncp').once().withArgs('static', 'out').callsArgWith(2, new Error('some error'));
+    this.stub(Engine.prototype, 'compile', function (dir, cb) {
+      assert.isTrue(['partials', 'layouts', 'pages'].indexOf(dir) !== -1);
+      cb();
+    });
+    this.stub(Engine.prototype, 'merge', function (dir, templates, params, cb) {
+      assert.equals(dir, 'out');
+      assert.isObject(params.sitemap);
+      assert.equals(params.__genId, '20001010000000');
+      cb();
+    });
+    this.ae86.generate(function (err, result) {
+      assert.equals(err.message, 'some error');
       done();
     });
   }
