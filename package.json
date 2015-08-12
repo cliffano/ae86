@@ -30,12 +30,12 @@
     "test": "./test"
   },
   "dependencies": {
-    "async": "^1.2.1",
-    "bagofcli": "^0.2.2",
+    "async": "^1.4.2",
+    "bagofcli": "^0.2.3",
     "dateformat": "^1.0.11",
     "file": "^0.2.2",
     "jazz": "^0.0.18",
-    "lodash": "^3.9.3",
+    "lodash": "^3.10.1",
     "minifier": "^0.7.1",
     "mkdirp": "^0.5.1",
     "ncp": "^2.0.0",
