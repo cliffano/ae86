@@ -166,6 +166,8 @@ This template function renders a path relative to the location of the page templ
 
 Which will be rendered as ../scripts/global.js from templates under the subdirectories of pages directory, but it will be rendered as scripts/global.js from templates right under the pages directory.
 
+Note that each JavaScript and CSS file has a corresponding minified version, i.e. a somescript.js has a corresponding somescript.min.js, somestyle.css has somestyle.min.css .
+
 <strong>__genId</strong>
 
 This variable is an ID unique for each website generation (currently a timestamp). It's handy when you want to force the client browser to request a resource that should only be cached once for each version of the generated website, e.g. JavaScript, CSS, or image files.

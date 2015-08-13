@@ -1,5 +1,5 @@
 ### 0.1.2-pre
-*
+* Add JavaScript and CSS minification
 
 ### 0.1.1
 * Add build reports to readme
