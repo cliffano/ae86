@@ -1,5 +1,5 @@
 ### 0.1.3-pre
-*
+* Fix init command due to ncp->cpr module replacement
 
 ### 0.1.2
 * Add JavaScript and CSS minification

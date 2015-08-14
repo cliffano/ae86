@@ -2,7 +2,7 @@ var AE86 = require('../lib/ae86'),
   buster = require('buster-node'),
   Engine = require('../lib/engine'),
   minifier = require('minifier'),
-  ncp = require('ncp'),
+  cpr = require('cpr'),
   p = require('path'),
   referee = require('referee'),
   watchtree = require('watch-tree-maintained'),
@@ -13,8 +13,8 @@ buster.testCase('ae86 - init', {
   setUp: function () {
     this.mock({});
   },
-  'should delegate to ncp ncp when initialising the project': function (done) {
-    this.stub(ncp, 'ncp', function (source, dest, cb) {
+  'should delegate to cpr cpr when initialising the project': function (done) {
+    this.stub(cpr, 'cpr', function (source, dest, cb) {
       assert.isTrue(source.match(/.+\/ae86\/examples$/).length === 1);
       assert.equals(dest, '.');
       cb();
@@ -29,7 +29,7 @@ buster.testCase('ae86 - init', {
 buster.testCase('ae86 - generate', {
   setUp: function () {
     this.mockMinifier = this.mock(minifier);
-    this.mockNcp = this.mock(ncp);
+    this.mockCpr = this.mock(cpr);
     this.useFakeTimers(new Date(2000, 9, 10).getTime());
     this.ae86 = new AE86({ params: { foo: 'bar' }});
   },
@@ -37,7 +37,7 @@ buster.testCase('ae86 - generate', {
     this.stub(process, 'cwd', function () { return p.join(__dirname, '/fixtures'); });
     this.mockMinifier.expects('on').once().withArgs('error');
     this.mockMinifier.expects('minify').once().withArgs('out');
-    this.mockNcp.expects('ncp').once().withArgs('static', 'out').callsArgWith(2);
+    this.mockCpr.expects('cpr').once().withArgs('static', 'out').callsArgWith(2);
     this.stub(Engine.prototype, 'compile', function (dir, cb) {
       assert.isTrue(['partials', 'layouts', 'pages'].indexOf(dir) !== -1);
       cb();
@@ -54,7 +54,7 @@ buster.testCase('ae86 - generate', {
   },
   'should pass error when an error occurs while preparing static files': function (done) {
     this.stub(process, 'cwd', function () { return p.join(__dirname, '/fixtures'); });
-    this.mockNcp.expects('ncp').once().withArgs('static', 'out').callsArgWith(2, new Error('some error'));
+    this.mockCpr.expects('cpr').once().withArgs('static', 'out').callsArgWith(2, new Error('some error'));
     this.stub(Engine.prototype, 'compile', function (dir, cb) {
       assert.isTrue(['partials', 'layouts', 'pages'].indexOf(dir) !== -1);
       cb();
