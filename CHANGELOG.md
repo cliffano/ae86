@@ -1,4 +1,7 @@
-### 0.1.3-pre
+### 0.1.4-pre
+*
+
+### 0.1.3
 * Fix init command due to ncp->cpr module replacement
 
 ### 0.1.2
