@@ -15,7 +15,7 @@ buster.testCase('ae86 - init', {
   },
   'should delegate to cpr cpr when initialising the project': function (done) {
     this.stub(cpr, 'cpr', function (source, dest, cb) {
-      assert.isTrue(source.match(/.+\/ae86\/examples$/).length === 1);
+      assert.isTrue(source.match(/.+\/examples$/).length === 1);
       assert.equals(dest, '.');
       cb();
     });
