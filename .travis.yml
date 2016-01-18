@@ -15,7 +15,6 @@ addons:
     packages:
       - g++-4.8
 before_install:
-  - npm update -g npm
   - npm install -g bob coveralls --loglevel error
 script:
   - DEBUG=canihaz bob build
