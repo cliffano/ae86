@@ -1,11 +1,8 @@
 ### 1.0.1
-*
+* Set min node engine to >= 4.0.0
 
 ### 1.0.0
-*
-
-### 0.1.4-pre
-*
+* First stable release
 
 ### 0.1.3
 * Fix init command due to ncp->cpr module replacement
