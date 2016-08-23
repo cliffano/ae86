@@ -1,3 +1,6 @@
+### 1.0.3
+*
+
 ### 1.0.2
 * Add generator meta tag to all pages
 
