@@ -1,5 +1,5 @@
 ### 1.0.2
-*
+* Add generator meta tag to all pages
 
 ### 1.0.1
 * Set min node engine to >= 4.0.0
@@ -42,7 +42,7 @@
 * Add clean target to remove the generated website
 * Fix fileDeleted event handling in watch mode, no longer keeps deleted file in generated website
 
-### 0.0.4 
+### 0.0.4
 * Display usage on arg-less comamand
 * Upgrade jazz to v0.0.18, file to v0.2.0
 * Replace watch-tree module with watch-tree-maintained for node v0.6.x compatibility
