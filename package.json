@@ -30,14 +30,14 @@
     "test": "./test"
   },
   "dependencies": {
-    "async": "^2.0.1",
-    "bagofcli": "^0.2.5",
+    "async": "^2.1.1",
+    "bagofcli": "^1.0.0",
     "cheerio": "^0.22.0",
     "cpr": "^2.0.0",
     "dateformat": "^1.0.12",
     "file": "^0.2.2",
     "jazz": "^0.0.18",
-    "lodash": "^4.15.0",
+    "lodash": "^4.16.4",
     "minifier": "^0.8.0",
     "mkdirp": "^0.5.1",
     "watch-tree-maintained": "^0.1.2",
