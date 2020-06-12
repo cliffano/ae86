@@ -31,21 +31,21 @@
   },
   "dependencies": {
     "async": "^2.1.4",
-    "bagofcli": "^1.0.0",
+    "bagofcli": "^2.0.0",
     "cheerio": "^0.22.0",
     "cpr": "^2.0.2",
     "dateformat": "^2.0.0",
     "file": "^0.2.2",
+    "fs-extra": "^9.0.0",
     "jazz": "^0.0.18",
     "lodash": "^4.17.4",
     "minifier": "^0.8.1",
-    "mkdirp": "^0.5.1",
-    "watch-tree-maintained": "^0.1.2",
-    "wrench": "^1.5.9"
+    "mkdirp": "^1.0.4",
+    "watch-tree-maintained": "^0.1.2"
   },
   "devDependencies": {
     "buster-node": "^0.7.1",
-    "referee": "^1.2.0"
+    "@sinonjs/referee": "^5.0.1"
   },
   "scripts": {},
   "engines": {
