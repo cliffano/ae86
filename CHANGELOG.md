@@ -1,61 +1,97 @@
-### 1.0.3
-*
 
-### 1.0.2
-* Add generator meta tag to all pages
+# Changelog
+All notable changes to this project will be documented in this file.
 
-### 1.0.1
-* Set min node engine to >= 4.0.0
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-### 1.0.0
-* First stable release
+## [Unreleased]
 
-### 0.1.3
-* Fix init command due to ncp->cpr module replacement
+### Changed
+- 
 
-### 0.1.2
-* Add JavaScript and CSS minification
+## [v1.0.2] - 2016-08-23
 
-### 0.1.1
-* Add build reports to readme
+### Added
+- Add generator meta tag to all pages
 
-### 0.1.0
-* Update example site with Bootstrap and Google Fonts
-* Set min node engine to >= v0.10.0
+## [v1.0.1] - 2016-08-07
 
-### 0.0.10
-* Add outDir flag to gen and watch/drift commands
+### Changed
+- Set min node engine to >= 4.0.0
 
-### 0.0.9
-* Change test lib to buster-node + referee
-* Set min node engine to >= v0.8.0
+## [v1.0.0] - 2016-02-03
 
-### 0.0.8
-* Update dependencies
+### Changed
+- First stable release
 
-### 0.0.7
-* Engine template file extension is now optional, defaults to html
-* Modify gen ID format, no longer includes millisecs value
+## [v0.1.3] - 2015-08-14
 
-### 0.0.6
-* Fix incorrect URL path and directory path on Windows
+## [v0.1.2] - 2015-08-13
 
-### 0.0.5
-* Fix params.js reloading in watch mode
-* Add clean target to remove the generated website
-* Fix fileDeleted event handling in watch mode, no longer keeps deleted file in generated website
+### Added
+- Add JavaScript and CSS minification
 
-### 0.0.4
-* Display usage on arg-less comamand
-* Upgrade jazz to v0.0.18, file to v0.2.0
-* Replace watch-tree module with watch-tree-maintained for node v0.6.x compatibility
+## [v0.1.1] - 2015-06-21
 
-### 0.0.3
-* Fix watch mode to work with both files and dirs (using watch-tree)
+### Added
+- Add build reports to readme
 
-### 0.0.2
-* Refactor lib modules
-* Add watch mode
+## [v0.1.0] - 2014-09-08
 
-### 0.0.1
-* Initial version
+### Changed
+- Update example site with Bootstrap and Google Fonts
+- Set min node engine to >= v0.10.0
+
+## [v0.0.10] - 2013-12-08
+
+### Added
+- Add outDir flag to gen and watch/drift commands
+
+## [v0.0.9] - 2013-10-31
+
+### Changed
+- Change test lib to buster-node + referee
+- Set min node engine to >= v0.8.0
+
+## [v0.0.8] - 2013-06-30
+
+### Changed
+- Update dependencies
+
+## [v0.0.7] - 2013-02-17
+
+### Changed
+- Engine template file extension is now optional, defaults to html
+- Modify gen ID format, no longer includes millisecs value
+
+## [v0.0.6] - 2012-08-15
+
+## [v0.0.5] - 2012-07-27
+
+### Added
+- Add clean target to remove the generated website
+
+## [v0.0.4] - 2012-02-22
+
+### Changed
+- Display usage on arg-less comamand
+- Upgrade jazz to v0.0.18, file to v0.2.0
+- Replace watch-tree module with watch-tree-maintained for node v0.6.x compatibility
+
+## [v0.0.3] - 2012-01-07
+
+## [v0.0.2] - 2011-12-11
+
+### Added
+- Add watch mode
+
+### Changed
+- Refactor lib modules
+
+## [v0.0.1] - 2011-11-27
+
+### Added
+- Initial version
+
+
