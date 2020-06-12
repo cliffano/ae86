@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Changed
-- 
+- Set min node engine to >= 13.0.0 
 
 ## [v1.0.2] - 2016-08-23
 
