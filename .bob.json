@@ -1,28 +1,22 @@
 {
   "build": "clean lint complexity test coverage test-integration doc",
   "lint": {
-    "type": "jshint"
+    "type": "eslint"
   },
   "complexity": {
     "type": "plato"
   },
   "test": {
-    "type": "buster"
-  },
-  "complexity": {
-    "type": "plato"
-  },
-  "test": {
-    "type": "buster"
-  },
-  "coverage": {
-    "type": "buster-istanbul"
+    "type": "mocha"
   },
   "test-integration": {
     "type": "cmdt"
   },
+  "coverage": {
+    "type": "c8"
+  },
   "doc": {
-    "type": "dox-foundation"
+    "type": "jsdoc"
   },
   "site": {
     "type": "buildbranch"
