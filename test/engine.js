@@ -13,12 +13,12 @@
 //   });
 
 //   it('should use default ext when optional ext is not specified', function () {
-//     var engine = new Engine();
+//     const engine = new Engine();
 //     assert.equals(engine.ext, 'html');
 //   });
 
 //   it('should use specified ext', function () {
-//     var engine = new Engine({ ext: 'someext' });
+//     const engine = new Engine({ ext: 'someext' });
 //     assert.equals(engine.ext, 'someext');
 //   });
 // });
@@ -80,7 +80,7 @@
 //   });
 
 //   it('should merge partials in page templates with non-default template', function (done) {
-//     var templates = {
+//     const templates = {
 //         partials: { 'footer.html': jazz.compile('Some footer text') },
 //         pages: { 'page.html': jazz.compile('{include(\'footer.html\')}') },
 //         layouts: { 'somelayout.html': jazz.compile('{content}') }
@@ -114,7 +114,7 @@
 //   });
 
 //   it('should merge layouts in page templates', function (done) {
-//     var templates = {
+//     const templates = {
 //         partials: {},
 //         pages: { 'page.html': jazz.compile('Some content') },
 //         layouts: { 'default.html': jazz.compile('Some layout {content}') }
@@ -142,7 +142,7 @@
 //   });
 
 //   it('should merge parameters in page templates and pass any error', function (done) {
-//     var templates = {
+//     const templates = {
 //         partials: {},
 //         pages: { 'page.html': jazz.compile('Some content with param {foo}') },
 //         layouts: { 'default.html': jazz.compile('{content}') }
@@ -169,7 +169,7 @@
 //   });
 
 //   it('should log command message when there is no error while writing the page file', function (done) {
-//     var templates = {
+//     const templates = {
 //         partials: {},
 //         pages: { 'page.html': jazz.compile('Some content with param {foo}') },
 //         layouts: { 'default.html': jazz.compile('{content}') }
@@ -197,7 +197,7 @@
 //   });
 
 //   it('should pass error to callback when directory cannot be created', function (done) {
-//     var templates = {
+//     const templates = {
 //         partials: {},
 //         pages: { 'page.html': jazz.compile('Some content with param {foo}') },
 //         layouts: { 'default.html': jazz.compile('{content}') }
@@ -218,7 +218,7 @@
 //   });
 
 //   it('should create dir with *nix and Windows paths', function (done) {
-//     var templates = {
+//     const templates = {
 //         partials: {},
 //         pages: { 'page.html': jazz.compile('Some content with param {foo}') },
 //         layouts: { 'default.html': jazz.compile('{content}') }

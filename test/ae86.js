@@ -17,7 +17,7 @@ describe('ae86 - init', function() {
       assert.equals(dest, '.');
       cb();
     });
-    var ae86 = new AE86();
+    const ae86 = new AE86();
     ae86.init(function (err, result) {
       done();
     });
@@ -95,7 +95,7 @@ describe('ae86 - watch', function() {
   });
 
   it('should ignore swap files and set sample rate on project directories and files', function () {
-    var mockWatcher = {
+    const mockWatcher = {
       on: function (event, cb) {}
     };
     sinon.stub(watchtree, 'watchTree', function (file, opts) {
@@ -113,7 +113,7 @@ describe('ae86 - watch', function() {
     this.mockConsole.expects('log').once().withExactArgs('%s was created', 'layouts');
     this.mockConsole.expects('log').once().withExactArgs('%s was created', 'pages');
     this.mockConsole.expects('log').once().withExactArgs('%s was created', 'params.js');
-    var mockWatcher = {
+    const mockWatcher = {
       on: function (event, cb) {}
     };
     sinon.stub(watchtree, 'watchTree', function (file, opts) {
@@ -134,7 +134,7 @@ describe('ae86 - watch', function() {
     this.mockConsole.expects('log').once().withExactArgs('%s was modified', 'layouts');
     this.mockConsole.expects('log').once().withExactArgs('%s was modified', 'pages');
     this.mockConsole.expects('log').once().withExactArgs('%s was modified', 'params.js');
-    var mockWatcher = {
+    const mockWatcher = {
       on: function (event, cb) {}
     };
     sinon.stub(watchtree, 'watchTree', function (file, opts) {
@@ -155,7 +155,7 @@ describe('ae86 - watch', function() {
     this.mockConsole.expects('log').once().withExactArgs('%s was deleted', 'layouts');
     this.mockConsole.expects('log').once().withExactArgs('%s was deleted', 'pages');
     this.mockConsole.expects('log').once().withExactArgs('%s was deleted', 'params.js');
-    var mockWatcher = {
+    const mockWatcher = {
       on: function (event, cb) {}
     };
     sinon.stub(watchtree, 'watchTree', function (file, opts) {
@@ -178,7 +178,7 @@ describe('ae86 - clean', function() {
       assert.equals(dir, 'out');
       cb();
     });
-    var ae86 = new AE86();
+    const ae86 = new AE86();
     ae86.clean(function (err, result) {
       done();
     });
@@ -189,7 +189,7 @@ describe('ae86 - clean', function() {
       assert.equals(dir, 'someoutdir');
       cb();
     });
-    var ae86 = new AE86({ outDir: 'someoutdir' });
+    const ae86 = new AE86({ outDir: 'someoutdir' });
     ae86.clean(function (err, result) {
       done();
     });

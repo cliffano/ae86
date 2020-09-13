@@ -8,7 +8,7 @@ const assert = referee.assert;
 describe('cli - exec', function() {
 
   it('should contain commands with actions', function (done) {
-    var mockCommand = function (base, actions) {
+    const mockCommand = function (base, actions) {
       assert.defined(base);
       assert.defined(actions.commands.init.action);
       assert.defined(actions.commands.gen.action);
