@@ -1,3 +1,4 @@
+"use strict"
 import AE86 from '../lib/ae86.js';
 import bag from 'bagofcli';
 import cli from '../lib/cli.js';
@@ -9,16 +10,16 @@ describe('cli - exec', function() {
 
   it('should contain commands with actions', function (done) {
     const mockCommand = function (base, actions) {
-      assert.defined(base);
-      assert.defined(actions.commands.init.action);
-      assert.defined(actions.commands.gen.action);
-      assert.defined(actions.commands.watch.action);
-      assert.defined(actions.commands.drift.action);
-      assert.defined(actions.commands.clean.action);
+      assert.isString(base);
+      assert.isFunction(actions.commands.init.action);
+      assert.isFunction(actions.commands.gen.action);
+      assert.isFunction(actions.commands.watch.action);
+      assert.isFunction(actions.commands.drift.action);
+      assert.isFunction(actions.commands.clean.action);
       done();
     };
     sinon.mock({});
-    sinon.stub(bag, 'command', mockCommand);
+    sinon.stub(bag, 'command').value(mockCommand);
     cli.exec();
   });
 });
@@ -36,10 +37,10 @@ describe('cli - init', function() {
 
   it('should contain init command and delegate to ae86 init when exec is called', function (done) {
     this.mockConsole.expects('log').withExactArgs('Creating example AE86 project');
-    sinon.stub(bag, 'command', function (base, actions) {
+    sinon.stub(bag, 'command').value(function (base, actions) {
       actions.commands.init.action();
     });
-    sinon.stub(AE86.prototype, 'init', function (cb) {
+    sinon.stub(AE86.prototype, 'init').value(function (cb) {
       assert.equals(typeof cb, 'function');
       done();
     });
@@ -60,10 +61,10 @@ describe('cli - gen', function() {
 
   it('should contain gen command and delegate to ae86 generate when exec is called', function (done) {
     this.mockConsole.expects('log').withExactArgs('Generating website');
-    sinon.stub(bag, 'command', function (base, actions) {
+    sinon.stub(bag, 'command').value(function (base, actions) {
       actions.commands.gen.action();
     });
-    sinon.stub(AE86.prototype, 'generate', function (cb) {
+    sinon.stub(AE86.prototype, 'generate').value(function (cb) {
       assert.equals(typeof cb, 'function');
       done();
     });
@@ -84,10 +85,10 @@ describe('cli - watch', function() {
 
   it('should contain watch command and delegate to ae86 watch when exec is called', function (done) {
     this.mockConsole.expects('log').withExactArgs('Watching for changes and automatically regenerating website');
-    sinon.stub(bag, 'command', function (base, actions) {
+    sinon.stub(bag, 'command').value(function (base, actions) {
       actions.commands.watch.action();
     });
-    sinon.stub(AE86.prototype, 'watch', function (cb) {
+    sinon.stub(AE86.prototype, 'watch').value(function (cb) {
       assert.equals(typeof cb, 'function');
       done();
     });
@@ -108,10 +109,10 @@ describe('cli - drift', function() {
 
   it('should contain drift command and delegate to ae86 watch when exec is called', function (done) {
     this.mockConsole.expects('log').withExactArgs('Watching for changes and automatically regenerating website');
-    sinon.stub(bag, 'command', function (base, actions) {
+    sinon.stub(bag, 'command').value(function (base, actions) {
       actions.commands.watch.action();
     });
-    sinon.stub(AE86.prototype, 'watch', function (cb) {
+    sinon.stub(AE86.prototype, 'watch').value(function (cb) {
       assert.equals(typeof cb, 'function');
       done();
     });
@@ -132,10 +133,10 @@ describe('cli - clean', function() {
 
   it('should contain clean command and delegate to ae86 clean when exec is called', function (done) {
     this.mockConsole.expects('log').withExactArgs('Removing website');
-    sinon.stub(bag, 'command', function (base, actions) {
+    sinon.stub(bag, 'command').value(function (base, actions) {
       actions.commands.clean.action();
     });
-    sinon.stub(AE86.prototype, 'clean', function (cb) {
+    sinon.stub(AE86.prototype, 'clean').value(function (cb) {
       assert.equals(typeof cb, 'function');
       done();
     });
@@ -144,10 +145,10 @@ describe('cli - clean', function() {
 
   it('should use output directory arg when provided', function (done) {
     this.mockConsole.expects('log').withExactArgs('Removing website');
-    sinon.stub(bag, 'command', function (base, actions) {
+    sinon.stub(bag, 'command').value(function (base, actions) {
       actions.commands.clean.action({ outDir: 'someoutdir' });
     });
-    sinon.stub(AE86.prototype, 'clean', function (cb) {
+    sinon.stub(AE86.prototype, 'clean').value(function (cb) {
       assert.equals(typeof cb, 'function');
       done();
     });
