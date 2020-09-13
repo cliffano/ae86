@@ -1,20 +1,18 @@
-var AE86 = require('../lib/ae86'),
-  buster = require('buster-node'),
-  Engine = require('../lib/engine'),
-  minifier = require('minifier'),
-  cpr = require('cpr'),
-  p = require('path'),
-  referee = require('referee'),
-  watchtree = require('watch-tree-maintained'),
-  wrench = require('wrench'),
-  assert = referee.assert;
+import AE86 from '../lib/ae86.js';
+import Engine from '../lib/engine.js';
+import minifier from 'minifier';
+import cpr from 'cpr';
+import p from 'path';
+import referee from '@sinonjs/referee';
+import sinon from 'sinon';
+import watchtree from 'watch-tree-maintained';
+import wrench from 'wrench';
+const assert = referee.assert;
 
-buster.testCase('ae86 - init', {
-  setUp: function () {
-    this.mock({});
-  },
-  'should delegate to cpr cpr when initialising the project': function (done) {
-    this.stub(cpr, 'cpr', function (source, dest, cb) {
+describe('ae86 - init', function() {
+
+  it('should delegate to cpr cpr when initialising the project', function (done) {
+    sinon.stub(cpr, 'cpr', function (source, dest, cb) {
       assert.isTrue(source.match(/.+\/examples$/).length === 1);
       assert.equals(dest, '.');
       cb();
@@ -23,26 +21,35 @@ buster.testCase('ae86 - init', {
     ae86.init(function (err, result) {
       done();
     });
-  }
+  });
 });
 
-buster.testCase('ae86 - generate', {
-  setUp: function () {
-    this.mockMinifier = this.mock(minifier);
-    this.mockCpr = this.mock(cpr);
-    this.useFakeTimers(new Date(2000, 9, 10).getTime());
+describe('ae86 - generate', function() {
+
+  beforeEach(function () {
+    this.mockMinifier = sinon.mock(minifier);
+    this.mockCpr = sinon.mock(cpr);
+    sinon.useFakeTimers(new Date(2000, 9, 10).getTime());
     this.ae86 = new AE86({ params: { foo: 'bar' }});
-  },
-  'should copy static files and process pages': function (done) {
-    this.stub(process, 'cwd', function () { return p.join(__dirname, '/fixtures'); });
+  });
+
+  afterEach(function () {
+    this.mockMinifier.verify();
+    this.mockMinifier.restore();
+    this.mockCpr.verify();
+    this.mockCpr.restore();
+  });
+
+  it('should copy static files and process pages', function (done) {
+    sinon.stub(process, 'cwd', function () { return p.join(__dirname, '/fixtures'); });
     this.mockMinifier.expects('on').once().withArgs('error');
     this.mockMinifier.expects('minify').once().withArgs('out');
     this.mockCpr.expects('cpr').once().withArgs('static', 'out').callsArgWith(2);
-    this.stub(Engine.prototype, 'compile', function (dir, cb) {
+    sinon.stub(Engine.prototype, 'compile', function (dir, cb) {
       assert.isTrue(['partials', 'layouts', 'pages'].indexOf(dir) !== -1);
       cb();
     });
-    this.stub(Engine.prototype, 'merge', function (dir, templates, params, cb) {
+    sinon.stub(Engine.prototype, 'merge', function (dir, templates, params, cb) {
       assert.equals(dir, 'out');
       assert.isObject(params.sitemap);
       assert.equals(params.__genId, '20001010000000');
@@ -51,15 +58,16 @@ buster.testCase('ae86 - generate', {
     this.ae86.generate(function (err, result) {
       done();
     });
-  },
-  'should pass error when an error occurs while preparing static files': function (done) {
-    this.stub(process, 'cwd', function () { return p.join(__dirname, '/fixtures'); });
+  });
+
+  it('should pass error when an error occurs while preparing static files', function (done) {
+    sinon.stub(process, 'cwd', function () { return p.join(__dirname, '/fixtures'); });
     this.mockCpr.expects('cpr').once().withArgs('static', 'out').callsArgWith(2, new Error('some error'));
-    this.stub(Engine.prototype, 'compile', function (dir, cb) {
+    sinon.stub(Engine.prototype, 'compile', function (dir, cb) {
       assert.isTrue(['partials', 'layouts', 'pages'].indexOf(dir) !== -1);
       cb();
     });
-    this.stub(Engine.prototype, 'merge', function (dir, templates, params, cb) {
+    sinon.stub(Engine.prototype, 'merge', function (dir, templates, params, cb) {
       assert.equals(dir, 'out');
       assert.isObject(params.sitemap);
       assert.equals(params.__genId, '20001010000000');
@@ -69,29 +77,37 @@ buster.testCase('ae86 - generate', {
       assert.equals(err.message, 'some error');
       done();
     });
-  }
+  });
 });
 
-buster.testCase('ae86 - watch', {
-  setUp: function () {
-    this.mockConsole = this.mock(console);
-    this.stub(process, 'cwd', function () { return '/somepath'; });
+describe('ae86 - watch', function() {
+
+  beforeEach(function () {
+    this.mockConsole = sinon.mock(console);
+    sinon.stub(process, 'cwd', function () { return '/somepath'; });
     this.ae86 = new AE86();
     require.cache['/somepath/params.js'] = { foo: 'bar' };
-  },
-  'should ignore swap files and set sample rate on project directories and files': function () {
+  });
+
+  afterEach(function () {
+    this.mockConsole.verify();
+    this.mockConsole.restore();
+  });
+
+  it('should ignore swap files and set sample rate on project directories and files', function () {
     var mockWatcher = {
       on: function (event, cb) {}
     };
-    this.stub(watchtree, 'watchTree', function (file, opts) {
+    sinon.stub(watchtree, 'watchTree', function (file, opts) {
       assert.isTrue(['static', 'partials', 'layouts', 'pages', 'params.js'].indexOf(file) !== -1);
       assert.equals(opts.ignore, '\\.swp');
       assert.equals(opts['sample-rate'], 5);
       return { on: function (event, cb) {} };
     });
     this.ae86.watch();
-  },
-  'should log message and set listener when a file is created': function () {
+  });
+
+  it('should log message and set listener when a file is created', function () {
     this.mockConsole.expects('log').once().withExactArgs('%s was created', 'static');
     this.mockConsole.expects('log').once().withExactArgs('%s was created', 'partials');
     this.mockConsole.expects('log').once().withExactArgs('%s was created', 'layouts');
@@ -100,7 +116,7 @@ buster.testCase('ae86 - watch', {
     var mockWatcher = {
       on: function (event, cb) {}
     };
-    this.stub(watchtree, 'watchTree', function (file, opts) {
+    sinon.stub(watchtree, 'watchTree', function (file, opts) {
       return { on: function (event, cb) {
         if (event === 'fileCreated') {
           cb('somepath', 'somestats');
@@ -110,8 +126,9 @@ buster.testCase('ae86 - watch', {
     this.ae86.generate = this.spy();
     this.ae86.clean = this.spy();
     this.ae86.watch();
-  },
-  'should log message and set listener when a file is modified': function () {
+  });
+
+  it('should log message and set listener when a file is modified', function () {
     this.mockConsole.expects('log').once().withExactArgs('%s was modified', 'static');
     this.mockConsole.expects('log').once().withExactArgs('%s was modified', 'partials');
     this.mockConsole.expects('log').once().withExactArgs('%s was modified', 'layouts');
@@ -120,7 +137,7 @@ buster.testCase('ae86 - watch', {
     var mockWatcher = {
       on: function (event, cb) {}
     };
-    this.stub(watchtree, 'watchTree', function (file, opts) {
+    sinon.stub(watchtree, 'watchTree', function (file, opts) {
       return { on: function (event, cb) {
         if (event === 'fileModified') {
           cb('somepath', 'somestats');
@@ -130,8 +147,9 @@ buster.testCase('ae86 - watch', {
     this.ae86.generate = this.spy();
     this.ae86.clean = this.spy();
     this.ae86.watch();
-  },
-  'should log message and set listener when a file is deleted': function () {
+  });
+
+  it('should log message and set listener when a file is deleted', function () {
     this.mockConsole.expects('log').once().withExactArgs('%s was deleted', 'static');
     this.mockConsole.expects('log').once().withExactArgs('%s was deleted', 'partials');
     this.mockConsole.expects('log').once().withExactArgs('%s was deleted', 'layouts');
@@ -140,7 +158,7 @@ buster.testCase('ae86 - watch', {
     var mockWatcher = {
       on: function (event, cb) {}
     };
-    this.stub(watchtree, 'watchTree', function (file, opts) {
+    sinon.stub(watchtree, 'watchTree', function (file, opts) {
       return { on: function (event, cb) {
         if (event === 'fileDeleted') {
           cb('somepath', 'somestats');
@@ -150,15 +168,13 @@ buster.testCase('ae86 - watch', {
     this.ae86.generate = this.spy();
     this.ae86.clean = this.spy();
     this.ae86.watch();
-  }
+  });
 });
 
-buster.testCase('ae86 - clean', {
-  setUp: function () {
-    this.mock({});
-  },
-  'should delegate to wrench rmdirRecursive when removing the generated website': function (done) {
-    this.stub(wrench, 'rmdirRecursive', function (dir, cb) {
+describe('ae86 - clean', function() {
+
+  it('should delegate to wrench rmdirRecursive when removing the generated website', function (done) {
+    sinon.stub(wrench, 'rmdirRecursive', function (dir, cb) {
       assert.equals(dir, 'out');
       cb();
     });
@@ -166,9 +182,10 @@ buster.testCase('ae86 - clean', {
     ae86.clean(function (err, result) {
       done();
     });
-  },
-  'should use custom out dir when specified': function (done) {
-    this.stub(wrench, 'rmdirRecursive', function (dir, cb) {
+  });
+
+  it('should use custom out dir when specified', function (done) {
+    sinon.stub(wrench, 'rmdirRecursive', function (dir, cb) {
       assert.equals(dir, 'someoutdir');
       cb();
     });
@@ -176,5 +193,5 @@ buster.testCase('ae86 - clean', {
     ae86.clean(function (err, result) {
       done();
     });
-  }
+  });
 });

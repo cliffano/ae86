@@ -1,5 +1,6 @@
 {
   "name": "ae86",
+  "type": "module",
   "description": "Old school static website generator.",
   "keywords": [
     "static",
@@ -12,9 +13,9 @@
   "contributors": [
     "All contributors (https://github.com/cliffano/ae86/graphs/contributors)"
   ],
-  "main": "./lib/ae86",
+  "main": "./lib/ae86.js",
   "bin": {
-    "ae86": "./bin/ae86"
+    "ae86": "./bin/ae86.js"
   },
   "preferGlobal": true,
   "repository": {
@@ -31,7 +32,7 @@
   },
   "dependencies": {
     "async": "^2.1.4",
-    "bagofcli": "^2.0.0",
+    "bagofcli": "^2.0.2",
     "cheerio": "^0.22.0",
     "cpr": "^2.0.2",
     "dateformat": "^2.0.0",
@@ -41,10 +42,11 @@
     "lodash": "^4.17.4",
     "minifier": "^0.8.1",
     "mkdirp": "^1.0.4",
-    "watch-tree-maintained": "^0.1.2"
+    "watch-tree-maintained": "^0.1.2",
+    "wrench": "^1.5.9"
   },
   "devDependencies": {
-    "buster-node": "^0.7.1",
+    "sinon": "^9.0.2",
     "@sinonjs/referee": "^5.0.1"
   },
   "scripts": {},
