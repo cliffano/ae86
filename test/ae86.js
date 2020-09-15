@@ -1,3 +1,4 @@
+"use strict"
 import AE86 from '../lib/ae86.js';
 import Engine from '../lib/engine.js';
 import minifier from 'minifier';
@@ -12,7 +13,7 @@ const assert = referee.assert;
 describe('ae86 - init', function() {
 
   it('should delegate to cpr cpr when initialising the project', function (done) {
-    sinon.stub(cpr, 'cpr', function (source, dest, cb) {
+    sinon.stub(cpr, 'cpr').value(function (source, dest, cb) {
       assert.isTrue(source.match(/.+\/examples$/).length === 1);
       assert.equals(dest, '.');
       cb();
@@ -41,33 +42,35 @@ describe('ae86 - generate', function() {
   });
 
   it('should copy static files and process pages', function (done) {
-    sinon.stub(process, 'cwd', function () { return p.join(__dirname, '/fixtures'); });
+    sinon.stub(process, 'cwd').value(function () { return p.join(__dirname, '/fixtures'); });
     this.mockMinifier.expects('on').once().withArgs('error');
     this.mockMinifier.expects('minify').once().withArgs('out');
     this.mockCpr.expects('cpr').once().withArgs('static', 'out').callsArgWith(2);
-    sinon.stub(Engine.prototype, 'compile', function (dir, cb) {
+    const compileStub = sinon.stub(Engine.prototype, 'compile').value(function (dir, cb) {
       assert.isTrue(['partials', 'layouts', 'pages'].indexOf(dir) !== -1);
       cb();
     });
-    sinon.stub(Engine.prototype, 'merge', function (dir, templates, params, cb) {
+    const mergeStub = sinon.stub(Engine.prototype, 'merge').value(function (dir, templates, params, cb) {
       assert.equals(dir, 'out');
       assert.isObject(params.sitemap);
       assert.equals(params.__genId, '20001010000000');
       cb();
     });
     this.ae86.generate(function (err, result) {
+      compileStub.restore();
+      mergeStub.restore();
       done();
     });
   });
 
   it('should pass error when an error occurs while preparing static files', function (done) {
-    sinon.stub(process, 'cwd', function () { return p.join(__dirname, '/fixtures'); });
+    sinon.stub(process, 'cwd').value(function () { return p.join(__dirname, '/fixtures'); });
     this.mockCpr.expects('cpr').once().withArgs('static', 'out').callsArgWith(2, new Error('some error'));
-    sinon.stub(Engine.prototype, 'compile', function (dir, cb) {
+    const compileStub = sinon.stub(Engine.prototype, 'compile').value(function (dir, cb) {
       assert.isTrue(['partials', 'layouts', 'pages'].indexOf(dir) !== -1);
       cb();
     });
-    sinon.stub(Engine.prototype, 'merge', function (dir, templates, params, cb) {
+    const mergeStub = sinon.stub(Engine.prototype, 'merge').value(function (dir, templates, params, cb) {
       assert.equals(dir, 'out');
       assert.isObject(params.sitemap);
       assert.equals(params.__genId, '20001010000000');
@@ -75,6 +78,8 @@ describe('ae86 - generate', function() {
     });
     this.ae86.generate(function (err, result) {
       assert.equals(err.message, 'some error');
+      compileStub.restore();
+      mergeStub.restore();
       done();
     });
   });
@@ -84,9 +89,8 @@ describe('ae86 - watch', function() {
 
   beforeEach(function () {
     this.mockConsole = sinon.mock(console);
-    sinon.stub(process, 'cwd', function () { return '/somepath'; });
+    sinon.stub(process, 'cwd').value(function () { return '/somepath'; });
     this.ae86 = new AE86();
-    require.cache['/somepath/params.js'] = { foo: 'bar' };
   });
 
   afterEach(function () {
@@ -98,7 +102,7 @@ describe('ae86 - watch', function() {
     const mockWatcher = {
       on: function (event, cb) {}
     };
-    sinon.stub(watchtree, 'watchTree', function (file, opts) {
+    sinon.stub(watchtree, 'watchTree').value(function (file, opts) {
       assert.isTrue(['static', 'partials', 'layouts', 'pages', 'params.js'].indexOf(file) !== -1);
       assert.equals(opts.ignore, '\\.swp');
       assert.equals(opts['sample-rate'], 5);
@@ -116,15 +120,15 @@ describe('ae86 - watch', function() {
     const mockWatcher = {
       on: function (event, cb) {}
     };
-    sinon.stub(watchtree, 'watchTree', function (file, opts) {
+    sinon.stub(watchtree, 'watchTree').value(function (file, opts) {
       return { on: function (event, cb) {
         if (event === 'fileCreated') {
           cb('somepath', 'somestats');
         }
       }};
     });
-    this.ae86.generate = this.spy();
-    this.ae86.clean = this.spy();
+    this.ae86.generate = sinon.spy();
+    this.ae86.clean = sinon.spy();
     this.ae86.watch();
   });
 
@@ -137,15 +141,15 @@ describe('ae86 - watch', function() {
     const mockWatcher = {
       on: function (event, cb) {}
     };
-    sinon.stub(watchtree, 'watchTree', function (file, opts) {
+    sinon.stub(watchtree, 'watchTree').value(function (file, opts) {
       return { on: function (event, cb) {
         if (event === 'fileModified') {
           cb('somepath', 'somestats');
         }
       }};
     });
-    this.ae86.generate = this.spy();
-    this.ae86.clean = this.spy();
+    this.ae86.generate = sinon.spy();
+    this.ae86.clean = sinon.spy();
     this.ae86.watch();
   });
 
@@ -158,15 +162,15 @@ describe('ae86 - watch', function() {
     const mockWatcher = {
       on: function (event, cb) {}
     };
-    sinon.stub(watchtree, 'watchTree', function (file, opts) {
+    sinon.stub(watchtree, 'watchTree').value(function (file, opts) {
       return { on: function (event, cb) {
         if (event === 'fileDeleted') {
           cb('somepath', 'somestats');
         }
       }};
     });
-    this.ae86.generate = this.spy();
-    this.ae86.clean = this.spy();
+    this.ae86.generate = sinon.spy();
+    this.ae86.clean = sinon.spy();
     this.ae86.watch();
   });
 });
@@ -174,7 +178,7 @@ describe('ae86 - watch', function() {
 describe('ae86 - clean', function() {
 
   it('should delegate to wrench rmdirRecursive when removing the generated website', function (done) {
-    sinon.stub(wrench, 'rmdirRecursive', function (dir, cb) {
+    sinon.stub(wrench, 'rmdirRecursive').value(function (dir, cb) {
       assert.equals(dir, 'out');
       cb();
     });
@@ -185,7 +189,7 @@ describe('ae86 - clean', function() {
   });
 
   it('should use custom out dir when specified', function (done) {
-    sinon.stub(wrench, 'rmdirRecursive', function (dir, cb) {
+    sinon.stub(wrench, 'rmdirRecursive').value(function (dir, cb) {
       assert.equals(dir, 'someoutdir');
       cb();
     });
