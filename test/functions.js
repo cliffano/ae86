@@ -1,4 +1,5 @@
 "use strict"
+/* eslint no-unused-vars: 0 */
 import functions from '../lib/functions.js';
 import referee from '@sinonjs/referee';
 import sinon from 'sinon';

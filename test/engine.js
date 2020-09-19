@@ -1,4 +1,5 @@
 "use strict"
+/* eslint no-unused-vars: 0 */
 import Engine from '../lib/engine.js';
 import f from 'file';
 import fs from 'fs';

@@ -1,4 +1,5 @@
 "use strict"
+/* eslint no-unused-vars: 0 */
 import AE86 from '../lib/ae86.js';
 import bag from 'bagofcli';
 import cli from '../lib/cli.js';
