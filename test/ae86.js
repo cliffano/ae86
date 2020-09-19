@@ -10,6 +10,8 @@ import watchtree from 'watch-tree-maintained';
 import wrench from 'wrench';
 const assert = referee.assert;
 
+const DIRNAME = p.dirname(import.meta.url).replace('file://', '');
+
 describe('ae86 - init', function() {
 
   it('should delegate to cpr cpr when initialising the project', function (done) {
@@ -42,7 +44,7 @@ describe('ae86 - generate', function() {
   });
 
   it('should copy static files and process pages', function (done) {
-    sinon.stub(process, 'cwd').value(function () { return p.join(__dirname, '/fixtures'); });
+    sinon.stub(process, 'cwd').value(function () { return p.join(DIRNAME, '/fixtures'); });
     this.mockMinifier.expects('on').once().withArgs('error');
     this.mockMinifier.expects('minify').once().withArgs('out');
     this.mockCpr.expects('cpr').once().withArgs('static', 'out').callsArgWith(2);
@@ -64,7 +66,7 @@ describe('ae86 - generate', function() {
   });
 
   it('should pass error when an error occurs while preparing static files', function (done) {
-    sinon.stub(process, 'cwd').value(function () { return p.join(__dirname, '/fixtures'); });
+    sinon.stub(process, 'cwd').value(function () { return p.join(DIRNAME, '/fixtures'); });
     this.mockCpr.expects('cpr').once().withArgs('static', 'out').callsArgWith(2, new Error('some error'));
     const compileStub = sinon.stub(Engine.prototype, 'compile').value(function (dir, cb) {
       assert.isTrue(['partials', 'layouts', 'pages'].indexOf(dir) !== -1);
