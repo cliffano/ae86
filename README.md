@@ -1,6 +1,7 @@
 <img align="right" src="https://raw.github.com/cliffano/ae86/master/avatar.jpg" alt="Avatar"/>
 
-[![Build Status](https://img.shields.io/travis/cliffano/ae86.svg)](http://travis-ci.org/cliffano/ae86)
+[![Build Status](https://github.com/cliffano/ae86/workflows/CI/badge.svg)](https://github.com/cliffano/ae86/actions?query=workflow%3ACI)
+[![Vulnerabilities Status](https://snyk.io/test/github/cliffano/ae86/badge.svg)](https://snyk.io/test/github/cliffano/ae86)
 [![Dependencies Status](https://img.shields.io/david/cliffano/ae86.svg)](http://david-dm.org/cliffano/ae86)
 [![Coverage Status](https://img.shields.io/coveralls/cliffano/ae86.svg)](https://coveralls.io/r/cliffano/ae86?branch=master)
 [![Published Version](https://img.shields.io/npm/v/ae86.svg)](http://www.npmjs.com/package/ae86)
@@ -197,7 +198,7 @@ Colophon
 Build reports:
 
 * [Code complexity report](http://cliffano.github.io/ae86/complexity/plato/index.html)
-* [Unit tests report](http://cliffano.github.io/ae86/test/buster.out)
-* [Test coverage report](http://cliffano.github.io/ae86/coverage/buster-istanbul/lcov-report/lib/index.html)
-* [Integration tests report](http://cliffano.github.io/ae86/test-integration/cmdt.out)
-* [API Documentation](http://cliffano.github.io/ae86/doc/dox-foundation/index.html)
+* [Unit tests report](http://cliffano.github.io/ae86/test/mocha.txt)
+* [Test coverage report](http://cliffano.github.io/ae86/coverage/c8/index.html)
+* [Integration tests report](http://cliffano.github.io/ae86/test-integration/cmdt.txt)
+* [API Documentation](http://cliffano.github.io/ae86/doc/jsdoc/index.html)
