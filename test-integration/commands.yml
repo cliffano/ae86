@@ -1,5 +1,5 @@
 - params:
-    ae86: ../../../../../bin/ae86
+    ae86: ../../../../../bin/ae86.js
 
 - description: Command help should display help information
   command: '{ae86} --help'
