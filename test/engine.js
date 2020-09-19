@@ -205,10 +205,10 @@ describe('engine - merge', function() {
       assert.equals(page, 'some/output/dir/page.html');
       assert.equals(content, 'Some content with param bar');
       assert.equals(encoding, 'utf8');
-      cb();
+      cb(new Error('Directory cannot be created'));
     });
     engine.merge('some/output/dir', templates, params, function (err, result) {
-      assert.equals(err, null);
+      assert.equals(err.message, 'Directory cannot be created');
       assert.equals(result[0], 'page.html');
       done();
     });
@@ -224,6 +224,7 @@ describe('engine - merge', function() {
       engine = new Engine();
 
     this.mockMkdirp.expects('sync').withExactArgs('some\\output');
+    this.mockConsole.expects('log').withExactArgs('+ creating %s', 'some\\output\\dir/page.html');
     sinon.stub(fs, 'writeFile').value(function (page, content, encoding, cb) {
       assert.equals(page, 'some\\output\\dir/page.html');
       assert.equals(content, 'Some content with param bar');
