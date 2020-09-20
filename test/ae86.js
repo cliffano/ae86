@@ -2,7 +2,6 @@
 /* eslint no-unused-vars: 0 */
 import AE86 from '../lib/ae86.js';
 import Engine from '../lib/engine.js';
-import minifier from 'minifier';
 import cpr from 'cpr';
 import p from 'path';
 import referee from '@sinonjs/referee';
@@ -31,23 +30,18 @@ describe('ae86 - init', function() {
 describe('ae86 - generate', function() {
 
   beforeEach(function () {
-    this.mockMinifier = sinon.mock(minifier);
     this.mockCpr = sinon.mock(cpr);
     sinon.useFakeTimers(new Date(2000, 9, 10).getTime());
     this.ae86 = new AE86({ params: { foo: 'bar' }});
   });
 
   afterEach(function () {
-    this.mockMinifier.verify();
-    this.mockMinifier.restore();
     this.mockCpr.verify();
     this.mockCpr.restore();
   });
 
   it('should copy static files and process pages', function (done) {
     sinon.stub(process, 'cwd').value(function () { return p.join(DIRNAME, '/fixtures'); });
-    this.mockMinifier.expects('on').once().withArgs('error');
-    this.mockMinifier.expects('minify').once().withArgs('out');
     this.mockCpr.expects('cpr').once().withArgs('static', 'out').callsArgWith(2);
     const compileStub = sinon.stub(Engine.prototype, 'compile').value(function (dir, cb) {
       assert.isTrue(['partials', 'layouts', 'pages'].indexOf(dir) !== -1);

@@ -40,7 +40,6 @@
     "fs-extra": "^9.0.0",
     "jazz": "^0.0.18",
     "lodash": "^4.17.4",
-    "minifier": "^0.8.1",
     "mkdirp": "^1.0.4",
     "watch-tree-maintained": "^0.1.2",
     "wrench": "^1.5.9"
