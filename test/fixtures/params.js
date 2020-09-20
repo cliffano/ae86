@@ -1,9 +1,7 @@
-const params = { foo: 'bar' };
-
-const exports = {
-  params: params
+const params = {
+  params: { foo: 'bar' }
 };
 
 export {
-  exports as default
+  params as params
 };

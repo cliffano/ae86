@@ -175,6 +175,23 @@ This variable is an ID unique for each website generation (currently a timestamp
 
     <script type="text/javascript" src="{relative('scripts/global.js')}?{__genId}"></script>
 
+Upgrade
+-------
+
+From 1.x.x to 2.x.x .
+
+Update params.js to use `export` to make the params available:
+
+    const params = {
+      site: {
+        name: "AE86",
+        url: "https://github.com/cliffano/ae86"
+      }
+    }
+    export {
+      params as params
+    }
+
 Bob Integration
 ---------------
 
