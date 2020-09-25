@@ -22,11 +22,11 @@
   output: Removing website
 
 - description: Command gen should generate website files at custom output directory
-  command: '{ae86} --out-dir public gen'
+  command: '{ae86} gen --out-dir public'
   exitcode: 0
   output: Generating website\n\+ creating public/.+.html\n\+ creating public/.+.html\n
 
 - description: Command clean should remove website from custom output directory
-  command: '{ae86} --out-dir public clean'
+  command: '{ae86} clean --out-dir public'
   exitcode: 0
   output: Removing website
