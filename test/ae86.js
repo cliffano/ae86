@@ -6,7 +6,7 @@ import cpr from 'cpr';
 import p from 'path';
 import referee from '@sinonjs/referee';
 import sinon from 'sinon';
-import watchtree from 'watch-tree-maintained';
+import watch from '@cnakazawa/watch';
 import wrench from 'wrench';
 const assert = referee.assert;
 
@@ -95,15 +95,14 @@ describe('ae86 - watch', function() {
     this.mockConsole.restore();
   });
 
-  it('should ignore swap files and set sample rate on project directories and files', function () {
-    const mockWatcher = {
-      on: function (event, cb) {}
-    };
-    sinon.stub(watchtree, 'watchTree').value(function (file, opts) {
+  it('should ignore swap files and set sample rate on project directories and files', function (done) {
+    let watchCounter = 0;
+    sinon.stub(watch, 'watchTree').value(function (file, cb) {
       assert.isTrue(['static', 'partials', 'layouts', 'pages', 'params.js'].indexOf(file) !== -1);
-      assert.equals(opts.ignore, '\\.swp');
-      assert.equals(opts['sample-rate'], 5);
-      return { on: function (event, cb) {} };
+      watchCounter += 1;
+      if (watchCounter === 5) {
+        done();
+      }
     });
     this.ae86.watch();
   });
@@ -114,15 +113,8 @@ describe('ae86 - watch', function() {
     this.mockConsole.expects('log').once().withExactArgs('%s was created', 'layouts');
     this.mockConsole.expects('log').once().withExactArgs('%s was created', 'pages');
     this.mockConsole.expects('log').once().withExactArgs('%s was created', 'params.js');
-    const mockWatcher = {
-      on: function (event, cb) {}
-    };
-    sinon.stub(watchtree, 'watchTree').value(function (file, opts) {
-      return { on: function (event, cb) {
-        if (event === 'fileCreated') {
-          cb('somepath', 'somestats');
-        }
-      }};
+    sinon.stub(watch, 'watchTree').value(function (file, cb) {
+      cb('somef', {}, null);
     });
     this.ae86.generate = sinon.spy();
     this.ae86.clean = sinon.spy();
@@ -135,15 +127,8 @@ describe('ae86 - watch', function() {
     this.mockConsole.expects('log').once().withExactArgs('%s was modified', 'layouts');
     this.mockConsole.expects('log').once().withExactArgs('%s was modified', 'pages');
     this.mockConsole.expects('log').once().withExactArgs('%s was modified', 'params.js');
-    const mockWatcher = {
-      on: function (event, cb) {}
-    };
-    sinon.stub(watchtree, 'watchTree').value(function (file, opts) {
-      return { on: function (event, cb) {
-        if (event === 'fileModified') {
-          cb('somepath', 'somestats');
-        }
-      }};
+    sinon.stub(watch, 'watchTree').value(function (file, cb) {
+      cb('somef', {}, {});
     });
     this.ae86.generate = sinon.spy();
     this.ae86.clean = sinon.spy();
@@ -156,15 +141,8 @@ describe('ae86 - watch', function() {
     this.mockConsole.expects('log').once().withExactArgs('%s was deleted', 'layouts');
     this.mockConsole.expects('log').once().withExactArgs('%s was deleted', 'pages');
     this.mockConsole.expects('log').once().withExactArgs('%s was deleted', 'params.js');
-    const mockWatcher = {
-      on: function (event, cb) {}
-    };
-    sinon.stub(watchtree, 'watchTree').value(function (file, opts) {
-      return { on: function (event, cb) {
-        if (event === 'fileDeleted') {
-          cb('somepath', 'somestats');
-        }
-      }};
+    sinon.stub(watch, 'watchTree').value(function (file, cb) {
+      cb('somef', {nlink: 0}, {});
     });
     this.ae86.generate = sinon.spy();
     this.ae86.clean = sinon.spy();
