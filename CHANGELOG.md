@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Set min node engine to >= 13.0.0
 - Subcommand options position must be after the command
+- Replace lint type from jshint to eslint
+- Replace coverage from buster-istanbul to c8
+- Replace doc type from dox-foundation to jsdoc
+- Replace Travis CI with GH Actions
 
 ### Removed
 - Remove JavaScript and CSS minification
