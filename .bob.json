@@ -1,5 +1,5 @@
 {
-  "build": "clean lint complexity test coverage test-integration doc",
+  "build": "clean dep lint complexity test coverage test-integration doc",
   "lint": {
     "type": "eslint"
   },
