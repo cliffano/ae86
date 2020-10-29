@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>engine.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="AE86.html">AE86</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AE86.html#clean">clean</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AE86.html#generate">generate</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AE86.html#init">init</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AE86.html#watch">watch</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Engine.html">Engine</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Engine.html#compile">compile</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Engine.html#merge">merge</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#exec">exec</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#funcs">funcs</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">engine.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict"
+import _ from 'lodash';
+import async from 'async';
+import cheerio from 'cheerio';
+import mkdirp from 'mkdirp';
+import f from 'file';
+import fs from 'fs';
+import functions from './functions.js';
+import jazz from 'jazz';
+import p from 'path';
+import util from 'util';
+
+const DIRNAME = p.dirname(import.meta.url).replace('file://', '');
+
+/**
+ * class Engine
+ */
+class Engine {
+
+  /**
+   * @param {String} opts: optional
+   * - ext: template file extension, files without this extension will be ignored.
+   */
+  constructor(opts) {
+    opts = opts || {};
+    this.ext = opts.ext || 'html';
+    this.version = JSON.parse(fs.readFileSync(p.join(DIRNAME, '../package.json'))).version;
+  }
+
+  /**
+   * Compile all template files (identified by file extension) in a directory.
+   * This can be done in parallel because compiling a template does not depend on other templates.
+   *
+   * @param {String} dir: directory containing the templates
+   * @param {Function} cb: standard cb(err, result) callback
+   */
+  compile(dir, cb) {
+
+    const tasks = {},
+      self = this;
+
+    function _task(base, file) {
+      const baseFile = p.join(base, file);
+      const baseUrlPath = baseFile.replace(/\\/g, '/');
+      tasks[baseUrlPath.substr(baseUrlPath.indexOf('/') + 1)] = function (cb) {
+        fs.readFile(baseFile, 'utf8', function (err, result) {
+          cb(err, jazz.compile(result));
+        });
+      };
+    }
+
+    f.walkSync(dir, function (base, dirs, files) {
+      files.forEach(function (file) {
+        if (file.match(new RegExp('\\.' + self.ext))) {
+          _task(base, file);
+        }
+      });
+    });
+
+    async.parallel(tasks, cb);
+  }
+
+  /**
+   * Compile all template files (identified by file extension) in a directory.
+   * This can be done in parallel because compiling a template does not depend on other templates.
+   *
+   * @param {String} dir: output directory where website files will be written to
+   * @param {Object} templates: compiled jazz templates
+   * @param {Object} params: template parameters and functions
+   * @param {Function} cb: standard cb(err, result) callback
+   */
+  merge(dir, templates, params, cb) {
+
+    const self = this;
+
+    // merge a set of params to a set of templates
+    function _process(templates, params, cb) {
+      const _templates = _.extend(templates, {}), // process template copies, not the originals
+        tasks = {};
+
+      _.keys(_templates).forEach(function (key) {
+        tasks[key] = function (cb) {
+          _templates[key].process(params, function (data) {
+            cb(null, data);
+          });
+        };
+      });
+
+      async.parallel(tasks, function (err, results) {
+        cb(results);
+      });
+    }
+
+    const tasks = {};
+
+    _.keys(templates.pages).forEach(function (page) {
+      tasks[page] = function (cb) {
+
+        let pageParams = _.extend(_.extend({}, params), functions(page, templates, params));
+        let pageContent;
+
+        function _mergePartials(cb) {
+          _process(templates.partials, pageParams, result => {
+            pageParams.partials = result;
+            pageParams = _.extend(pageParams, functions(page, templates, pageParams));
+            _process(templates.partials, pageParams, result => {
+              pageParams.partials = result;
+              cb();
+            });
+          });
+        }
+
+        function _mergePage(cb) {
+          _process({ currpage: templates.pages[page] }, pageParams, result => {
+            pageParams.content = result.currpage;
+            cb();
+          });
+        }
+
+        function _mergeLayout(cb) {
+          const layout = (pageParams.sitemap &amp;&amp; pageParams.sitemap[page] &amp;&amp; pageParams.sitemap[page].layout) ? pageParams.sitemap[page].layout : 'default.html';
+          _process({ currlayout: templates.layouts[layout] }, pageParams, result => {
+            const $ = cheerio.load(result.currlayout);
+            $('head').append(util.format('&lt;meta name="generator" content="AE86 %s" />', self.version));
+            pageContent = $.html();
+            cb();
+          });
+        }
+
+        function _writePage(cb) {
+          // eslint-disable-next-line no-useless-escape
+          mkdirp.sync(p.join(dir, page).replace(/(\/[^\/]+$|\\[^\\]+$)/, ''));
+          fs.writeFile(p.join(dir, page), pageContent, 'utf8', function (err) {
+            if (!err) {
+              console.log('+ creating %s', p.join(dir, page));
+            }
+            cb(err);
+          });
+        }
+
+        async.series([_mergePartials, _mergePage, _mergeLayout, _writePage], cb);
+      };
+    });
+
+    async.parallel(tasks, function (err, results) {
+      cb(err, _.keys(results));
+    });
+  }
+}
+
+export {
+  Engine as default
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Thu Oct 29 2020 23:26:39 GMT+1100 (Australian Eastern Daylight Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

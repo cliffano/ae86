@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>functions.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="AE86.html">AE86</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AE86.html#clean">clean</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AE86.html#generate">generate</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AE86.html#init">init</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AE86.html#watch">watch</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Engine.html">Engine</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Engine.html#compile">compile</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Engine.html#merge">merge</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#exec">exec</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#funcs">funcs</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">functions.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict"
+import dateformat from 'dateformat';
+
+/**
+ * Pre-defined functions which can be used as template functions.
+ * When these functions are applied to the current page, it uses page + templates + params as its context.
+ *
+ * @param {String} page: current page which these functions will be applied to
+ * @param {Object} templates: compiled jazz templates
+ * @param {Object} params: template parameters (including user-defined parameters and custom functions)
+ */
+function funcs(page, templates, params) {
+
+  /**
+   * Display the current date in specified format.
+   * Default to ISO date when format is not specified.
+   *
+   * @param {String} format: date format (felixge/node-dateformat)
+   * @param {Function} cb: jazz cb(data) callback
+   */
+  function date(format, cb) {
+    cb(dateformat(new Date(), format || 'isoDateTime'));
+  }
+
+  /**
+   * Include a partial template in the current page.
+   * An error message will be included when partial does not exist.
+   *
+   * @param {String} partial: partial template file to include
+   * @param {Function} cb: jazz cb(data) callback
+   */
+  function include(partial, cb) {
+    cb((params.partials &amp;&amp; params.partials[partial]) ?
+      params.partials[partial] :
+      '[error] partial ' + partial + ' does not exist');
+  }
+
+  /**
+   * Prefix path with one ../ for each parent directory of the page.
+   * This is used to construct static links from various directory level in the website.
+   *
+   * @param {String} path: a URL path in the site navigation
+   * @param {Function} cb: jazz cb(data) callback
+   */
+  function relative(path, cb) {
+    let value = path;
+    for (let i = 0, ln = page.length; i &lt; ln; i += 1) {
+      if (page.charAt(i) === '/') {
+        value = '../' + value;
+      }
+    }
+    cb(value);
+  }
+
+  /**
+   * Display current page's sitemap title.
+   *
+   * @param {Function} cb: jazz cb(data) callback
+   */
+  function title(cb) {
+    cb((params.sitemap &amp;&amp; params.sitemap[page]) ?
+      params.sitemap[page].title :
+      '[error] page ' + page + ' does not have any sitemap title');
+  }
+
+  return {
+    date: date,
+    include: include,
+    relative: relative,
+    title: title
+  };    
+}
+
+export {
+  funcs as default
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Thu Oct 29 2020 23:26:39 GMT+1100 (Australian Eastern Daylight Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

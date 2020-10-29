@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>ae86.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="AE86.html">AE86</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AE86.html#clean">clean</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AE86.html#generate">generate</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AE86.html#init">init</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="AE86.html#watch">watch</a></span></li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Engine.html">Engine</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Engine.html#compile">compile</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Engine.html#merge">merge</a></span></li><li class="nav-heading"><a href="global.html">Globals</a></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#exec">exec</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="global.html#funcs">funcs</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">ae86.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict"
+import async from 'async';
+import cpr from 'cpr';
+import dateformat from 'dateformat';
+import Engine from './engine.js';
+import fs from 'fs';
+import p from 'path';
+import watch from '@cnakazawa/watch';
+import wrench from 'wrench';
+
+const DIRNAME = p.dirname(import.meta.url).replace('file://', '');
+
+/**
+ * class AE86
+ */
+class AE86 {
+
+  constructor(opts) {
+    opts = opts || {};
+    this.outDir = opts.outDir || 'out';
+  }
+
+  /**
+   * Create example AE86 project files in current directory.
+   *
+   * @param {Function} cb: standard cb(err, result) callback
+   */
+  init(cb) {
+    cpr.cpr(p.join(DIRNAME, '../examples'), '.', cb);
+  }
+
+  /**
+   * Generate website based on the templates and params.
+   *
+   * @param {Function} cb: standard cb(err, result) callback
+   */
+  generate(cb) {
+
+    const self = this;
+
+    function _static(cb) {
+      // copy static files as-is
+      cpr.cpr('static', self.outDir, cb);
+    }
+
+    function _pages(cb) {
+
+      function _params(cb) {
+
+        function prepParams(result) {
+          const params = result.params;
+          // add website info
+          params.sitemap = params.sitemap || {};
+          params.__genId = dateformat('yyyymmddHHMMss');
+          cb(null, params);
+        }
+
+        // initialise userland params
+        const paramsFile = p.join(process.cwd(), 'params.js');
+        if (fs.existsSync(paramsFile)) {
+          import(paramsFile)
+            .then(result => prepParams(result))
+            .catch(err => cb(err));
+        } else {
+          cb(null, null);
+        }
+      }
+
+      const engine = new Engine(),
+        tasks = {};
+
+      ['partials', 'layouts', 'pages'].forEach((dir) => {
+        tasks[dir] = function (cb) {
+          engine.compile(dir, cb);
+        };
+      });
+
+      async.parallel(tasks, (err, results) => {
+        function prepParams(err, result) {
+          if (err) {
+            cb(err);
+          } else {
+            engine.merge(self.outDir, results, result || {}, cb);
+          }
+        }
+        _params(prepParams);
+      });
+    }
+
+    async.parallel([_static, _pages], cb);
+  }
+
+  /**
+   * Watch for any file changes in AE86 project files.
+   * A change means the project website will automatically be regenerated.
+   */
+  watch() {
+    const self = this;
+
+    function _listener() {
+      // no callback because the process shouldn't exit
+      self.generate();
+    }
+
+    function _watch(file) {
+      watch.watchTree(file, function (f, curr, prev) {
+        if (typeof f === "object" &amp;&amp; prev === null &amp;&amp; curr === null) {
+          console.log('Watching for file changes...')
+        } else if (prev === null) {
+          console.log('%s was created', file);
+          _listener();
+        } else if (curr.nlink === 0) {
+          console.log('%s was deleted', file);
+          self.clean();
+          _listener();
+        } else {
+          console.log('%s was modified', file);
+          _listener();
+        }
+      });
+    }
+
+    ['static', 'partials', 'layouts', 'pages', 'params.js'].forEach(_watch);
+  }
+
+  /**
+   * Remove the generated website.
+   *
+   * @param {Function} cb: standard cb(err, result) callback
+   */
+  clean(cb) {
+    wrench.rmdirRecursive(this.outDir, cb);
+  }
+}
+
+export {
+  AE86 as default
+};</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.6</a> on Thu Oct 29 2020 23:26:39 GMT+1100 (Australian Eastern Daylight Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
