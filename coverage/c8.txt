@@ -1,7 +1,4 @@
-(node:74166) ExperimentalWarning: Conditional exports is an experimental feature. This feature could change at any time
-(node:74167) ExperimentalWarning: The ESM module loader is experimental.
-[36mtest[39m | /Users/cliffano/dev/workspace-studio/bob/node_modules/.bin/mocha --colors --reporter spec --recursive test/
-(node:74168) ExperimentalWarning: The ESM module loader is experimental.
+test | /opt/hostedtoolcache/node/13.14.0/x64/lib/node_modules/bob/node_modules/.bin/mocha --colors --reporter spec --recursive test/
 
 [0m[0m
 [0m  ae86 - init[0m
@@ -77,9 +74,9 @@
   [32m  ✓[0m[90m should return error message when file does not exist in sitemap[0m
 
 
-[92m [0m[32m 38 passing[0m[90m (85ms)[0m
+[92m [0m[32m 38 passing[0m[90m (188ms)[0m
 
-[32mSUCCESS[39m | exit code 0
+SUCCESS | exit code 0
 --------------|---------|----------|---------|---------|-------------------
 File          | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
 --------------|---------|----------|---------|---------|-------------------
