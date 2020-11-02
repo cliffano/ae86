@@ -3,6 +3,7 @@
 import AE86 from '../lib/ae86.js';
 import Engine from '../lib/engine.js';
 import cpr from 'cpr';
+import fs from 'fs';
 import p from 'path';
 import referee from '@sinonjs/referee';
 import sinon from 'sinon';
@@ -31,6 +32,7 @@ describe('ae86 - generate', function() {
 
   beforeEach(function () {
     this.mockCpr = sinon.mock(cpr);
+    this.mockFs = sinon.mock(fs);
     sinon.useFakeTimers(new Date(2000, 9, 10).getTime());
     this.ae86 = new AE86({ params: { foo: 'bar' }});
   });
@@ -38,10 +40,13 @@ describe('ae86 - generate', function() {
   afterEach(function () {
     this.mockCpr.verify();
     this.mockCpr.restore();
+    this.mockFs.verify();
+    this.mockFs.restore();
   });
 
   it('should copy static files and process pages', function (done) {
     sinon.stub(process, 'cwd').value(function () { return p.join(DIRNAME, '/fixtures'); });
+    this.mockFs.expects('existsSync').once().withArgs(p.join(DIRNAME, '/fixtures', '/params.js')).returns(true);
     this.mockCpr.expects('cpr').once().withArgs('static', 'out').callsArgWith(2);
     const compileStub = sinon.stub(Engine.prototype, 'compile').value(function (dir, cb) {
       assert.isTrue(['partials', 'layouts', 'pages'].indexOf(dir) !== -1);
@@ -51,6 +56,39 @@ describe('ae86 - generate', function() {
       assert.equals(dir, 'out');
       assert.isObject(params.sitemap);
       assert.equals(params.__genId, '20001010000000');
+      cb();
+    });
+    this.ae86.generate(function (err, result) {
+      compileStub.restore();
+      mergeStub.restore();
+      done();
+    });
+  });
+
+  it('should handle invalid params file', function (done) {
+    sinon.stub(process, 'cwd').value(function () { return p.join(DIRNAME, '/fixtures-error'); });
+    this.mockCpr.expects('cpr').once().withArgs('static', 'out').callsArgWith(2);
+    const compileStub = sinon.stub(Engine.prototype, 'compile').value(function (dir, cb) {
+      assert.isTrue(['partials', 'layouts', 'pages'].indexOf(dir) !== -1);
+      cb();
+    });
+    this.ae86.generate(function (err, result) {
+      compileStub.restore();
+      done();
+    });
+  });
+
+  it('should handle inexisting params file', function (done) {
+    sinon.stub(process, 'cwd').value(function () { return p.join(DIRNAME, '/fixtures'); });
+    this.mockFs.expects('existsSync').once().withArgs(p.join(DIRNAME, '/fixtures', '/params.js')).returns(false);
+    this.mockCpr.expects('cpr').once().withArgs('static', 'out').callsArgWith(2);
+    const compileStub = sinon.stub(Engine.prototype, 'compile').value(function (dir, cb) {
+      assert.isTrue(['partials', 'layouts', 'pages'].indexOf(dir) !== -1);
+      cb();
+    });
+    const mergeStub = sinon.stub(Engine.prototype, 'merge').value(function (dir, templates, params, cb) {
+      assert.equals(dir, 'out');
+      assert.equals(params, {});
       cb();
     });
     this.ae86.generate(function (err, result) {
@@ -104,6 +142,20 @@ describe('ae86 - watch', function() {
         done();
       }
     });
+    this.ae86.watch();
+  });
+
+  it('should log message when watching for file changes', function () {
+    this.mockConsole.expects('log').once().withExactArgs('Watching for file changes at %s...', 'static');
+    this.mockConsole.expects('log').once().withExactArgs('Watching for file changes at %s...', 'partials');
+    this.mockConsole.expects('log').once().withExactArgs('Watching for file changes at %s...', 'layouts');
+    this.mockConsole.expects('log').once().withExactArgs('Watching for file changes at %s...', 'pages');
+    this.mockConsole.expects('log').once().withExactArgs('Watching for file changes at %s...', 'params.js');
+    sinon.stub(watch, 'watchTree').value(function (file, cb) {
+      cb(Object.create(null), null, null);
+    });
+    this.ae86.generate = sinon.spy();
+    this.ae86.clean = sinon.spy();
     this.ae86.watch();
   });
 
