@@ -1,4 +1,4 @@
-test | /opt/hostedtoolcache/node/14.14.0/x64/lib/node_modules/bob/node_modules/.bin/mocha --colors --reporter spec --recursive test/
+test | /opt/hostedtoolcache/node/13.14.0/x64/lib/node_modules/bob/node_modules/.bin/mocha --colors --reporter spec --recursive test/
 
 [0m[0m
 [0m  ae86 - init[0m
@@ -6,10 +6,13 @@ test | /opt/hostedtoolcache/node/14.14.0/x64/lib/node_modules/bob/node_modules/.
 
 [0m  ae86 - generate[0m
   [32m  ✓[0m[90m should copy static files and process pages[0m
+  [32m  ✓[0m[90m should handle invalid params file[0m
+  [32m  ✓[0m[90m should handle inexisting params file[0m
   [32m  ✓[0m[90m should pass error when an error occurs while preparing static files[0m
 
 [0m  ae86 - watch[0m
   [32m  ✓[0m[90m should ignore swap files and set sample rate on project directories and files[0m
+  [32m  ✓[0m[90m should log message when watching for file changes[0m
   [32m  ✓[0m[90m should log message and set listener when a file is created[0m
   [32m  ✓[0m[90m should log message and set listener when a file is modified[0m
   [32m  ✓[0m[90m should log message and set listener when a file is deleted[0m
@@ -74,14 +77,14 @@ test | /opt/hostedtoolcache/node/14.14.0/x64/lib/node_modules/bob/node_modules/.
   [32m  ✓[0m[90m should return error message when file does not exist in sitemap[0m
 
 
-[92m [0m[32m 38 passing[0m[90m (85ms)[0m
+[92m [0m[32m 41 passing[0m[90m (164ms)[0m
 
 SUCCESS | exit code 0
 --------------|---------|----------|---------|---------|-------------------
 File          | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
 --------------|---------|----------|---------|---------|-------------------
-All files     |   99.05 |    92.94 |     100 |   99.05 |                   
- ae86.js      |    97.1 |    79.31 |     100 |    97.1 | 65-66,81,108      
+All files     |     100 |      100 |     100 |     100 |                   
+ ae86.js      |     100 |      100 |     100 |     100 |                   
  cli.js       |     100 |      100 |     100 |     100 |                   
  engine.js    |     100 |      100 |     100 |     100 |                   
  functions.js |     100 |      100 |     100 |     100 |                   
