@@ -1,1 +1,1 @@
-__history = [{"date":"Sat, 28 Nov 2020 12:16:58 GMT","total":{"sloc":76,"maintainability":74.491},"average":{"sloc":76,"maintainability":"74.49"}}]
+__history = [{"date":"Wed, 14 Apr 2021 15:01:17 GMT","total":{"sloc":76,"maintainability":74.491},"average":{"sloc":76,"maintainability":"74.49"}}]
