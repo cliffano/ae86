@@ -1,4 +1,4 @@
 
-added 153 packages, and audited 154 packages in 3s
+added 153 packages, and audited 154 packages in 4s
 
 found 0 vulnerabilities
