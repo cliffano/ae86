@@ -1,5 +1,5 @@
 
-added 153 packages, and audited 154 packages in 4s
+added 153 packages, and audited 154 packages in 3s
 
 3 moderate severity vulnerabilities
 
