@@ -77,7 +77,7 @@ test | /opt/hostedtoolcache/node/16.13.2/x64/lib/node_modules/bob/node_modules/.
   [32m  ✓[0m[90m should return error message when file does not exist in sitemap[0m
 
 
-[92m [0m[32m 41 passing[0m[90m (112ms)[0m
+[92m [0m[32m 41 passing[0m[90m (101ms)[0m
 
 SUCCESS | exit code 0
 --------------|---------|----------|---------|---------|-------------------
