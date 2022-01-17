@@ -6,7 +6,6 @@
 [![Coverage Status](https://img.shields.io/coveralls/cliffano/ae86.svg)](https://coveralls.io/r/cliffano/ae86?branch=master)
 [![Published Version](https://img.shields.io/npm/v/ae86.svg)](http://www.npmjs.com/package/ae86)
 <br/>
-[![npm Badge](https://nodei.co/npm/ae86.png)](http://npmjs.org/package/ae86)
 
 AE86
 ----
