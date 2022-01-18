@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+- Change Engine unit tests to use HTML-formatted layout
+
 ## 2.2.1 - 2022-01-13
 ### Fixed
 - Fix release to use version ref

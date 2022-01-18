@@ -33,7 +33,7 @@
   "dependencies": {
     "async": "^3.2.0",
     "bagofcli": "^2.1.0",
-    "cheerio": "^0.22.0",
+    "cheerio": "^1.0.0-rc.10",
     "cpr": "^3.0.1",
     "dateformat": "^4.5.1",
     "file": "^0.2.2",

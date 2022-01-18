@@ -12,7 +12,7 @@ const assert = referee.assert;
 describe('engine - engine', function() {
 
   it('should use default ext when optional ext is not specified', function () {
-    const engine = new Engine();
+    const engine = new Engine({ version: '1.2.3' });
     assert.equals(engine.ext, 'html');
   });
 
@@ -26,7 +26,7 @@ describe('engine - compile', function() {
 
   beforeEach(function () {
     this.mockFs = sinon.mock(fs);
-    this.engine = new Engine();
+    this.engine = new Engine({ version: '1.2.3' });
   });
 
   afterEach(function () {
@@ -95,7 +95,7 @@ describe('engine - merge', function() {
     const templates = {
         partials: { 'footer.html': jazz.compile('Some footer text') },
         pages: { 'page.html': jazz.compile('{include(\'footer.html\')}') },
-        layouts: { 'somelayout.html': jazz.compile('{content}') }
+        layouts: { 'somelayout.html': jazz.compile('<html lang="en"><head><title>Some Title</title><body>{content}</body></html>') }
       },
       params = {
         sitemap: {
@@ -104,13 +104,13 @@ describe('engine - merge', function() {
           }
         }
       },
-      engine = new Engine();
+      engine = new Engine({ version: '1.2.3' });
 
     this.mockMkdirp.expects('sync').withExactArgs('someoutputdir');
     this.mockConsole.expects('log').withExactArgs('+ creating %s', 'someoutputdir/page.html');
     sinon.stub(fs, 'writeFile').value(function (page, content, encoding, cb) {
       assert.equals(page, 'someoutputdir/page.html');
-      assert.equals(content, 'Some footer text');
+      assert.equals(content, '<html lang="en"><head><title>Some Title</title><meta name="generator" content="AE86 1.2.3"></head><body>Some footer text</body></html>');
       assert.equals(encoding, 'utf8');
       cb();
     });
@@ -125,16 +125,16 @@ describe('engine - merge', function() {
     const templates = {
         partials: {},
         pages: { 'page.html': jazz.compile('Some content') },
-        layouts: { 'default.html': jazz.compile('Some layout {content}') }
+        layouts: { 'default.html': jazz.compile('<html lang="en"><head><title>Some Title</title><body>Some layout {content}</body></html>') }
       },
       params = {},
-      engine = new Engine();
+      engine = new Engine({ version: '1.2.3' });
 
     this.mockMkdirp.expects('sync').withExactArgs('someoutputdir');
     this.mockConsole.expects('log').withExactArgs('+ creating %s', 'someoutputdir/page.html');
     sinon.stub(fs, 'writeFile').value(function (page, content, encoding, cb) {
       assert.equals(page, 'someoutputdir/page.html');
-      assert.equals(content, 'Some layout Some content');
+      assert.equals(content, '<html lang="en"><head><title>Some Title</title><meta name="generator" content="AE86 1.2.3"></head><body>Some layout Some content</body></html>');
       assert.equals(encoding, 'utf8');
       cb();
     });
@@ -149,15 +149,15 @@ describe('engine - merge', function() {
     const templates = {
         partials: {},
         pages: { 'page.html': jazz.compile('Some content with param {foo}') },
-        layouts: { 'default.html': jazz.compile('{content}') }
+        layouts: { 'default.html': jazz.compile('<html lang="en"><head><title>Some Title</title></head><body>{content}</body></html>') }
       },
       params = { foo: 'bar' },
-      engine = new Engine();
+      engine = new Engine({ version: '1.2.3' });
 
     this.mockMkdirp.expects('sync').withExactArgs('someoutputdir');
     sinon.stub(fs, 'writeFile').value(function (page, content, encoding, cb) {
       assert.equals(page, 'someoutputdir/page.html');
-      assert.equals(content, 'Some content with param bar');
+      assert.equals(content, '<html lang="en"><head><title>Some Title</title><meta name="generator" content="AE86 1.2.3"></head><body>Some content with param bar</body></html>');
       assert.equals(encoding, 'utf8');
       cb(new Error('some error'));
     });
@@ -172,16 +172,16 @@ describe('engine - merge', function() {
     const templates = {
         partials: {},
         pages: { 'page.html': jazz.compile('Some content with param {foo}') },
-        layouts: { 'default.html': jazz.compile('{content}') }
+        layouts: { 'default.html': jazz.compile('<html lang="en"><head><title>Some Title</title><body>{content}</body></html>') }
       },
       params = { foo: 'bar' },
-      engine = new Engine();
+      engine = new Engine({ version: '1.2.3' });
 
     this.mockMkdirp.expects('sync').withExactArgs('some/output/dir');
     this.mockConsole.expects('log').withExactArgs('+ creating %s', 'some/output/dir/page.html');
     sinon.stub(fs, 'writeFile').value(function (page, content, encoding, cb) {
       assert.equals(page, 'some/output/dir/page.html');
-      assert.equals(content, 'Some content with param bar');
+      assert.equals(content, '<html lang="en"><head><title>Some Title</title><meta name="generator" content="AE86 1.2.3"></head><body>Some content with param bar</body></html>');
       assert.equals(encoding, 'utf8');
       cb();
     });
@@ -196,15 +196,15 @@ describe('engine - merge', function() {
     const templates = {
         partials: {},
         pages: { 'page.html': jazz.compile('Some content with param {foo}') },
-        layouts: { 'default.html': jazz.compile('{content}') }
+        layouts: { 'default.html': jazz.compile('<html lang="en"><head><title>Some Title</title><body>{content}</body></html>') }
       },
       params = { foo: 'bar' },
-      engine = new Engine();
+      engine = new Engine({ version: '1.2.3' });
 
     this.mockMkdirp.expects('sync').withExactArgs('some/output/dir');
     sinon.stub(fs, 'writeFile').value(function (page, content, encoding, cb) {
       assert.equals(page, 'some/output/dir/page.html');
-      assert.equals(content, 'Some content with param bar');
+      assert.equals(content, '<html lang="en"><head><title>Some Title</title><meta name="generator" content="AE86 1.2.3"></head><body>Some content with param bar</body></html>');
       assert.equals(encoding, 'utf8');
       cb(new Error('Directory cannot be created'));
     });
@@ -219,16 +219,16 @@ describe('engine - merge', function() {
     const templates = {
         partials: {},
         pages: { 'page.html': jazz.compile('Some content with param {foo}') },
-        layouts: { 'default.html': jazz.compile('{content}') }
+        layouts: { 'default.html': jazz.compile('<html lang="en"><head><title>Some Title</title></head><body>{content}</body></html>') }
       },
       params = { foo: 'bar' },
-      engine = new Engine();
+      engine = new Engine({ version: '1.2.3' });
 
     this.mockMkdirp.expects('sync').withExactArgs('some\\output');
     this.mockConsole.expects('log').withExactArgs('+ creating %s', 'some\\output\\dir/page.html');
     sinon.stub(fs, 'writeFile').value(function (page, content, encoding, cb) {
       assert.equals(page, 'some\\output\\dir/page.html');
-      assert.equals(content, 'Some content with param bar');
+      assert.equals(content, '<html lang="en"><head><title>Some Title</title><meta name="generator" content="AE86 1.2.3"></head><body>Some content with param bar</body></html>');
       assert.equals(encoding, 'utf8');
       cb();
     });
