@@ -1,14 +1,7 @@
-npm WARN old lockfile 
-npm WARN old lockfile The package-lock.json file was created with an old version of npm,
-npm WARN old lockfile so supplemental metadata must be fetched from the registry.
-npm WARN old lockfile 
-npm WARN old lockfile This is a one-time fix-up, please be patient...
-npm WARN old lockfile 
-npm WARN deprecated wrench@1.5.9: wrench.js is deprecated! You should check out fs-extra (https://github.com/jprichardson/node-fs-extra) for any operations you were using wrench for. Thanks for all the usage over the years.
-
-added 142 packages, and audited 143 packages in 5s
+added 142 packages from 468 contributors and audited 143 packages in 2.973s
 
 46 packages are looking for funding
   run `npm fund` for details
 
 found 0 vulnerabilities
+
