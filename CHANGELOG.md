@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Fixed
+- Fix Publish workflow ref to use formatted tag
+
 ## 2.3.0 - 2022-01-18
 ### Changed
 - Change Engine unit tests to use HTML-formatted layout
