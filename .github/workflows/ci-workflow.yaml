@@ -7,7 +7,7 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        node: [ '13', '14', '15', '16', '17' ]
+        node: [ '16', '17' ]
     name: node ${{ matrix.node }}
     steps:
       - uses: actions/checkout@v2
