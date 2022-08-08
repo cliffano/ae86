@@ -1,83 +1,83 @@
-test | /opt/hostedtoolcache/node/17.4.0/x64/lib/node_modules/bob/node_modules/.bin/mocha --colors --reporter spec --recursive test/
+test | /opt/hostedtoolcache/node/16.16.0/x64/lib/node_modules/bob/node_modules/.bin/mocha --colors --reporter spec --recursive test/
 
 [0m[0m
 [0m  ae86 - init[0m
-  [32m  ✓[0m[90m should delegate to cpr cpr when initialising the project[0m
+  [32m  [32m✔[39m[0m[90m should delegate to cpr cpr when initialising the project[0m
 
 [0m  ae86 - generate[0m
-  [32m  ✓[0m[90m should copy static files and process pages[0m
-  [32m  ✓[0m[90m should handle invalid params file[0m
-  [32m  ✓[0m[90m should handle inexisting params file[0m
-  [32m  ✓[0m[90m should pass error when an error occurs while preparing static files[0m
+  [32m  [32m✔[39m[0m[90m should copy static files and process pages[0m
+  [32m  [32m✔[39m[0m[90m should handle invalid params file[0m
+  [32m  [32m✔[39m[0m[90m should handle inexisting params file[0m
+  [32m  [32m✔[39m[0m[90m should pass error when an error occurs while preparing static files[0m
 
 [0m  ae86 - watch[0m
-  [32m  ✓[0m[90m should ignore swap files and set sample rate on project directories and files[0m
-  [32m  ✓[0m[90m should log message when watching for file changes[0m
-  [32m  ✓[0m[90m should log message and set listener when a file is created[0m
-  [32m  ✓[0m[90m should log message and set listener when a file is modified[0m
-  [32m  ✓[0m[90m should log message and set listener when a file is deleted[0m
+  [32m  [32m✔[39m[0m[90m should ignore swap files and set sample rate on project directories and files[0m
+  [32m  [32m✔[39m[0m[90m should log message when watching for file changes[0m
+  [32m  [32m✔[39m[0m[90m should log message and set listener when a file is created[0m
+  [32m  [32m✔[39m[0m[90m should log message and set listener when a file is modified[0m
+  [32m  [32m✔[39m[0m[90m should log message and set listener when a file is deleted[0m
 
 [0m  ae86 - clean[0m
-  [32m  ✓[0m[90m should delegate to wrench rmdirRecursive when removing the generated website[0m
-  [32m  ✓[0m[90m should use custom out dir when specified[0m
+  [32m  [32m✔[39m[0m[90m should delegate to wrench rmdirRecursive when removing the generated website[0m
+  [32m  [32m✔[39m[0m[90m should use custom out dir when specified[0m
 
 [0m  cli - exec[0m
-  [32m  ✓[0m[90m should contain commands with actions[0m
+  [32m  [32m✔[39m[0m[90m should contain commands with actions[0m
 
 [0m  cli - init[0m
-  [32m  ✓[0m[90m should contain init command and delegate to ae86 init when exec is called[0m
+  [32m  [32m✔[39m[0m[90m should contain init command and delegate to ae86 init when exec is called[0m
 
 [0m  cli - gen[0m
-  [32m  ✓[0m[90m should contain gen command and delegate to ae86 generate when exec is called[0m
+  [32m  [32m✔[39m[0m[90m should contain gen command and delegate to ae86 generate when exec is called[0m
 
 [0m  cli - watch[0m
-  [32m  ✓[0m[90m should contain watch command and delegate to ae86 watch when exec is called[0m
+  [32m  [32m✔[39m[0m[90m should contain watch command and delegate to ae86 watch when exec is called[0m
 
 [0m  cli - drift[0m
-  [32m  ✓[0m[90m should contain drift command and delegate to ae86 watch when exec is called[0m
+  [32m  [32m✔[39m[0m[90m should contain drift command and delegate to ae86 watch when exec is called[0m
 
 [0m  cli - clean[0m
-  [32m  ✓[0m[90m should contain clean command and delegate to ae86 clean when exec is called[0m
-  [32m  ✓[0m[90m should use output directory arg when provided[0m
+  [32m  [32m✔[39m[0m[90m should contain clean command and delegate to ae86 clean when exec is called[0m
+  [32m  [32m✔[39m[0m[90m should use output directory arg when provided[0m
 
 [0m  engine - engine[0m
-  [32m  ✓[0m[90m should use default ext when optional ext is not specified[0m
-  [32m  ✓[0m[90m should use specified ext[0m
+  [32m  [32m✔[39m[0m[90m should use default ext when optional ext is not specified[0m
+  [32m  [32m✔[39m[0m[90m should use specified ext[0m
 
 [0m  engine - compile[0m
-  [32m  ✓[0m[90m should compile files with the specified file extension[0m
-  [32m  ✓[0m[90m should compile files with windows file path separator (backslashes) and have url path separator (slashes)[0m
-  [32m  ✓[0m[90m should ignore files with extensions other than the one specified[0m
+  [32m  [32m✔[39m[0m[90m should compile files with the specified file extension[0m
+  [32m  [32m✔[39m[0m[90m should compile files with windows file path separator (backslashes) and have url path separator (slashes)[0m
+  [32m  [32m✔[39m[0m[90m should ignore files with extensions other than the one specified[0m
 
 [0m  engine - merge[0m
-  [32m  ✓[0m[90m should merge partials in page templates with non-default template[0m
-  [32m  ✓[0m[90m should merge layouts in page templates[0m
-  [32m  ✓[0m[90m should merge parameters in page templates and pass any error[0m
-  [32m  ✓[0m[90m should log command message when there is no error while writing the page file[0m
-  [32m  ✓[0m[90m should pass error to callback when directory cannot be created[0m
-  [32m  ✓[0m[90m should create dir with *nix and Windows paths[0m
+  [32m  [32m✔[39m[0m[90m should merge partials in page templates with non-default template[0m
+  [32m  [32m✔[39m[0m[90m should merge layouts in page templates[0m
+  [32m  [32m✔[39m[0m[90m should merge parameters in page templates and pass any error[0m
+  [32m  [32m✔[39m[0m[90m should log command message when there is no error while writing the page file[0m
+  [32m  [32m✔[39m[0m[90m should pass error to callback when directory cannot be created[0m
+  [32m  [32m✔[39m[0m[90m should create dir with *nix and Windows paths[0m
 
 [0m  functions - date[0m
-  [32m  ✓[0m[90m should return formatted date when format is specified[0m
-  [32m  ✓[0m[90m should return date with default format when format is not specified[0m
+  [32m  [32m✔[39m[0m[90m should return formatted date when format is specified[0m
+  [32m  [32m✔[39m[0m[90m should return date with default format when format is not specified[0m
 
 [0m  functions - include[0m
-  [32m  ✓[0m[90m should return partial template when partial exists[0m
-  [32m  ✓[0m[90m should return error message when partial does not exist[0m
+  [32m  [32m✔[39m[0m[90m should return partial template when partial exists[0m
+  [32m  [32m✔[39m[0m[90m should return error message when partial does not exist[0m
 
 [0m  functions - relative[0m
-  [32m  ✓[0m[90m should return path when page is at the project root directory[0m
-  [32m  ✓[0m[90m should return a single upper directory when page is at a project subdirectory[0m
-  [32m  ✓[0m[90m should return multiple upper directories when page is at several directories deep below project directory[0m
-  [32m  ✓[0m[90m should return multiple upper directories when page and path are both at several directories deep below project directory[0m
+  [32m  [32m✔[39m[0m[90m should return path when page is at the project root directory[0m
+  [32m  [32m✔[39m[0m[90m should return a single upper directory when page is at a project subdirectory[0m
+  [32m  [32m✔[39m[0m[90m should return multiple upper directories when page is at several directories deep below project directory[0m
+  [32m  [32m✔[39m[0m[90m should return multiple upper directories when page and path are both at several directories deep below project directory[0m
 
 [0m  functions - title[0m
-  [32m  ✓[0m[90m should return title when file exists in sitemap and it has a title[0m
-  [32m  ✓[0m[90m should return undefined when file exists in sitemap but it does not have a title[0m
-  [32m  ✓[0m[90m should return error message when file does not exist in sitemap[0m
+  [32m  [32m✔[39m[0m[90m should return title when file exists in sitemap and it has a title[0m
+  [32m  [32m✔[39m[0m[90m should return undefined when file exists in sitemap but it does not have a title[0m
+  [32m  [32m✔[39m[0m[90m should return error message when file does not exist in sitemap[0m
 
 
-[92m [0m[32m 41 passing[0m[90m (72ms)[0m
+[92m [0m[32m 41 passing[0m[90m (85ms)[0m
 
 SUCCESS | exit code 0
 --------------|---------|----------|---------|---------|-------------------
