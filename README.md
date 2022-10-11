@@ -209,12 +209,12 @@ And generate the web site with `bob site` command.
 Colophon
 --------
 
-[Developer's Guide](http://cliffano.github.io/developers_guide.html#nodejs)
+[Developer's Guide](https://cliffano.github.io/developers_guide.html#nodejs)
 
 Build reports:
 
-* [Code complexity report](http://cliffano.github.io/ae86/complexity/plato/index.html)
-* [Unit tests report](http://cliffano.github.io/ae86/test/mocha.txt)
-* [Test coverage report](http://cliffano.github.io/ae86/coverage/c8/index.html)
-* [Integration tests report](http://cliffano.github.io/ae86/test-integration/cmdt.txt)
-* [API Documentation](http://cliffano.github.io/ae86/doc/jsdoc/index.html)
+* [Code complexity report](https://cliffano.github.io/ae86/complexity/plato/index.html)
+* [Unit tests report](https://cliffano.github.io/ae86/test/mocha.txt)
+* [Test coverage report](https://cliffano.github.io/ae86/coverage/c8/index.html)
+* [Integration tests report](https://cliffano.github.io/ae86/test-integration/cmdt.txt)
+* [API Documentation](https://cliffano.github.io/ae86/doc/jsdoc/index.html)
