@@ -45,7 +45,7 @@
     "wrench": "^1.5.9"
   },
   "devDependencies": {
-    "sinon": "^10.0.0",
+    "sinon": "^15.2.0",
     "@sinonjs/referee": "^10.0.1"
   },
   "scripts": {},

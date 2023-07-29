@@ -33,7 +33,7 @@ describe('ae86 - generate', function() {
   beforeEach(function () {
     this.mockCpr = sinon.mock(cpr);
     this.mockFs = sinon.mock(fs);
-    sinon.useFakeTimers(new Date(2000, 9, 10).getTime());
+    this.clock = sinon.useFakeTimers(new Date(2000, 9, 10).getTime());
     this.ae86 = new AE86({ params: { foo: 'bar' }});
   });
 
@@ -42,6 +42,7 @@ describe('ae86 - generate', function() {
     this.mockCpr.restore();
     this.mockFs.verify();
     this.mockFs.restore();
+    this.clock.restore();
   });
 
   it('should copy static files and process pages', function (done) {

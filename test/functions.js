@@ -8,8 +8,12 @@ const assert = referee.assert;
 describe('functions - date', function() {
 
   beforeEach(function () {
-    sinon.useFakeTimers(new Date(2000, 9, 10).getTime());
+    this.clock = sinon.useFakeTimers(new Date(2000, 9, 10).getTime());
     sinon.mock({});
+  });
+
+  afterEach(function () {
+    this.clock.restore();
   });
 
   it('should return formatted date when format is specified', function (done) {
