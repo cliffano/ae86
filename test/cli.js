@@ -19,7 +19,6 @@ describe('cli - exec', function() {
       assert.isFunction(actions.commands.clean.action);
       done();
     };
-    sinon.mock({});
     sinon.stub(bag, 'command').value(mockCommand);
     cli.exec();
   });

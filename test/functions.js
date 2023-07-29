@@ -9,7 +9,6 @@ describe('functions - date', function() {
 
   beforeEach(function () {
     this.clock = sinon.useFakeTimers(new Date(2000, 9, 10).getTime());
-    sinon.mock({});
   });
 
   afterEach(function () {
