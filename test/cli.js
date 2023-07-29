@@ -28,16 +28,16 @@ describe('cli - exec', function() {
 describe('cli - init', function() {
 
   beforeEach(function () {
-    this.mockConsole = sinon.mock(console);
+    this.mockBag = sinon.mock(bag);
   });
 
   afterEach(function () {
-    this.mockConsole.verify();
-    this.mockConsole.restore();
+    this.mockBag.verify();
+    this.mockBag.restore();
   });
 
   it('should contain init command and delegate to ae86 init when exec is called', function (done) {
-    this.mockConsole.expects('log').withExactArgs('Creating example AE86 project');
+    this.mockBag.expects('logStepHeading').withExactArgs('Creating example AE86 project');
     sinon.stub(bag, 'command').value(function (base, actions) {
       actions.commands.init.action();
     });
@@ -52,16 +52,16 @@ describe('cli - init', function() {
 describe('cli - gen', function() {
 
   beforeEach(function () {
-    this.mockConsole = sinon.mock(console);
+    this.mockBag = sinon.mock(bag);
   });
 
   afterEach(function () {
-    this.mockConsole.verify();
-    this.mockConsole.restore();
+    this.mockBag.verify();
+    this.mockBag.restore();
   });
 
   it('should contain gen command and delegate to ae86 generate when exec is called', function (done) {
-    this.mockConsole.expects('log').withExactArgs('Generating website');
+    this.mockBag.expects('logStepHeading').withExactArgs('Generating website');
     sinon.stub(bag, 'command').value(function (base, actions) {
       actions.commands.gen.action();
     });
@@ -76,16 +76,16 @@ describe('cli - gen', function() {
 describe('cli - watch', function() {
 
   beforeEach(function () {
-    this.mockConsole = sinon.mock(console);
+    this.mockBag = sinon.mock(bag);
   });
 
   afterEach(function () {
-    this.mockConsole.verify();
-    this.mockConsole.restore();
+    this.mockBag.verify();
+    this.mockBag.restore();
   });
 
   it('should contain watch command and delegate to ae86 watch when exec is called', function (done) {
-    this.mockConsole.expects('log').withExactArgs('Watching for changes and automatically regenerating website');
+    this.mockBag.expects('logStepHeading').withExactArgs('Watching for changes and automatically regenerating website');
     sinon.stub(bag, 'command').value(function (base, actions) {
       actions.commands.watch.action();
     });
@@ -100,16 +100,16 @@ describe('cli - watch', function() {
 describe('cli - drift', function() {
 
   beforeEach(function () {
-    this.mockConsole = sinon.mock(console);
+    this.mockBag = sinon.mock(bag);
   });
 
   afterEach(function () {
-    this.mockConsole.verify();
-    this.mockConsole.restore();
+    this.mockBag.verify();
+    this.mockBag.restore();
   });
 
   it('should contain drift command and delegate to ae86 watch when exec is called', function (done) {
-    this.mockConsole.expects('log').withExactArgs('Watching for changes and automatically regenerating website');
+    this.mockBag.expects('logStepHeading').withExactArgs('Watching for changes and automatically regenerating website');
     sinon.stub(bag, 'command').value(function (base, actions) {
       actions.commands.watch.action();
     });
@@ -124,16 +124,16 @@ describe('cli - drift', function() {
 describe('cli - clean', function() {
 
   beforeEach(function () {
-    this.mockConsole = sinon.mock(console);
+    this.mockBag = sinon.mock(bag);
   });
 
   afterEach(function () {
-    this.mockConsole.verify();
-    this.mockConsole.restore();
+    this.mockBag.verify();
+    this.mockBag.restore();
   });
 
   it('should contain clean command and delegate to ae86 clean when exec is called', function (done) {
-    this.mockConsole.expects('log').withExactArgs('Removing website');
+    this.mockBag.expects('logStepHeading').withExactArgs('Removing website');
     sinon.stub(bag, 'command').value(function (base, actions) {
       actions.commands.clean.action();
     });
@@ -145,7 +145,7 @@ describe('cli - clean', function() {
   });
 
   it('should use output directory arg when provided', function (done) {
-    this.mockConsole.expects('log').withExactArgs('Removing website');
+    this.mockBag.expects('logStepHeading').withExactArgs('Removing website');
     sinon.stub(bag, 'command').value(function (base, actions) {
       actions.commands.clean.action({ outDir: 'someoutdir' });
     });
