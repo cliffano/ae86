@@ -1,7 +1,7 @@
 <img align="right" src="https://raw.github.com/cliffano/ae86/master/avatar.jpg" alt="Avatar"/>
 
 [![Build Status](https://github.com/cliffano/ae86/workflows/CI/badge.svg)](https://github.com/cliffano/ae86/actions?query=workflow%3ACI)
-[![Vulnerabilities Status](https://snyk.io/test/github/cliffano/ae86/badge.svg)](https://snyk.io/test/github/cliffano/ae86)
+[![Security Status](https://snyk.io/test/github/cliffano/ae86/badge.svg)](https://snyk.io/test/github/cliffano/ae86)
 [![Dependencies Status](https://img.shields.io/david/cliffano/ae86.svg)](http://david-dm.org/cliffano/ae86)
 [![Coverage Status](https://img.shields.io/coveralls/cliffano/ae86.svg)](https://coveralls.io/r/cliffano/ae86?branch=master)
 [![Published Version](https://img.shields.io/npm/v/ae86.svg)](http://www.npmjs.com/package/ae86)
