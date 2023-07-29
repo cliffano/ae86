@@ -31,13 +31,13 @@
     "test": "./test"
   },
   "dependencies": {
-    "async": "^3.2.0",
-    "bagofcli": "^2.3.0",
-    "cheerio": "^1.0.0-rc.10",
+    "async": "^3.2.4",
+    "bagofcli": "^2.4.1",
+    "cheerio": "^1.0.0-rc.12",
     "cpr": "^3.0.1",
-    "dateformat": "^4.5.1",
+    "dateformat": "^5.0.3",
     "file": "^0.2.2",
-    "fs-extra": "^9.1.0",
+    "fs-extra": "^11.1.1",
     "jazz": "^0.0.18",
     "lodash": "^4.17.21",
     "mkdirp": "^1.0.4",
@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "sinon": "^10.0.0",
-    "@sinonjs/referee": "^8.0.1"
+    "@sinonjs/referee": "^10.0.1"
   },
   "scripts": {},
   "engines": {
