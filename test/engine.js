@@ -1,5 +1,6 @@
 "use strict"
 /* eslint no-unused-vars: 0 */
+import bag from 'bagofcli';
 import Engine from '../lib/engine.js';
 import f from 'file';
 import fs from 'fs';
@@ -7,6 +8,7 @@ import jazz from 'jazz';
 import mkdirp from 'mkdirp';
 import referee from '@sinonjs/referee';
 import sinon from 'sinon';
+import util from 'util';
 const assert = referee.assert;
 
 describe('engine - engine', function() {
@@ -80,13 +82,13 @@ describe('engine - compile', function() {
 describe('engine - merge', function() {
 
   beforeEach(function () {
-    this.mockConsole = sinon.mock(console);
+    this.mockBag = sinon.mock(bag);
     this.mockMkdirp = sinon.mock(mkdirp);
   });
 
   afterEach(function () {
-    this.mockConsole.verify();
-    this.mockConsole.restore();
+    this.mockBag.verify();
+    this.mockBag.restore();
     this.mockMkdirp.verify();
     this.mockMkdirp.restore();
   });
@@ -107,7 +109,7 @@ describe('engine - merge', function() {
       engine = new Engine({ version: '1.2.3' });
 
     this.mockMkdirp.expects('sync').withExactArgs('someoutputdir');
-    this.mockConsole.expects('log').withExactArgs('+ creating %s', 'someoutputdir/page.html');
+    this.mockBag.expects('logStepItemSuccess').withExactArgs('creating someoutputdir/page.html');
     sinon.stub(fs, 'writeFile').value(function (page, content, encoding, cb) {
       assert.equals(page, 'someoutputdir/page.html');
       assert.equals(content, '<html lang="en"><head><title>Some Title</title><meta name="generator" content="AE86 1.2.3"></head><body>Some footer text</body></html>');
@@ -131,7 +133,7 @@ describe('engine - merge', function() {
       engine = new Engine({ version: '1.2.3' });
 
     this.mockMkdirp.expects('sync').withExactArgs('someoutputdir');
-    this.mockConsole.expects('log').withExactArgs('+ creating %s', 'someoutputdir/page.html');
+    this.mockBag.expects('logStepItemSuccess').withExactArgs(util.format('creating someoutputdir/page.html'));
     sinon.stub(fs, 'writeFile').value(function (page, content, encoding, cb) {
       assert.equals(page, 'someoutputdir/page.html');
       assert.equals(content, '<html lang="en"><head><title>Some Title</title><meta name="generator" content="AE86 1.2.3"></head><body>Some layout Some content</body></html>');
@@ -178,7 +180,7 @@ describe('engine - merge', function() {
       engine = new Engine({ version: '1.2.3' });
 
     this.mockMkdirp.expects('sync').withExactArgs('some/output/dir');
-    this.mockConsole.expects('log').withExactArgs('+ creating %s', 'some/output/dir/page.html');
+    this.mockBag.expects('logStepItemSuccess').withExactArgs('creating some/output/dir/page.html');
     sinon.stub(fs, 'writeFile').value(function (page, content, encoding, cb) {
       assert.equals(page, 'some/output/dir/page.html');
       assert.equals(content, '<html lang="en"><head><title>Some Title</title><meta name="generator" content="AE86 1.2.3"></head><body>Some content with param bar</body></html>');
@@ -225,7 +227,7 @@ describe('engine - merge', function() {
       engine = new Engine({ version: '1.2.3' });
 
     this.mockMkdirp.expects('sync').withExactArgs('some\\output');
-    this.mockConsole.expects('log').withExactArgs('+ creating %s', 'some\\output\\dir/page.html');
+    this.mockBag.expects('logStepItemSuccess').withExactArgs('creating some\\output\\dir/page.html');
     sinon.stub(fs, 'writeFile').value(function (page, content, encoding, cb) {
       assert.equals(page, 'some\\output\\dir/page.html');
       assert.equals(content, '<html lang="en"><head><title>Some Title</title><meta name="generator" content="AE86 1.2.3"></head><body>Some content with param bar</body></html>');

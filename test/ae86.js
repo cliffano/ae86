@@ -1,6 +1,7 @@
 "use strict"
 /* eslint no-unused-vars: 0 */
 import AE86 from '../lib/ae86.js';
+import bag from 'bagofcli';
 import Engine from '../lib/engine.js';
 import cpr from 'cpr';
 import fs from 'fs';
@@ -124,14 +125,14 @@ describe('ae86 - generate', function() {
 describe('ae86 - watch', function() {
 
   beforeEach(function () {
-    this.mockConsole = sinon.mock(console);
+    this.mockBag = sinon.mock(bag);
     sinon.stub(process, 'cwd').value(function () { return '/somepath'; });
     this.ae86 = new AE86();
   });
 
   afterEach(function () {
-    this.mockConsole.verify();
-    this.mockConsole.restore();
+    this.mockBag.verify();
+    this.mockBag.restore();
   });
 
   it('should ignore swap files and set sample rate on project directories and files', function (done) {
@@ -147,11 +148,11 @@ describe('ae86 - watch', function() {
   });
 
   it('should log message when watching for file changes', function () {
-    this.mockConsole.expects('log').once().withExactArgs('Watching for file changes at %s...', 'static');
-    this.mockConsole.expects('log').once().withExactArgs('Watching for file changes at %s...', 'partials');
-    this.mockConsole.expects('log').once().withExactArgs('Watching for file changes at %s...', 'layouts');
-    this.mockConsole.expects('log').once().withExactArgs('Watching for file changes at %s...', 'pages');
-    this.mockConsole.expects('log').once().withExactArgs('Watching for file changes at %s...', 'params.js');
+    this.mockBag.expects('logStepItemSuccess').once().withExactArgs('Watching for file changes at %s...', 'static');
+    this.mockBag.expects('logStepItemSuccess').once().withExactArgs('Watching for file changes at %s...', 'partials');
+    this.mockBag.expects('logStepItemSuccess').once().withExactArgs('Watching for file changes at %s...', 'layouts');
+    this.mockBag.expects('logStepItemSuccess').once().withExactArgs('Watching for file changes at %s...', 'pages');
+    this.mockBag.expects('logStepItemSuccess').once().withExactArgs('Watching for file changes at %s...', 'params.js');
     sinon.stub(watch, 'watchTree').value(function (file, cb) {
       cb(Object.create(null), null, null);
     });
@@ -161,11 +162,11 @@ describe('ae86 - watch', function() {
   });
 
   it('should log message and set listener when a file is created', function () {
-    this.mockConsole.expects('log').once().withExactArgs('%s was created', 'static');
-    this.mockConsole.expects('log').once().withExactArgs('%s was created', 'partials');
-    this.mockConsole.expects('log').once().withExactArgs('%s was created', 'layouts');
-    this.mockConsole.expects('log').once().withExactArgs('%s was created', 'pages');
-    this.mockConsole.expects('log').once().withExactArgs('%s was created', 'params.js');
+    this.mockBag.expects('logStepItemSuccess').once().withExactArgs('%s was created', 'static');
+    this.mockBag.expects('logStepItemSuccess').once().withExactArgs('%s was created', 'partials');
+    this.mockBag.expects('logStepItemSuccess').once().withExactArgs('%s was created', 'layouts');
+    this.mockBag.expects('logStepItemSuccess').once().withExactArgs('%s was created', 'pages');
+    this.mockBag.expects('logStepItemSuccess').once().withExactArgs('%s was created', 'params.js');
     sinon.stub(watch, 'watchTree').value(function (file, cb) {
       cb('somef', {}, null);
     });
@@ -175,11 +176,11 @@ describe('ae86 - watch', function() {
   });
 
   it('should log message and set listener when a file is modified', function () {
-    this.mockConsole.expects('log').once().withExactArgs('%s was modified', 'static');
-    this.mockConsole.expects('log').once().withExactArgs('%s was modified', 'partials');
-    this.mockConsole.expects('log').once().withExactArgs('%s was modified', 'layouts');
-    this.mockConsole.expects('log').once().withExactArgs('%s was modified', 'pages');
-    this.mockConsole.expects('log').once().withExactArgs('%s was modified', 'params.js');
+    this.mockBag.expects('logStepItemSuccess').once().withExactArgs('%s was modified', 'static');
+    this.mockBag.expects('logStepItemSuccess').once().withExactArgs('%s was modified', 'partials');
+    this.mockBag.expects('logStepItemSuccess').once().withExactArgs('%s was modified', 'layouts');
+    this.mockBag.expects('logStepItemSuccess').once().withExactArgs('%s was modified', 'pages');
+    this.mockBag.expects('logStepItemSuccess').once().withExactArgs('%s was modified', 'params.js');
     sinon.stub(watch, 'watchTree').value(function (file, cb) {
       cb('somef', {}, {});
     });
@@ -189,11 +190,11 @@ describe('ae86 - watch', function() {
   });
 
   it('should log message and set listener when a file is deleted', function () {
-    this.mockConsole.expects('log').once().withExactArgs('%s was deleted', 'static');
-    this.mockConsole.expects('log').once().withExactArgs('%s was deleted', 'partials');
-    this.mockConsole.expects('log').once().withExactArgs('%s was deleted', 'layouts');
-    this.mockConsole.expects('log').once().withExactArgs('%s was deleted', 'pages');
-    this.mockConsole.expects('log').once().withExactArgs('%s was deleted', 'params.js');
+    this.mockBag.expects('logStepItemSuccess').once().withExactArgs('%s was deleted', 'static');
+    this.mockBag.expects('logStepItemSuccess').once().withExactArgs('%s was deleted', 'partials');
+    this.mockBag.expects('logStepItemSuccess').once().withExactArgs('%s was deleted', 'layouts');
+    this.mockBag.expects('logStepItemSuccess').once().withExactArgs('%s was deleted', 'pages');
+    this.mockBag.expects('logStepItemSuccess').once().withExactArgs('%s was deleted', 'params.js');
     sinon.stub(watch, 'watchTree').value(function (file, cb) {
       cb('somef', {nlink: 0}, {});
     });

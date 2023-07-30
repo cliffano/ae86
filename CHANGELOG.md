@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+- Replace console logging of page generation with bagofcli
+
 ## 2.4.0 - 2023-07-29
 ### Changed
 - Set min node engine to >= 16.0.0
