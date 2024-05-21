@@ -40,12 +40,12 @@
     "fs-extra": "^11.2.0",
     "jazz": "^0.0.18",
     "lodash": "^4.17.21",
-    "mkdirp": "^1.0.4",
+    "mkdirp": "^3.0.1",
     "@cnakazawa/watch": "^1.0.4",
     "wrench": "^1.5.9"
   },
   "devDependencies": {
-    "sinon": "^17.0.1",
+    "sinon": "^18.0.0",
     "@sinonjs/referee": "^11.0.1"
   },
   "scripts": {},
