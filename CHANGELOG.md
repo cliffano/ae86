@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+- Switch release workflow to use studio-release-action
+
 ## 2.4.1 - 2023-07-30
 ### Changed
 - Replace console logging of page generation with bagofcli
