@@ -14,7 +14,7 @@
 - description: Command gen should generate website files
   command: '{ae86} gen'
   exitcode: 0
-  output: Generating website\n.*  *.+creating out/.+\.html\n  *.+creating out/.+\.html\n
+  output: Generating website\n  *.+creating out/.+\.html\n  *.+creating out/.+\.html\n
 
 - description: Command clean should remove website
   command: '{ae86} clean'
@@ -24,7 +24,7 @@
 - description: Command gen should generate website files at custom output directory
   command: '{ae86} gen --out-dir public'
   exitcode: 0
-  output: Generating website\n.*  *.+creating public/.+\.html\n  *.+creating public/.+\.html\n
+  output: Generating website\n  *.+creating public/.+\.html\n  *.+creating public/.+\.html\n
 
 - description: Command clean should remove website from custom output directory
   command: '{ae86} clean --out-dir public'
