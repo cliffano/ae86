@@ -12,7 +12,7 @@
   output: Creating example AE86 project
 
 - description: Command gen should generate website files
-  command: '{ae86} gen'
+  command: 'NODE_NO_WARNINGS=1 {ae86} gen'
   exitcode: 0
   output: Generating website\n  *.+creating out/.+\.html\n  *.+creating out/.+\.html\n
 
@@ -22,7 +22,7 @@
   output: Removing website
 
 - description: Command gen should generate website files at custom output directory
-  command: '{ae86} gen --out-dir public'
+  command: 'NODE_NO_WARNINGS=1 {ae86} gen --out-dir public'
   exitcode: 0
   output: Generating website\n  *.+creating public/.+\.html\n  *.+creating public/.+\.html\n
 

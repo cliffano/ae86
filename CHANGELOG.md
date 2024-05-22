@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Switch release workflow to use studio-release-action
 - Upgrade deps to latest, mkdirp to 3.x
 - Set min node engine to >= 18.0.0
+- Add NODE_NO_WARNINGS=1 to integration test runs which require output matching
 
 ## 2.4.1 - 2023-07-30
 ### Changed
