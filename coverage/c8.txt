@@ -1,8 +1,4 @@
-(node:1939) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
-(Use `node --trace-deprecation ...` to show where the warning was created)
-test | /opt/hostedtoolcache/node/22.2.0/x64/lib/node_modules/bob/node_modules/.bin/mocha --colors --reporter spec --recursive test/
-(node:1951) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
-(Use `node --trace-deprecation ...` to show where the warning was created)
+test | /opt/hostedtoolcache/node/18.20.3/x64/lib/node_modules/bob/node_modules/.bin/mocha --colors --reporter spec --recursive test/
 
 [0m[0m
 [0m  ae86 - init[0m
@@ -81,7 +77,7 @@ test | /opt/hostedtoolcache/node/22.2.0/x64/lib/node_modules/bob/node_modules/.b
   [32m  [32m✔[39m[0m[90m should return error message when file does not exist in sitemap[0m
 
 
-[92m [0m[32m 41 passing[0m[90m (65ms)[0m
+[92m [0m[32m 41 passing[0m[90m (69ms)[0m
 
 SUCCESS | exit code 0
 --------------|---------|----------|---------|---------|-------------------
