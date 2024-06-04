@@ -7,9 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## 3.0.0 - 2024-05-22
 ### Changed
-- Switch release workflow to use studio-release-action
+- Switch release workflow to use release-action
+
+## 3.0.0 - 2024-05-22
+
+### Changed
 - Upgrade deps to latest, mkdirp to 3.x
 - Set min node engine to >= 18.0.0
 - Add NODE_NO_WARNINGS=1 to integration test runs which require output matching
