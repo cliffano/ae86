@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Changed
+- Set min node engine to >= 22.0.0
 - Switch release workflow to use release-action
 - Upgrade all workflows versions
 
