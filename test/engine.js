@@ -1,11 +1,11 @@
-"use strict"
+"use strict";
 /* eslint no-unused-vars: 0 */
 import bag from 'bagofcli';
 import Engine from '../lib/engine.js';
 import f from 'file';
 import fs from 'fs';
 import jazz from 'jazz';
-import { mkdirp } from 'mkdirp'
+import { mkdirp } from 'mkdirp';
 import referee from '@sinonjs/referee';
 import sinon from 'sinon';
 import util from 'util';
