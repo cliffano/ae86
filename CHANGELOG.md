@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Switch release workflow to use release-action
 - Upgrade all workflows versions
+- Update ESLint config to eslint.config.js
 
 ### Removed
 - Remove CodeQL analysis GH workflow
