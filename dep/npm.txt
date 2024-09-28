@@ -1,8 +1,8 @@
 npm warn deprecated wrench@1.5.9: wrench.js is deprecated! You should check out fs-extra (https://github.com/jprichardson/node-fs-extra) for any operations you were using wrench for. Thanks for all the usage over the years.
 
-added 146 packages, and audited 147 packages in 2s
+added 153 packages, and audited 154 packages in 2s
 
-47 packages are looking for funding
+49 packages are looking for funding
   run `npm fund` for details
 
 3 vulnerabilities (1 low, 2 high)
