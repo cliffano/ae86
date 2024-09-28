@@ -7,14 +7,14 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        node: [ '18', '22' ]
+        node: [ '18', '20', '22' ]
     name: node ${{ matrix.node }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-      - run: npm install -g bob
+      - run: npm install -g bob@3.0.0
       - run: bob build
       - uses: coverallsapp/github-action@v2.3.0
         with:
