@@ -31,7 +31,7 @@
     "test": "./test"
   },
   "dependencies": {
-    "async": "^3.2.5",
+    "async": "^3.2.6",
     "bagofcli": "^2.4.1",
     "cheerio": "^1.0.0",
     "cpr": "^3.0.1",
@@ -45,7 +45,7 @@
     "wrench": "^1.5.9"
   },
   "devDependencies": {
-    "sinon": "^18.0.0",
+    "sinon": "^19.0.2",
     "@sinonjs/referee": "^11.0.1"
   },
   "scripts": {},
