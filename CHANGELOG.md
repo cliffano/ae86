@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - Remove CodeQL analysis GH workflow
 
+### Fixed
+- Fix cheerio import
+
 ## 3.0.0 - 2024-05-22
 
 ### Changed
