@@ -1,5 +1,4 @@
-(node:1912) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
-(Use `node --trace-deprecation ...` to show where the warning was created)
+Using compatibility WeakRef and FinalizationRegistry
 
 [0m[0m
 [0m  ae86 - init[0m
@@ -78,5 +77,5 @@
   [32m  [32m✔[39m[0m[90m should return error message when file does not exist in sitemap[0m
 
 
-[92m [0m[32m 41 passing[0m[90m (65ms)[0m
+[92m [0m[32m 41 passing[0m[90m (70ms)[0m
 
