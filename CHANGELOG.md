@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+- Set min node engine to >= 20.0.0
+
 ## 3.1.0 - 2024-09-28
 ### Changed
 - Switch release workflow to use release-action
