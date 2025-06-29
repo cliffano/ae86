@@ -3,24 +3,27 @@ name: CI
 on: [push, pull_request, workflow_dispatch]
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     strategy:
       max-parallel: 1
       matrix:
-        node: [ '18', '20', '22' ]
+        # Available node versions: https://raw.githubusercontent.com/actions/node-versions/main/versions-manifest.json
+        node: [ '20', '22', '24' ]
     name: node ${{ matrix.node }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          set-safe-directory: ${{ github.workspace }}
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-      - run: npm install -g bob@3.0.0
+      - run: npm install -g bob@4.0.0
       - run: bob build
-      - uses: coverallsapp/github-action@v2.3.0
+      - uses: coverallsapp/github-action@v2.3.6
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: .bob/coverage/c8/lcov.info
       - uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.STUDIO_GITHUB_TOKEN }}
           publish_dir: .bob
