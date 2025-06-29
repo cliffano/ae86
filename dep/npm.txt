@@ -3,12 +3,12 @@ npm warn deprecated rimraf@2.7.1: Rimraf versions prior to v4 are no longer supp
 npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
 npm warn deprecated wrench@1.5.9: wrench.js is deprecated! You should check out fs-extra (https://github.com/jprichardson/node-fs-extra) for any operations you were using wrench for. Thanks for all the usage over the years.
 
-added 148 packages, and audited 149 packages in 2s
+added 150 packages, and audited 151 packages in 2s
 
-50 packages are looking for funding
+51 packages are looking for funding
   run `npm fund` for details
 
-2 vulnerabilities (1 low, 1 moderate)
+1 low severity vulnerability
 
 To address all issues, run:
   npm audit fix
