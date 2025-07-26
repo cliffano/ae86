@@ -17,7 +17,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-      - run: npm install -g bob@4.0.0
+      - run: npm install -g bob@4
       - run: bob build
       - uses: coverallsapp/github-action@v2.3.6
         with:
