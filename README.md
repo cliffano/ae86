@@ -13,8 +13,7 @@ AE86
 
 AE86 is an old school static website generator written in Node.js .
 
-This is handy when you want to create a static website by specifying simple templates, along with custom variables and template functions.
-All you need to know is standard HTML, JavaScript, CSS, and a bit of simple Jazz templating, nothing fancy.
+You can create a static website by specifying simple templates, along with custom variables and template functions. All you need to know is standard HTML, JavaScript, CSS, and a bit of simple Jazz templating, nothing fancy.
 
 Installation
 ------------
