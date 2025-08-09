@@ -1,10 +1,11 @@
 <img align="right" src="https://raw.github.com/cliffano/ae86/master/avatar.jpg" alt="Avatar"/>
 
 [![Build Status](https://github.com/cliffano/ae86/workflows/CI/badge.svg)](https://github.com/cliffano/ae86/actions?query=workflow%3ACI)
-[![Security Status](https://snyk.io/test/github/cliffano/ae86/badge.svg)](https://snyk.io/test/github/cliffano/ae86)
 [![Dependencies Status](https://img.shields.io/librariesio/release/npm/ae86)](https://libraries.io/npm/ae86)
+[![Code Scanning Status](https://github.com/cliffano/ae86/workflows/CodeQL/badge.svg)](https://github.com/cliffano/ae86/actions?query=workflow%3ACodeQL)
 [![Coverage Status](https://img.shields.io/coveralls/cliffano/ae86.svg)](https://coveralls.io/r/cliffano/ae86?branch=master)
-[![Published Version](https://img.shields.io/npm/v/ae86.svg)](http://www.npmjs.com/package/ae86)
+[![Security Status](https://snyk.io/test/github/cliffano/ae86/badge.svg)](https://snyk.io/test/github/cliffano/ae86)
+[![Published Version](https://img.shields.io/npm/v/ae86.svg)](https://www.npmjs.com/package/ae86)
 <br/>
 
 AE86
