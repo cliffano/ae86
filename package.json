@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "async": "^3.2.6",
-    "bagofcli": "^2.4.1",
+    "bagofcli": "^2.5.0",
     "cheerio": "^1.1.2",
     "cpr": "^3.0.1",
     "dateformat": "^5.0.3",
