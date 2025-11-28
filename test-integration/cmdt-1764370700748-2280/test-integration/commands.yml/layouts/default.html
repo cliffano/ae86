@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{title()} w/ Default Layout</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald" type="text/css"/>
+  <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" type="text/css"/>
+  <link rel="stylesheet" href="{relative('styles/global.css')}?{__genId}" type="text/css"/>
+  <script type="text/javascript" src="{relative('scripts/global.js')}?{__genId}"></script>
+</head>
+<body>
+{include('header.html')}
+<div id="body">
+  {content}
+</div>
+{include('footer.html')}
+<script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js" integrity="sha256-fc1d94f50dd3822e1e53cb96af4f040d2ad8b5c7b984bae5e84efc7641acfada"></script>
+</body>
+</html>
