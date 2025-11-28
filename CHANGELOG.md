@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Upgrade dependencies to latest
 
+### Security
+- Fix example templates to use https and with SHA256 integrity
+
 ## 4.0.0 - 2025-06-29
 ### Changed
 - Set min node engine to >= 20.0.0
