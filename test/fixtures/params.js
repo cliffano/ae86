@@ -1,7 +1,5 @@
 const params = {
-  params: { foo: 'bar' }
+  params: { foo: "bar" },
 };
 
-export {
-  params as params
-};
+export { params as params };
