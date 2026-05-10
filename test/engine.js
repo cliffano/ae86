@@ -21,6 +21,16 @@ describe("engine - engine", function () {
     const engine = new Engine({ ext: "someext" });
     assert.equals(engine.ext, "someext");
   });
+
+  it("should read package version from filesystem path", function () {
+    const stub = sinon.stub(fs, "readFileSync").value(function (path) {
+      assert.isFalse(path.startsWith("file://"));
+      return JSON.stringify({ version: "1.2.3" });
+    });
+    const engine = new Engine();
+    assert.equals(engine.version, "1.2.3");
+    stub.restore();
+  });
 });
 
 describe("engine - compile", function () {
