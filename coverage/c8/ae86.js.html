@@ -25,7 +25,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>139/139</span>
+                <span class='fraction'>133/133</span>
             </div>
         
             
@@ -46,7 +46,7 @@
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>139/139</span>
+                <span class='fraction'>133/133</span>
             </div>
         
             
@@ -196,13 +196,7 @@
 <a name='L131'></a><a href='#L131'>131</a>
 <a name='L132'></a><a href='#L132'>132</a>
 <a name='L133'></a><a href='#L133'>133</a>
-<a name='L134'></a><a href='#L134'>134</a>
-<a name='L135'></a><a href='#L135'>135</a>
-<a name='L136'></a><a href='#L136'>136</a>
-<a name='L137'></a><a href='#L137'>137</a>
-<a name='L138'></a><a href='#L138'>138</a>
-<a name='L139'></a><a href='#L139'>139</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<a name='L134'></a><a href='#L134'>134</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -248,9 +242,6 @@
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
@@ -338,28 +329,26 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
-import async from 'async';
-import bag from 'bagofcli';
-import cpr from 'cpr';
-import dateformat from 'dateformat';
-import Engine from './engine.js';
-import fs from 'fs';
-import p from 'path';
-import watch from '@cnakazawa/watch';
-import wrench from 'wrench';
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
+import async from "async";
+import bag from "bagofcli";
+import cpr from "cpr";
+import dateformat from "dateformat";
+import Engine from "./engine.js";
+import fs from "fs";
+import p from "path";
+import watch from "@cnakazawa/watch";
+import wrench from "wrench";
 &nbsp;
-const DIRNAME = p.dirname(import.meta.url).replace('file://', '');
+const DIRNAME = p.dirname(import.meta.url).replace("file://", "");
 &nbsp;
 /**
  * class AE86
  */
 class AE86 {
-&nbsp;
   constructor(opts) {
     opts = opts || {};
-    this.outDir = opts.outDir || 'out';
+    this.outDir = opts.outDir || "out";
   }
 &nbsp;
   /**
@@ -368,7 +357,7 @@ class AE86 {
    * @param {Function} cb: standard cb(err, result) callback
    */
   init(cb) {
-    cpr.cpr(p.join(DIRNAME, '../examples'), '.', cb);
+    cpr.cpr(p.join(DIRNAME, "../examples"), ".", cb);
   }
 &nbsp;
   /**
@@ -377,32 +366,29 @@ class AE86 {
    * @param {Function} cb: standard cb(err, result) callback
    */
   generate(cb) {
-&nbsp;
     const self = this;
 &nbsp;
     function _static(cb) {
       // copy static files as-is
-      cpr.cpr('static', self.outDir, cb);
+      cpr.cpr("static", self.outDir, cb);
     }
 &nbsp;
     function _pages(cb) {
-&nbsp;
       function _params(cb) {
-&nbsp;
         function prepParams(result) {
           const params = result.params;
           // add website info
           params.sitemap = params.sitemap || {};
-          params.__genId = dateformat('yyyymmddHHMMss');
+          params.__genId = dateformat("yyyymmddHHMMss");
           cb(null, params);
         }
 &nbsp;
         // initialise userland params
-        const paramsFile = p.join(process.cwd(), 'params.js');
+        const paramsFile = p.join(process.cwd(), "params.js");
         if (fs.existsSync(paramsFile)) {
           import(paramsFile)
-            .then(result =&gt; prepParams(result))
-            .catch(err =&gt; cb(err));
+            .then((result) =&gt; prepParams(result))
+            .catch((err) =&gt; cb(err));
         } else {
           cb(null, null);
         }
@@ -411,7 +397,7 @@ class AE86 {
       const engine = new Engine(),
         tasks = {};
 &nbsp;
-      ['partials', 'layouts', 'pages'].forEach((dir) =&gt; {
+      ["partials", "layouts", "pages"].forEach((dir) =&gt; {
         tasks[dir] = function (cb) {
           engine.compile(dir, cb);
         };
@@ -447,22 +433,22 @@ class AE86 {
     function _watch(file) {
       watch.watchTree(file, function (f, curr, prev) {
         if (typeof f === "object" &amp;&amp; prev === null &amp;&amp; curr === null) {
-          bag.logStepItemSuccess('Watching for file changes at %s...', file);
+          bag.logStepItemSuccess("Watching for file changes at %s...", file);
         } else if (prev === null) {
-          bag.logStepItemSuccess('%s was created', file);
+          bag.logStepItemSuccess("%s was created", file);
           _listener();
         } else if (curr.nlink === 0) {
-          bag.logStepItemSuccess('%s was deleted', file);
+          bag.logStepItemSuccess("%s was deleted", file);
           self.clean();
           _listener();
         } else {
-          bag.logStepItemSuccess('%s was modified', file);
+          bag.logStepItemSuccess("%s was modified", file);
           _listener();
         }
       });
     }
 &nbsp;
-    ['static', 'partials', 'layouts', 'pages', 'params.js'].forEach(_watch);
+    ["static", "partials", "layouts", "pages", "params.js"].forEach(_watch);
   }
 &nbsp;
   /**
@@ -475,16 +461,15 @@ class AE86 {
   }
 }
 &nbsp;
-export {
-  AE86 as default
-};</pre></td></tr></table></pre>
+export { AE86 as default };
+&nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2025-11-28T22:59:46.084Z
+                at 2026-05-10T06:16:54.510Z
             </div>
         <script src="prettify.js"></script>
         <script>

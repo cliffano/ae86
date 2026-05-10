@@ -48,7 +48,7 @@
     </div>
     <div class="col-md-6">
       <h2 class="header">Lines of code <i class="icon icon-info-sign" rel="popover" data-placement="top" data-trigger="hover" data-content="Source Lines of Code / Logical Lines of Code" data-original-title="SLOC/LSLOC" data-container="body"></i></h2>
-      <p class="stat">76</p>
+      <p class="stat">77</p>
     </div>
   </div>
   <div class="row historical">
@@ -90,7 +90,7 @@
 <div class="container">
   <div class="row">
     <textarea id="file-source" class="col-md-12">&quot;use strict&quot;;
-import dateformat from &#039;dateformat&#039;;
+import dateformat from &quot;dateformat&quot;;
 
 /**
  * Pre-defined functions which can be used as template functions.
@@ -101,7 +101,6 @@ import dateformat from &#039;dateformat&#039;;
  * @param {Object} params: template parameters (including user-defined parameters and custom functions)
  */
 function funcs(page, templates, params) {
-
   /**
    * Display the current date in specified format.
    * Default to ISO date when format is not specified.
@@ -110,7 +109,7 @@ function funcs(page, templates, params) {
    * @param {Function} cb: jazz cb(data) callback
    */
   function date(format, cb) {
-    cb(dateformat(new Date(), format || &#039;isoDateTime&#039;));
+    cb(dateformat(new Date(), format || &quot;isoDateTime&quot;));
   }
 
   /**
@@ -121,9 +120,11 @@ function funcs(page, templates, params) {
    * @param {Function} cb: jazz cb(data) callback
    */
   function include(partial, cb) {
-    cb((params.partials &amp;&amp; params.partials[partial]) ?
-      params.partials[partial] :
-      &#039;[error] partial &#039; + partial + &#039; does not exist&#039;);
+    cb(
+      params.partials &amp;&amp; params.partials[partial]
+        ? params.partials[partial]
+        : &quot;[error] partial &quot; + partial + &quot; does not exist&quot;,
+    );
   }
 
   /**
@@ -136,8 +137,8 @@ function funcs(page, templates, params) {
   function relative(path, cb) {
     let value = path;
     for (let i = 0, ln = page.length; i &lt; ln; i += 1) {
-      if (page.charAt(i) === &#039;/&#039;) {
-        value = &#039;../&#039; + value;
+      if (page.charAt(i) === &quot;/&quot;) {
+        value = &quot;../&quot; + value;
       }
     }
     cb(value);
@@ -149,22 +150,22 @@ function funcs(page, templates, params) {
    * @param {Function} cb: jazz cb(data) callback
    */
   function title(cb) {
-    cb((params.sitemap &amp;&amp; params.sitemap[page]) ?
-      params.sitemap[page].title :
-      &#039;[error] page &#039; + page + &#039; does not have any sitemap title&#039;);
+    cb(
+      params.sitemap &amp;&amp; params.sitemap[page]
+        ? params.sitemap[page].title
+        : &quot;[error] page &quot; + page + &quot; does not have any sitemap title&quot;,
+    );
   }
 
   return {
     date: date,
     include: include,
     relative: relative,
-    title: title
+    title: title,
   };
 }
 
-export {
-  funcs as default
-};</textarea>
+export { funcs as default };</textarea>
   </div>
 </div>
 
