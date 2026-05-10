@@ -11,6 +11,7 @@ describe("cli - exec", function () {
   it("should contain commands with actions", function (done) {
     const mockCommand = function (base, actions) {
       assert.isString(base);
+      assert.isFalse(base.startsWith("file://"));
       assert.isFunction(actions.commands.init.action);
       assert.isFunction(actions.commands.gen.action);
       assert.isFunction(actions.commands.watch.action);

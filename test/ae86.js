@@ -17,6 +17,7 @@ const DIRNAME = p.dirname(import.meta.url).replace("file://", "");
 describe("ae86 - init", function () {
   it("should delegate to cpr cpr when initialising the project", function (done) {
     sinon.stub(cpr, "cpr").value(function (source, dest, cb) {
+      assert.isFalse(source.startsWith("file://"));
       assert.isTrue(source.match(/.+\/examples$/).length === 1);
       assert.equals(dest, ".");
       cb();

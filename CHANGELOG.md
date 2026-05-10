@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Upgrade dependencies to latest
 - Set min node engine to >= 22.0.0
 
+### Fixed
+- Fix CI complexity parser compatibility by deriving ESM dirname via `fileURLToPath()`
+
 ### Security
 - Fix example templates to use https and with SHA256 integrity
 
