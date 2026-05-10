@@ -91,6 +91,7 @@ update-dotfiles: stage
 	  cp .gitignore ../../../../.gitignore && \
 	  cp eslint.config.js ../../../../eslint.config.js && \
 	  cp .rtk.json ../../../../.rtk.json
+	make -f Makefile-extras x-overwrite-dotfiles
 
 ################################################################
 # Formatting targets
