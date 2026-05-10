@@ -18,17 +18,7 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - run: npm install -g bob@5.0.1
-      - run: |
-          if [ "${{ matrix.node }}" = "26" ]; then
-            bob clean dep style lint complexity test test-integration doc
-          else
-            bob build
-          fi
-      - uses: coverallsapp/github-action@v2.3.6
-        if: ${{ matrix.node != '26' }}
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: .bob/coverage/c8/lcov.info
+      - run: bob build
       - uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.STUDIO_GITHUB_TOKEN }}
