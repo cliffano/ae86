@@ -1,3 +1,6 @@
+(node:2444) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+test | /opt/hostedtoolcache/node/22.22.2/x64/lib/node_modules/bob/node_modules/.bin/mocha --colors --reporter spec --recursive test/
 (node:2463) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
 (Use `node --trace-deprecation ...` to show where the warning was created)
 
@@ -81,3 +84,13 @@
 
 [92m [0m[32m 42 passing[0m[90m (81ms)[0m
 
+SUCCESS | exit code 0
+--------------|---------|----------|---------|---------|-------------------
+File          | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+--------------|---------|----------|---------|---------|-------------------
+All files     |     100 |      100 |     100 |     100 |                   
+ ae86.js      |     100 |      100 |     100 |     100 |                   
+ cli.js       |     100 |      100 |     100 |     100 |                   
+ engine.js    |     100 |      100 |     100 |     100 |                   
+ functions.js |     100 |      100 |     100 |     100 |                   
+--------------|---------|----------|---------|---------|-------------------
