@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Upgrade dependencies to latest
 - Set min node engine to >= 22.0.0
+- Update Makefile-extras target to fit Suntory run hook
 
 ### Fixed
 - Fix CI complexity parser compatibility by deriving ESM dirname via `fileURLToPath()`
