@@ -6,7 +6,7 @@
 [![Build Status](https://github.com/cliffano/ae86/workflows/CI/badge.svg)](https://github.com/cliffano/ae86/actions?query=workflow%3ACI)
 [![Dependencies Status](https://img.shields.io/librariesio/release/npm/ae86)](https://libraries.io/npm/ae86)
 [![Code Scanning Status](https://github.com/cliffano/ae86/workflows/CodeQL/badge.svg)](https://github.com/cliffano/ae86/actions?query=workflow%3ACodeQL)
-[![Coverage Status](https://img.shields.io/coveralls/cliffano/ae86.svg)](https://coveralls.io/r/cliffano/ae86?branch=main)
+[![Coverage Status](https://coveralls.io/repos/github/cliffano/ae86/badge.svg?branch=main)](https://coveralls.io/r/cliffano/ae86?branch=main)
 [![Security Status](https://snyk.io/test/github/cliffano/ae86/badge.svg)](https://snyk.io/test/github/cliffano/ae86)
 [![Published Version](https://img.shields.io/npm/v/ae86.svg)](https://www.npmjs.com/package/ae86)
 <!-- END:BADGES -->
@@ -74,23 +74,23 @@ ae86 clean --out-dir public
 
 AE86 uses [shinetech/jazz](https://github.com/shinetech/jazz) as its template engine, checkout Jazz documentation for further syntax documentation.
 
-__Partials__
+### Partials
 
 Partial templates can be used for fragments of the website, e.g. website header, footer, and navigation, which appear on multiple pages. Partial templates can be included in other templates using {include('partial.html')} template function.
 
-__Layouts__
+### Layouts
 
 Layout templates are applied to each page. By default, all pages use layouts/default.html unless otherwise specified in params.js' sitemap. Page content is rendered in layout using {content} variable.
 
-__Pages__
+### Pages
 
 Each page template will be applied a layout, and evaluated into a static HTML page.
 
-__Static__
+### Static
 
 Place all static files (e.g. images, scripts, styles, robots.txt) in static directory. The directory structure of static files will be kept as-is. If there's any conflict with the page templates, the page template will overwrite the static file.
 
-__Custom Variables__
+### Custom Variables
 
 Website custom variables and template functions can be specified in exports.params object in params.js file:
 
@@ -127,7 +127,7 @@ exports.params = {
 
 Note that params.js is a Node.js module, so it can require other modules accordingly.
 
-__Custom Template Functions__
+### Custom Template Functions
 
 Custom template functions can be specified in params.js :
 
@@ -149,7 +149,7 @@ The custom copyright template function above can then be used in a template file
 <div>
 ```
 
-__Built-in Variables & Template Functions__
+### Built-in Variables & Template Functions
 
 AE86 comes with a number of built-in variables and template functions:
 
@@ -159,7 +159,7 @@ AE86 comes with a number of built-in variables and template functions:
 * relative(path)
 * __genId
 
-__include(file)__
+#### include(file)
 
 This template function includes a partial template within another template. The file argument is relative to partials directory. E.g. include('header.html') includes partials/header.html file.
 
@@ -171,7 +171,7 @@ This template function includes a partial template within another template. The 
 
 A partial template can also be included in another partial template.
 
-__title()__
+#### title()
 
 This template function displays the current page's title as configured in sitemap param in params.js file.
 
@@ -179,7 +179,7 @@ This template function displays the current page's title as configured in sitema
 <title>{title()}</title>
 ```
 
-__date(format)__
+#### date(format)
 
 This template function displays the current time with a specified format. Check out [felixge/node-dateformat](https://github.com/felixge/node-dateformat) README page for date format examples.
 
@@ -187,7 +187,7 @@ This template function displays the current time with a specified format. Check 
 <div class="date">{date('dddd dd/mm/yyyy hh:MM:ssTT')}</div>
 ```
 
-__relative(path)__
+#### relative(path)
 
 This template function renders a path relative to the location of the page template.
 
@@ -246,7 +246,7 @@ And generate the web site with `bob site` command.
 ## Colophon
 
 <!-- BEGIN:DEVELOPERS_GUIDE -->
-[Developer's Guide](https://cliffano.github.io/developers_guide.html#nodejs)
+[Developer's Guide](https://cliffano.github.io/developers-guide-nodejs.html)
 <!-- END:DEVELOPERS_GUIDE -->
 
 <!-- BEGIN:BUILD_REPORTS -->
