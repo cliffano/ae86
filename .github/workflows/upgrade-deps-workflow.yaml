@@ -7,17 +7,17 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          token: ${{ secrets.STUDIO_GITHUB_TOKEN }}
+          token: ${{ secrets.null_GITHUB_TOKEN }}
       - uses: actions/setup-node@v6
         with:
           node-version: '26'
       - run: git config --global user.email "blah+pakkun@cliffano.com"
       - run: git config --global user.name "pakkunbot"
-      - run: npm install -g bob@5.0.1
+      - run: npm install -g bob@5.2.1
       - run: bob updep build
       - run: git commit -am "Upgrade dependencies to latest"
       - uses: ad-m/github-push-action@v0.8.0
         with:
           tags: true
-          github_token: ${{ secrets.STUDIO_GITHUB_TOKEN }}
+          github_token: ${{ secrets.null_GITHUB_TOKEN }}
           branch: ${{ github.ref }}
