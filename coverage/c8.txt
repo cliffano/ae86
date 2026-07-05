@@ -1,3 +1,7 @@
+(node:3114) [DEP0151] DeprecationWarning: Package /opt/hostedtoolcache/node/22.23.1/x64/lib/node_modules/bob/node_modules/jazz/ has a "main" field set to "./lib/jazz", excluding the full filename and extension to the resolved file at "lib/jazz.js", imported from /opt/hostedtoolcache/node/22.23.1/x64/lib/node_modules/bob/lib/bob.js.
+ Automatic extension resolution of the "main" field is deprecated for ES modules.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+test | /opt/hostedtoolcache/node/22.23.1/x64/lib/node_modules/bob/node_modules/.bin/mocha --colors --reporter spec --recursive test/
 (node:3133) [DEP0151] DeprecationWarning: Package /home/runner/work/ae86/ae86/node_modules/jazz/ has a "main" field set to "./lib/jazz", excluding the full filename and extension to the resolved file at "lib/jazz.js", imported from /home/runner/work/ae86/ae86/lib/engine.js.
  Automatic extension resolution of the "main" field is deprecated for ES modules.
 (Use `node --trace-deprecation ...` to show where the warning was created)
@@ -84,3 +88,13 @@
 
 [92m [0m[32m 42 passing[0m[90m (89ms)[0m
 
+SUCCESS | exit code 0
+--------------|---------|----------|---------|---------|-------------------
+File          | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+--------------|---------|----------|---------|---------|-------------------
+All files     |     100 |      100 |     100 |     100 |                   
+ ae86.js      |     100 |      100 |     100 |     100 |                   
+ cli.js       |     100 |      100 |     100 |     100 |                   
+ engine.js    |     100 |      100 |     100 |     100 |                   
+ functions.js |     100 |      100 |     100 |     100 |                   
+--------------|---------|----------|---------|---------|-------------------
