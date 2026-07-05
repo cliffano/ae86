@@ -25,5 +25,5 @@ jobs:
           path-to-lcov: .bob/coverage/c8/lcov.info
       - uses: peaceiris/actions-gh-pages@v4
         with:
-          github_token: ${{ secrets.null_GITHUB_TOKEN }}
+          github_token: ${{ secrets.STUDIO_GITHUB_TOKEN }}
           publish_dir: .bob

@@ -7,7 +7,7 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          token: ${{ secrets.null_GITHUB_TOKEN }}
+          token: ${{ secrets.STUDIO_GITHUB_TOKEN }}
       - uses: actions/setup-node@v6
         with:
           node-version: '26'
@@ -19,5 +19,5 @@ jobs:
       - uses: ad-m/github-push-action@v0.8.0
         with:
           tags: true
-          github_token: ${{ secrets.null_GITHUB_TOKEN }}
+          github_token: ${{ secrets.STUDIO_GITHUB_TOKEN }}
           branch: ${{ github.ref }}

@@ -8,4 +8,4 @@ jobs:
       - uses: cliffano/release-action@v1.4.0
         with:
           release_type: 'major'
-          github_token: ${{ secrets.null_GITHUB_TOKEN }}
+          github_token: ${{ secrets.STUDIO_GITHUB_TOKEN }}

@@ -12,3 +12,4 @@ generator:
     author_url: https://github.com/cliffano
     github_id: cliffano
     github_repo: ae86
+    github_token_prefix: STUDIO
