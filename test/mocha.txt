@@ -1,7 +1,7 @@
-(node:3133) [DEP0151] DeprecationWarning: Package /home/runner/work/ae86/ae86/node_modules/jazz/ has a "main" field set to "./lib/jazz", excluding the full filename and extension to the resolved file at "lib/jazz.js", imported from /home/runner/work/ae86/ae86/lib/engine.js.
+(node:3124) [DEP0151] DeprecationWarning: Package /home/runner/work/ae86/ae86/node_modules/jazz/ has a "main" field set to "./lib/jazz", excluding the full filename and extension to the resolved file at "lib/jazz.js", imported from /home/runner/work/ae86/ae86/lib/engine.js.
  Automatic extension resolution of the "main" field is deprecated for ES modules.
 (Use `node --trace-deprecation ...` to show where the warning was created)
-(node:3133) [DEP0151] DeprecationWarning: Package /home/runner/work/ae86/ae86/node_modules/jazz/ has a "main" field set to "./lib/jazz", excluding the full filename and extension to the resolved file at "lib/jazz.js", imported from /home/runner/work/ae86/ae86/test/engine.js.
+(node:3124) [DEP0151] DeprecationWarning: Package /home/runner/work/ae86/ae86/node_modules/jazz/ has a "main" field set to "./lib/jazz", excluding the full filename and extension to the resolved file at "lib/jazz.js", imported from /home/runner/work/ae86/ae86/test/engine.js.
  Automatic extension resolution of the "main" field is deprecated for ES modules.
 
 [0m[0m
@@ -82,5 +82,5 @@
   [32m  [32m✔[39m[0m[90m should return error message when file does not exist in sitemap[0m
 
 
-[92m [0m[32m 42 passing[0m[90m (89ms)[0m
+[92m [0m[32m 42 passing[0m[90m (88ms)[0m
 
