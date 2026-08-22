@@ -33,20 +33,20 @@
   "dependencies": {
     "@cnakazawa/watch": "^1.0.4",
     "async": "^3.2.6",
-    "bagofcli": "^2.5.0",
+    "bagofcli": "^3.1.0",
     "cheerio": "^1.2.0",
     "cpr": "^3.0.1",
     "dateformat": "^5.0.3",
     "file": "^0.2.2",
-    "fs-extra": "^11.3.5",
-    "jazz": "^1.0.0",
+    "fs-extra": "^11.4.0",
+    "jazz": "^1.1.0",
     "lodash": "^4.18.1",
     "mkdirp": "^3.0.1",
     "wrench": "^1.5.9"
   },
   "devDependencies": {
     "@sinonjs/referee": "^11.0.2",
-    "sinon": "^22.0.0"
+    "sinon": "^22.1.0"
   },
   "scripts": {},
   "engines": {
